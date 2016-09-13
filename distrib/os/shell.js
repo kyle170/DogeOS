@@ -170,6 +170,25 @@ var TSOS;
         };
         Shell.prototype.shellVer = function (args) {
             _StdOut.putText(APP_NAME + " version " + APP_VERSION);
+            _StdOut.advanceLine();
+            _StdOut.putText("                            __");
+            _StdOut.advanceLine();
+            _StdOut.putText('     ,                    ," e`--o');
+            _StdOut.advanceLine();
+            _StdOut.putText("    ((                   (  | __,'");
+            _StdOut.advanceLine();
+            _StdOut.putText("     \\~-----------' \_;/     ~Woof!");
+            _StdOut.advanceLine();
+            _StdOut.putText("     (                      /");
+            _StdOut.advanceLine();
+            _StdOut.putText("     /) ._______________.  )");
+            _StdOut.advanceLine();
+            _StdOut.putText("    (( (               (( (");
+            _StdOut.advanceLine();
+            _StdOut.putText("     ``-'               ``-'");
+            _StdOut.advanceLine();
+            _StdOut.advanceLine();
+            _StdOut.putText(">> Here... Have somewhat eh ascii art of a dog :/  <<");
         };
         Shell.prototype.shellHelp = function (args) {
             _StdOut.putText("Commands:");
@@ -196,6 +215,27 @@ var TSOS;
                         _StdOut.putText("Help displays a list of (hopefully) valid commands.");
                         break;
                     // TODO: Make descriptive MANual page entries for the the rest of the shell commands here.
+                    case "ver":
+                        _StdOut.putText("Displays the current version data");
+                        break;
+                    case "shutdown":
+                        _StdOut.putText("Shuts the kernel off");
+                        break;
+                    case "cls":
+                        _StdOut.putText("This command clears the screen adn resets the cursor postition");
+                        break;
+                    case "man":
+                        _StdOut.putText("Need Help?... You've come to the right place! You used `man` to get here so its kinda redundant on what it does... You can go away now...");
+                        break;
+                    case "trace":
+                        _StdOut.putText("This enables the OS trace");
+                        break;
+                    case "rot13":
+                        _StdOut.putText("Need to obfuscate something?... good... use the command rot13 followed by the string you want to obfuscate... like this! rot13 Alan");
+                        break;
+                    case "prompt":
+                        _StdOut.putText("This is pretty obvious...");
+                        break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
                 }
