@@ -17,6 +17,7 @@ module TSOS {
                     public currentFontSize = _DefaultFontSize,
                     public currentXPosition = 0,
                     public currentYPosition = _DefaultFontSize,
+					public lastCommand = "",
                     public buffer = "") {
         }
 
@@ -44,7 +45,11 @@ module TSOS {
                     // ... tell the shell ...
                     _OsShell.handleInput(this.buffer);
                     // ... and reset our buffer.
+					this.lastCommand = this.buffer;
                     this.buffer = "";
+				}elseif (chr === String.fromCharCode(38)){
+					this.putText("YES");
+				
                 } else {
                     // This is a "normal" character, so ...
                     // ... draw it on the screen...
@@ -65,12 +70,18 @@ module TSOS {
             //
             // UPDATE: Even though we are now working in TypeScript, char and string remain undistinguished.
             //         Consider fixing that.
+			var wordWrapLength = 56;
+			var newSubstringDisplay = text.substring(0, wordWrapLength);
             if (text !== "") {
-                // Draw the text at the current X and Y coordinates.
-                _DrawingContext.drawText(this.currentFont, this.currentFontSize, this.currentXPosition, this.currentYPosition, text);
-                // Move the current X position.
-                var offset = _DrawingContext.measureText(this.currentFont, this.currentFontSize, text);
-                this.currentXPosition = this.currentXPosition + offset;
+				// Draw the text at the current X and Y coordinates.
+				_DrawingContext.drawText(this.currentFont, this.currentFontSize, this.currentXPosition, this.currentYPosition, newSubstringDisplay);
+				// Move the current X position.
+				var offset = _DrawingContext.measureText(this.currentFont, this.currentFontSize, newSubstringDisplay);
+				this.currentXPosition = this.currentXPosition + offset;
+				if(text.substring(0, wordWrapLength).length != 0 && text.length > wordWrapLength){
+					this.advanceLine();
+					this.putText(text.substring(wordWrapLength));
+				}
             }
          }
 

@@ -10,16 +10,18 @@
 var TSOS;
 (function (TSOS) {
     var Console = (function () {
-        function Console(currentFont, currentFontSize, currentXPosition, currentYPosition, buffer) {
+        function Console(currentFont, currentFontSize, currentXPosition, currentYPosition, lastCommand, buffer) {
             if (currentFont === void 0) { currentFont = _DefaultFontFamily; }
             if (currentFontSize === void 0) { currentFontSize = _DefaultFontSize; }
             if (currentXPosition === void 0) { currentXPosition = 0; }
             if (currentYPosition === void 0) { currentYPosition = _DefaultFontSize; }
+            if (lastCommand === void 0) { lastCommand = ""; }
             if (buffer === void 0) { buffer = ""; }
             this.currentFont = currentFont;
             this.currentFontSize = currentFontSize;
             this.currentXPosition = currentXPosition;
             this.currentYPosition = currentYPosition;
+            this.lastCommand = lastCommand;
             this.buffer = buffer;
         }
         Console.prototype.init = function () {
@@ -43,9 +45,14 @@ var TSOS;
                     // ... tell the shell ...
                     _OsShell.handleInput(this.buffer);
                     // ... and reset our buffer.
+                    this.lastCommand = this.buffer;
                     this.buffer = "";
                 }
-                else {
+                elseif(chr === String.fromCharCode(38));
+                {
+                    this.putText("YES");
+                }
+                {
                     // This is a "normal" character, so ...
                     // ... draw it on the screen...
                     this.putText(chr);
@@ -63,12 +70,18 @@ var TSOS;
             //
             // UPDATE: Even though we are now working in TypeScript, char and string remain undistinguished.
             //         Consider fixing that.
+            var wordWrapLength = 56;
+            var newSubstringDisplay = text.substring(0, wordWrapLength);
             if (text !== "") {
                 // Draw the text at the current X and Y coordinates.
-                _DrawingContext.drawText(this.currentFont, this.currentFontSize, this.currentXPosition, this.currentYPosition, text);
+                _DrawingContext.drawText(this.currentFont, this.currentFontSize, this.currentXPosition, this.currentYPosition, newSubstringDisplay);
                 // Move the current X position.
-                var offset = _DrawingContext.measureText(this.currentFont, this.currentFontSize, text);
+                var offset = _DrawingContext.measureText(this.currentFont, this.currentFontSize, newSubstringDisplay);
                 this.currentXPosition = this.currentXPosition + offset;
+                if (text.substring(0, wordWrapLength).length != 0 && text.length > wordWrapLength) {
+                    this.advanceLine();
+                    this.putText(text.substring(wordWrapLength));
+                }
             }
         };
         Console.prototype.advanceLine = function () {
