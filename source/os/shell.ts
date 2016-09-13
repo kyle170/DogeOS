@@ -29,7 +29,7 @@ module TSOS {
         public init() {
             var sc;
             //
-            // Load the command list.
+            // Load the command list. 
 
             // ver
             sc = new ShellCommand(this.shellVer,

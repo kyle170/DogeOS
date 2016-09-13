@@ -24,7 +24,7 @@ var TSOS;
         Shell.prototype.init = function () {
             var sc;
             //
-            // Load the command list.
+            // Load the command list. 
             // ver
             sc = new TSOS.ShellCommand(this.shellVer, "ver", "- Displays the current version data.");
             this.commandList[this.commandList.length] = sc;
