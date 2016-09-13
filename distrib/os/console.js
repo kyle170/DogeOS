@@ -10,18 +10,18 @@
 var TSOS;
 (function (TSOS) {
     var Console = (function () {
-        function Console(currentFont, currentFontSize, currentXPosition, currentYPosition, lastCommand, buffer) {
+        function Console(currentFont, currentFontSize, currentXPosition, currentYPosition, 
+            //public lastCommand = "";
+            buffer) {
             if (currentFont === void 0) { currentFont = _DefaultFontFamily; }
             if (currentFontSize === void 0) { currentFontSize = _DefaultFontSize; }
             if (currentXPosition === void 0) { currentXPosition = 0; }
             if (currentYPosition === void 0) { currentYPosition = _DefaultFontSize; }
-            if (lastCommand === void 0) { lastCommand = ""; }
             if (buffer === void 0) { buffer = ""; }
             this.currentFont = currentFont;
             this.currentFontSize = currentFontSize;
             this.currentXPosition = currentXPosition;
             this.currentYPosition = currentYPosition;
-            this.lastCommand = lastCommand;
             this.buffer = buffer;
         }
         Console.prototype.init = function () {
@@ -45,14 +45,10 @@ var TSOS;
                     // ... tell the shell ...
                     _OsShell.handleInput(this.buffer);
                     // ... and reset our buffer.
-                    this.lastCommand = this.buffer;
+                    //this.lastCommand = this.buffer;
                     this.buffer = "";
                 }
-                elseif(chr === String.fromCharCode(38));
-                {
-                    this.putText("YES");
-                }
-                {
+                else {
                     // This is a "normal" character, so ...
                     // ... draw it on the screen...
                     this.putText(chr);

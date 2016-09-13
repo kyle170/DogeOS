@@ -17,7 +17,7 @@ module TSOS {
                     public currentFontSize = _DefaultFontSize,
                     public currentXPosition = 0,
                     public currentYPosition = _DefaultFontSize,
-					public lastCommand = "",
+					//public lastCommand = "";
                     public buffer = "") {
         }
 
@@ -45,10 +45,10 @@ module TSOS {
                     // ... tell the shell ...
                     _OsShell.handleInput(this.buffer);
                     // ... and reset our buffer.
-					this.lastCommand = this.buffer;
+					//this.lastCommand = this.buffer;
                     this.buffer = "";
-				}elseif (chr === String.fromCharCode(38)){
-					this.putText("YES");
+				//}else if (chr === String.fromCharCode(38)){
+				//	this.putText())
 				
                 } else {
                     // This is a "normal" character, so ...

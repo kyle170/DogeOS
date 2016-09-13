@@ -96,6 +96,12 @@ module TSOS {
                                   "haiku",
                                   "- generates a Haiku just for you");
             this.commandList[this.commandList.length] = sc;
+			
+			// status
+            sc = new ShellCommand(this.shellStatus,
+                                  "status",
+                                  "- sets stats above the console");
+            this.commandList[this.commandList.length] = sc;
 
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
@@ -294,6 +300,16 @@ module TSOS {
 			_StdOut.advanceLine();
 			_StdOut.putText(haiku3);
         }
+		
+		public shellStatus(args) {
+            if (args.length > 0) {
+				var statusMessage = "";
+				for(var i=0; i<args.length; i++){
+					statusMessage += args[i]+" ";
+				}
+				document.getElementById('statusArea').innerHTML = statusMessage;
+			}
+        }
 
         public shellHelp(args) {
             _StdOut.putText("Commands:");
@@ -352,6 +368,9 @@ module TSOS {
                         break;	
 					case "haiku":
                         _StdOut.putText("generates a haiku just for you!");
+                        break;	
+					case "status":
+                        _StdOut.putText("Sets a new status message above the console... just use status <message>");
                         break;	
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");

@@ -58,6 +58,9 @@ var TSOS;
             // haiku
             sc = new TSOS.ShellCommand(this.shellHaiku, "haiku", "- generates a Haiku just for you");
             this.commandList[this.commandList.length] = sc;
+            // status
+            sc = new TSOS.ShellCommand(this.shellStatus, "status", "- sets stats above the console");
+            this.commandList[this.commandList.length] = sc;
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
             //
@@ -244,6 +247,15 @@ var TSOS;
             _StdOut.advanceLine();
             _StdOut.putText(haiku3);
         };
+        Shell.prototype.shellStatus = function (args) {
+            if (args.length > 0) {
+                var statusMessage = "";
+                for (var i = 0; i < args.length; i++) {
+                    statusMessage += args[i] + " ";
+                }
+                document.getElementById('statusArea').innerHTML = statusMessage;
+            }
+        };
         Shell.prototype.shellHelp = function (args) {
             _StdOut.putText("Commands:");
             for (var i in _OsShell.commandList) {
@@ -298,6 +310,9 @@ var TSOS;
                         break;
                     case "haiku":
                         _StdOut.putText("generates a haiku just for you!");
+                        break;
+                    case "status":
+                        _StdOut.putText("Sets a new status message above the console... just use status <message>");
                         break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
