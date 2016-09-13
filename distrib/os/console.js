@@ -84,6 +84,7 @@ var TSOS;
             var lineNewSpace = this.currentFontSize + 12; // does 12 sound good for an offset?
             // TODO: Handle scrolling. (iProject 1)
             if (this.currentYPosition > _Canvas.height) {
+                // lets take what we see in the console, convert it to an image, move it slightly upwards so the oldest stuff just is cropped out and move the line space back up a few ticks so we dont loose it into oblivion
                 var imageOCanvas = _DrawingContext.getImageData(0, lineNewSpace, _Canvas.width, _Canvas.height);
                 //moving things down
                 _DrawingContext.putImageData(imageOCanvas, 0, 0);
