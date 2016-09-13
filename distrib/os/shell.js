@@ -55,6 +55,9 @@ var TSOS;
             // whereami
             sc = new TSOS.ShellCommand(this.shellWhereami, "whereami", "- displays the location of the user");
             this.commandList[this.commandList.length] = sc;
+            // haiku
+            sc = new TSOS.ShellCommand(this.shellHaiku, "haiku", "- generates a Haiku just for you");
+            this.commandList[this.commandList.length] = sc;
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
             //
@@ -206,6 +209,41 @@ var TSOS;
             var state = states[Math.floor(Math.random() * states.length)];
             _StdOut.putText("Believe it or not, you are actually in " + state);
         };
+        Shell.prototype.shellHaiku = function (args) {
+            //things and stuff...nothing to see here
+            var adjective1 = new Array("sad", "young", "happy", "coward", "brave", "little");
+            var verb1 = new Array("runs", "sleeps", "seeks", "eats", "fight", "dream");
+            var adverb2 = new Array("quickly", "fully", "dimly", "hotly", "quite", "loudly");
+            var noun1 = new Array("colonist", "pirate", "slave", "raider", "muffalo", "boomrat");
+            var preposition2 = new Array("over", "under", "astride", "towards", "along", "backwards");
+            var article1 = new Array("the", "this", "that", "our", "a", "some");
+            var adjective2 = new Array("cold", "rough", "hot", "hidden", "red", "dark");
+            var noun2 = new Array("desert", "mountain", "cave", "hill", "plain", "ruins");
+            var verb2 = new Array("speaking", "hunting", "jumping", "running", "working", "watching");
+            var adverb3 = new Array("quietly", "gracefully", "knowingly", "peacefully", "intently", "silently");
+            var arNums = new Array();
+            //go through everything
+            for (var i = 0; i < 10; i++) {
+                arNums[i] = Math.round(Math.random() * adjective1.length);
+            }
+            //time to build!
+            var haiku = adjective1[arNums[0]] + " ";
+            haiku += noun1[arNums[1]] + " ";
+            haiku += adverb2[arNums[2]] + " ";
+            haiku += verb1[arNums[3]] + " ";
+            var haiku2 = preposition2[arNums[4]] + " ";
+            haiku2 += article1[arNums[5]] + " ";
+            haiku2 += adjective2[arNums[6]] + " ";
+            haiku2 += noun2[arNums[7]] + " ";
+            var haiku3 = verb2[arNums[8]] + " ";
+            haiku3 += adverb3[arNums[9]] + " ";
+            //Print dammit... DID I STUDDAH?
+            _StdOut.putText(haiku);
+            _StdOut.advanceLine();
+            _StdOut.putText(haiku2);
+            _StdOut.advanceLine();
+            _StdOut.putText(haiku3);
+        };
         Shell.prototype.shellHelp = function (args) {
             _StdOut.putText("Commands:");
             for (var i in _OsShell.commandList) {
@@ -254,6 +292,12 @@ var TSOS;
                         break;
                     case "date":
                         _StdOut.putText("displays the date dummy!");
+                        break;
+                    case "whereami":
+                        _StdOut.putText("You should really know where you are...seriously");
+                        break;
+                    case "haiku":
+                        _StdOut.putText("generates a haiku just for you!");
                         break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
