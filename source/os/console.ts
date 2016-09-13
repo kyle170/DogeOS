@@ -84,8 +84,17 @@ module TSOS {
             this.currentYPosition += _DefaultFontSize + 
                                      _DrawingContext.fontDescent(this.currentFont, this.currentFontSize) +
                                      _FontHeightMargin;
-
+			
+			var lineNewSpace = this.currentFontSize + 12; // does 12 sound good for an offset?
             // TODO: Handle scrolling. (iProject 1)
+			if (this.currentYPosition > _Canvas.height)
+            {
+                var imageOCanvas = _DrawingContext.getImageData(0, lineNewSpace, _Canvas.width, _Canvas.height);
+				//moving things down
+                _DrawingContext.putImageData(imageOCanvas, 0, 0);
+                this.currentYPosition -= lineNewSpace;
+                //Control.scrollConsoleDown();
+            }
         }
     }
  }
