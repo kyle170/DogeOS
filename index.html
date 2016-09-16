@@ -65,18 +65,21 @@
              tabindex="2"
              onclick="TSOS.Control.hostBtnReset_click(this);">
    </div>
-   <span id="aboveTheConsole">The time is: <span id="timeArea">xx:xx:xx x/x/x</span> || Status: <span id="statusArea">This is operating systems</span></span>
+   <span id="aboveTheConsole">The time is: <span id="timeArea">xx:xx:xx x/x/x</span> || Status: <span id="statusArea">No Status....yet....</span></span>
    <br>
    	<script>
 function startTime() {
     var today = new Date(); // grab the latest timestamp from the browser!
-    var h = today.getHours();
+    var year = today.getFullYear();
+	var month = today.getMonth();
+	var day = today.getDay();
+	var h = today.getHours();
     var m = today.getMinutes();
     var s = today.getSeconds();
     m = checkTime(m); // make sure to check for leading zeros...wouldnt want to be incorrect!
     s = checkTime(s);
     document.getElementById('timeArea').innerHTML =
-    h + ":" + m + ":" + s;
+    month + "/" + day + "/" + year + " " + h + ":" + m + ":" + s;
     var t = setTimeout(startTime, 500);
 }
 function checkTime(i) {
