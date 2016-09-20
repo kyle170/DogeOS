@@ -56,6 +56,17 @@ var TSOS;
                 chr = String.fromCharCode(keyCode);
                 _KernelInputQueue.enqueue(chr);
             }
+            else if ((keyCode >= 186) && (keyCode <= 222)) {
+                if (isShifted) {
+                    var symbolsShift = { 222: "\"", 221: "}", 220: "|", 219: "{", 192: "~", 191: "?", 190: ">", 189: "_", 188: "<", 187: "+", 186: ":" };
+                    chr = symbolsShift[keyCode];
+                }
+                else {
+                    var symbolsShift = { 222: "'", 221: "]", 220: "\\", 219: "[", 192: "`", 191: "/", 190: ".", 189: "-", 188: ",", 187: "=", 186: ";" };
+                    chr = symbolsShift[keyCode];
+                }
+                _KernelInputQueue.enqueue(chr);
+            }
         };
         return DeviceDriverKeyboard;
     }(TSOS.DeviceDriver));

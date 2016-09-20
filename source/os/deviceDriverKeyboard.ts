@@ -54,7 +54,18 @@ module TSOS {
                         (keyCode == 13)) {                       // enter
                 chr = String.fromCharCode(keyCode);
                 _KernelInputQueue.enqueue(chr);
-            }
+            }else if((keyCode >=186) && (keyCode <=222)){ // check for special characters
+				if(isShifted){
+					var symbolsShift = {222: "\"", 221: "}", 220: "|", 219: "{", 192: "~", 191: "?", 190: ">", 189: "_", 188: "<", 187: "+", 186: ":" };
+					chr = symbolsShift[keyCode];
+				}else{  // ok, so theres no shift present...that still means we care about the stuff tho
+					var symbolsShift = {222: "'", 221: "]", 220: "\\", 219: "[", 192: "`", 191: "/", 190: ".", 189: "-", 188: ",", 187: "=", 186: ";" };
+					chr = symbolsShift[keyCode];
+				}
+				
+				
+				_KernelInputQueue.enqueue(chr);
+			}
         }
     }
 }

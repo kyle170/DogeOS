@@ -47,7 +47,6 @@ var _KernelBuffers: any[] = null;   // when clearly 'any' is not what we want. T
 
 
 //Something we need that i feel we just dont have initialized
-//static proInput: HTMLTextAreaElement = null;
 
 
 // Standard input and output
