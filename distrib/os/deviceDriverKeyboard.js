@@ -76,6 +76,24 @@ var TSOS;
                 }
                 _KernelInputQueue.enqueue(chr);
             }
+            else if (keyCode == 8) {
+                if (!isShifted) {
+                    chr = String.fromCharCode(keyCode);
+                    _KernelInputQueue.enqueue(chr);
+                }
+            }
+            else if (keyCode == 38 || keyCode == 39 || keyCode == 40) {
+                if (!isShifted) {
+                    chr = keyCode.toString(); // convert a thing to a string
+                    _KernelInputQueue.enqueue(chr);
+                }
+            }
+            else if (keyCode == 9) {
+                if (!isShifted) {
+                    chr = String.fromCharCode(keyCode);
+                    _KernelInputQueue.enqueue(chr);
+                }
+            }
         };
         return DeviceDriverKeyboard;
     }(TSOS.DeviceDriver));

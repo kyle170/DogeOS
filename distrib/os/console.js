@@ -60,6 +60,7 @@ var TSOS;
             }
         };
         Console.prototype.bsod = function () {
+            //make the bluescreen thing a thing!
             _DrawingContext.clearRect(0, 0, _Canvas.width, _Canvas.height);
             _DrawingContext.rect(0, 0, _Canvas.width, _Canvas.height);
             _DrawingContext.fillStyle = "blue";

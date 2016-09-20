@@ -71,6 +71,22 @@ module TSOS {
 					chr = symbolsShift3[keyCode];
 				}
 				_KernelInputQueue.enqueue(chr);
+			}else if(keyCode == 8){ // do we have any backspace or arrow in here?
+				if(!isShifted){ // lets make sure things are not shifted
+					chr = String.fromCharCode(keyCode);
+					_KernelInputQueue.enqueue(chr);
+				}
+				
+			}else if(keyCode == 38 || keyCode == 39 || keyCode == 40){ //arrowzzzzzz
+				if(!isShifted){ // lets make sure things are not shifted
+					chr = keyCode.toString(); // convert a thing to a string
+					_KernelInputQueue.enqueue(chr);
+				}
+			}else if(keyCode == 9){ // TAB
+				if(!isShifted){ // lets make sure things are not shifted
+					chr = String.fromCharCode(keyCode);
+					_KernelInputQueue.enqueue(chr);
+				}
 			}
         }
     }
