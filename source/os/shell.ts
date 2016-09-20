@@ -224,6 +224,8 @@ module TSOS {
             _StdOut.putText("Bitch.");
             _SarcasticMode = true;
         }
+		
+
 
         public shellApology() {
            if (_SarcasticMode) {
@@ -416,9 +418,13 @@ module TSOS {
 		public shellBSOD(args) {
 			// the all mighty blue screen of life...err...death
             _StdOut.bsod();
-            _StdOut.resetXY();
+            _StdOut.resetXY(); 
 			_Kernel.krnShutdown();
         }
+		
+		public hexvalidator(args){
+			
+		}
 
         public shellRot13(args) {
             if (args.length > 0) {

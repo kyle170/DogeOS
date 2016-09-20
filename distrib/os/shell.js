@@ -359,6 +359,8 @@ var TSOS;
             _StdOut.resetXY();
             _Kernel.krnShutdown();
         };
+        Shell.prototype.hexvalidator = function (args) {
+        };
         Shell.prototype.shellRot13 = function (args) {
             if (args.length > 0) {
                 // Requires Utils.ts for rot13() function.

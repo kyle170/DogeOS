@@ -48,7 +48,7 @@ module TSOS {
 					//this.lastCommand = this.buffer;
                     this.buffer = "";
 				}else if (chr === String.fromCharCode(38)){
-					//this.putText();
+					//this.putText(); 
 				
                 } else {
                     // This is a "normal" character, so ...
