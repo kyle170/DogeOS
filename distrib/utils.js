@@ -44,6 +44,34 @@ var TSOS;
             }
             return retVal;
         };
+        //converts the incoming string that we found in the id="taProgramInput" to something a little more usable...such as...oh...I dont know... HEX???!?!
+        Utils.stringToHex = function (input) {
+            var output = "";
+            // go through each character and push it to a 16 char string
+            for (var i = 0; i < input.length; i++) {
+                output += input.charCodeAt(i).toString(16);
+            }
+            //now that we've broken it up...send it out!
+            return output;
+        };
+        // thje hex will now be converted to something a little more readable...maybe?
+        Utils.HexToS = function (input) {
+            var output = "";
+            for (var i = 0; i < input.length; ++i) {
+                ++i;
+                output += String.fromCharCode(parseInt(input.substr(i, 2), 16));
+            }
+            return output;
+        };
+        // String ->  Hex conversion check... true = hex, false = NOPE
+        Utils.checkForValidHex = function (input) {
+            if (input.length == 2 && parseInt(input, 16) >= 0) {
+                return true; // this is hex
+            }
+            else {
+                return false; // this is not hex
+            }
+        };
         return Utils;
     }());
     TSOS.Utils = Utils;

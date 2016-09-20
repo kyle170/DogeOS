@@ -108,6 +108,12 @@ module TSOS {
                                   "bsod",
                                   "- simulates a blue screen of death");
             this.commandList[this.commandList.length] = sc;
+			
+			// load a progra
+            sc = new ShellCommand(this.shellLoad,
+                                  "load",
+                                  "- loads a program in the User Program Input");
+            this.commandList[this.commandList.length] = sc;
 
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
@@ -383,6 +389,9 @@ module TSOS {
 					case "bsod":
                         _StdOut.putText("Simulates a blue screen of death...");
                         break;
+					case "load":
+                        _StdOut.putText("run this command after you have valid hex inputed intop the User Program Input");
+                        break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
                 }
@@ -422,8 +431,27 @@ module TSOS {
 			_Kernel.krnShutdown();
         }
 		
-		public hexvalidator(args){
+		public shellLoad(args){
+			var program: string = document.getElementById('taProgramInput').value; //bring in value from html5 input
+			program = Utils.trim(program); // remove white
+			var isStillValidHex: boolean=true; // set false if any aprt is not hex
+			var programArray = program.split(' ');
+			if (program.length==0){isStillValidHex=false;} //disable if nothing there
 			
+			for(var i:number=0; i<programArray.length; i++){
+				if(Utils.checkForValidHex(programArray[i])){
+					isStillValidHex=true;
+					//_StdOut.putText("1");
+				}else{
+					isStillValidHex=false;
+					//_StdOut.putText("0");
+				}
+			}
+			if(isStillValidHex){
+				_StdOut.putText("Congradulations...thats valid hex code!");
+			}else{
+				_StdOut.putText("Thats not valid hex code!");
+			}
 		}
 
         public shellRot13(args) {

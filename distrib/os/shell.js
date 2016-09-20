@@ -64,6 +64,9 @@ var TSOS;
             // blue screen of death
             sc = new TSOS.ShellCommand(this.shellBSOD, "bsod", "- simulates a blue screen of death");
             this.commandList[this.commandList.length] = sc;
+            // load a progra
+            sc = new TSOS.ShellCommand(this.shellLoad, "load", "- loads a program in the User Program Input");
+            this.commandList[this.commandList.length] = sc;
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
             //
@@ -320,6 +323,9 @@ var TSOS;
                     case "bsod":
                         _StdOut.putText("Simulates a blue screen of death...");
                         break;
+                    case "load":
+                        _StdOut.putText("run this command after you have valid hex inputed intop the User Program Input");
+                        break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
                 }
@@ -359,7 +365,28 @@ var TSOS;
             _StdOut.resetXY();
             _Kernel.krnShutdown();
         };
-        Shell.prototype.hexvalidator = function (args) {
+        Shell.prototype.shellLoad = function (args) {
+            var program = document.getElementById('taProgramInput').value; //bring in value from html5 input
+            program = TSOS.Utils.trim(program); // remove white
+            var isStillValidHex = true; // set false if any aprt is not hex
+            var programArray = program.split(' ');
+            if (program.length == 0) {
+                isStillValidHex = false;
+            } //disable if nothing there
+            for (var i = 0; i < programArray.length; i++) {
+                if (TSOS.Utils.checkForValidHex(programArray[i])) {
+                    isStillValidHex = true;
+                }
+                else {
+                    isStillValidHex = false;
+                }
+            }
+            if (isStillValidHex) {
+                _StdOut.putText("Congradulations...thats valid hex code!");
+            }
+            else {
+                _StdOut.putText("Thats not valid hex code!");
+            }
         };
         Shell.prototype.shellRot13 = function (args) {
             if (args.length > 0) {

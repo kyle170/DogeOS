@@ -43,5 +43,37 @@ module TSOS {
             }
             return retVal;
         }
+		
+		//converts the incoming string that we found in the id="taProgramInput" to something a little more usable...such as...oh...I dont know... HEX???!?!
+		public static stringToHex(input: string ): string{
+			var output: string = "";
+			// go through each character and push it to a 16 char string
+			for (var i: number = 0; i < input.length; i++){
+				output += input.charCodeAt(i).toString(16);
+			}
+			//now that we've broken it up...send it out!
+			return output;
+		}
+		
+		// thje hex will now be converted to something a little more readable...maybe?
+        public static HexToS(input: string): string{
+            var output: string = "";
+            for (var i: number = 0; i < input.length; ++i){
+				++i;
+                output += String.fromCharCode(parseInt(input.substr(i, 2), 16));
+            }
+            return output;
+        }
+
+        // String ->  Hex conversion check... true = hex, false = NOPE
+        public static checkForValidHex(input: string): boolean{
+            if (input.length == 2 && parseInt(input, 16) >= 0){ // gotta be 2 in length and the 16 in length is greater than 0 when parsed.
+                return true; // this is hex
+            }else{
+                return false; // this is not hex
+            }
+        }
+		
+
     }
 }
