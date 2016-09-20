@@ -53,17 +53,26 @@ var TSOS;
             else if (((keyCode >= 48) && (keyCode <= 57)) ||
                 (keyCode == 32) ||
                 (keyCode == 13)) {
-                chr = String.fromCharCode(keyCode);
+                if (isShifted) {
+                    var symbolsShift = { 48: ")", 49: "!", 50: "@", 51: "#", 52: "$", 53: "%", 54: "^", 55: "&", 56: "*", 57: "(" };
+                    chr = symbolsShift[keyCode];
+                    if (!chr) {
+                        chr = "";
+                    }
+                }
+                else {
+                    chr = String.fromCharCode(keyCode);
+                }
                 _KernelInputQueue.enqueue(chr);
             }
             else if ((keyCode >= 186) && (keyCode <= 222)) {
                 if (isShifted) {
-                    var symbolsShift = { 222: "\"", 221: "}", 220: "|", 219: "{", 192: "~", 191: "?", 190: ">", 189: "_", 188: "<", 187: "+", 186: ":" };
-                    chr = symbolsShift[keyCode];
+                    var symbolsShift2 = { 222: "\"", 221: "}", 220: "|", 219: "{", 192: "~", 191: "?", 190: ">", 189: "_", 188: "<", 187: "+", 186: ":" };
+                    chr = symbolsShift2[keyCode];
                 }
                 else {
-                    var symbolsShift = { 222: "'", 221: "]", 220: "\\", 219: "[", 192: "`", 191: "/", 190: ".", 189: "-", 188: ",", 187: "=", 186: ";" };
-                    chr = symbolsShift[keyCode];
+                    var symbolsShift3 = { 222: "'", 221: "]", 220: "\\", 219: "[", 192: "`", 191: "/", 190: ".", 189: "-", 188: ",", 187: "=", 186: ";" };
+                    chr = symbolsShift3[keyCode];
                 }
                 _KernelInputQueue.enqueue(chr);
             }
