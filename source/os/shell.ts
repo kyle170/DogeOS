@@ -102,6 +102,12 @@ module TSOS {
                                   "status",
                                   "- sets stats above the console");
             this.commandList[this.commandList.length] = sc;
+			
+			// blue screen of death
+            sc = new ShellCommand(this.shellBSOD,
+                                  "bsod",
+                                  "- simulates a blue screen of death");
+            this.commandList[this.commandList.length] = sc;
 
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
@@ -372,6 +378,9 @@ module TSOS {
 					case "status":
                         _StdOut.putText("Sets a new status message above the console... just use status <message>");
                         break;	
+					case "bsod":
+                        _StdOut.putText("Simulates a blue screen of death...");
+                        break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
                 }
@@ -402,6 +411,13 @@ module TSOS {
             } else {
                 _StdOut.putText("Usage: trace <on | off>");
             }
+        }
+		
+		public shellBSOD(args) {
+			// the all mighty blue screen of life...err...death
+            _StdOut.bsod();
+            _StdOut.resetXY();
+			_Kernel.krnShutdown();
         }
 
         public shellRot13(args) {

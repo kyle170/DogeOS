@@ -48,6 +48,8 @@ var TSOS;
                     //this.lastCommand = this.buffer;
                     this.buffer = "";
                 }
+                else if (chr === String.fromCharCode(38)) {
+                }
                 else {
                     // This is a "normal" character, so ...
                     // ... draw it on the screen...
@@ -56,6 +58,12 @@ var TSOS;
                     this.buffer += chr;
                 }
             }
+        };
+        Console.prototype.bsod = function () {
+            _DrawingContext.clearRect(0, 0, _Canvas.width, _Canvas.height);
+            _DrawingContext.rect(0, 0, _Canvas.width, _Canvas.height);
+            _DrawingContext.fillStyle = "blue";
+            _DrawingContext.fill();
         };
         Console.prototype.putText = function (text) {
             // My first inclination here was to write two functions: putChar() and putString().

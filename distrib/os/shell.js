@@ -61,6 +61,9 @@ var TSOS;
             // status
             sc = new TSOS.ShellCommand(this.shellStatus, "status", "- sets stats above the console");
             this.commandList[this.commandList.length] = sc;
+            // blue screen of death
+            sc = new TSOS.ShellCommand(this.shellBSOD, "bsod", "- simulates a blue screen of death");
+            this.commandList[this.commandList.length] = sc;
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
             //
@@ -314,6 +317,9 @@ var TSOS;
                     case "status":
                         _StdOut.putText("Sets a new status message above the console... just use status <message>");
                         break;
+                    case "bsod":
+                        _StdOut.putText("Simulates a blue screen of death...");
+                        break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
                 }
@@ -346,6 +352,12 @@ var TSOS;
             else {
                 _StdOut.putText("Usage: trace <on | off>");
             }
+        };
+        Shell.prototype.shellBSOD = function (args) {
+            // the all mighty blue screen of life...err...death
+            _StdOut.bsod();
+            _StdOut.resetXY();
+            _Kernel.krnShutdown();
         };
         Shell.prototype.shellRot13 = function (args) {
             if (args.length > 0) {

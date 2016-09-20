@@ -47,8 +47,8 @@ module TSOS {
                     // ... and reset our buffer.
 					//this.lastCommand = this.buffer;
                     this.buffer = "";
-				//}else if (chr === String.fromCharCode(38)){
-				//	this.putText())
+				}else if (chr === String.fromCharCode(38)){
+					//this.putText();
 				
                 } else {
                     // This is a "normal" character, so ...
@@ -60,6 +60,13 @@ module TSOS {
                 // TODO: Write a case for Ctrl-C.
             }
         }
+		
+		public bsod(): void{
+			_DrawingContext.clearRect(0, 0, _Canvas.width, _Canvas.height);
+			_DrawingContext.rect(0, 0, _Canvas.width, _Canvas.height);
+			_DrawingContext.fillStyle = "blue";
+			_DrawingContext.fill();
+		}
 
         public putText(text): void {
             // My first inclination here was to write two functions: putChar() and putString().
