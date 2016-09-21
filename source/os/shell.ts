@@ -293,7 +293,7 @@ module TSOS {
 			var adverb3 = new Array("quietly", "gracefully", "knowingly", "peacefully", "intently", "silently");
 			var arNums = new Array();
 			//go through everything
-			for(var i=0;i<10;i++) { 
+			for(var i=0;i<5;i++) { 
 			  arNums[i] = Math.round(Math.random() * adjective1.length);
 			}
 			//time to build!
@@ -450,7 +450,8 @@ module TSOS {
 			if(isStillValidHex){
 				_StdOut.putText("Congradulations...thats valid hex code!");
 			}else{
-				_StdOut.putText("Thats not valid hex code!");
+				_StdOut.putText("Invalid Hex Code: ");
+				_StdOut.putText(program);
 			}
 		}
 
