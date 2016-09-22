@@ -115,5 +115,10 @@ module TSOS {
                 this.currentYPosition -= lineNewSpace;
             }
         }
+		
+		public removeLastCharacter(): void{  // this is to handle backspaces
+			
+			
+		}
     }
  }

@@ -109,6 +109,8 @@ var TSOS;
                 this.currentYPosition -= lineNewSpace;
             }
         };
+        Console.prototype.removeLastCharacter = function () {
+        };
         return Console;
     }());
     TSOS.Console = Console;
