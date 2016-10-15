@@ -17,8 +17,10 @@ module TSOS {
                     public currentFontSize = _DefaultFontSize,
                     public currentXPosition = 0,
                     public currentYPosition = _DefaultFontSize,
-					//public lastCommand = "";
-                    public buffer = "") {
+					public buffer = "",
+					public current_line = '',
+					public command_history_position = 0,
+                    public command_history = new Array()) {
         }
 
         public init(): void {
@@ -44,18 +46,28 @@ module TSOS {
                     // The enter key marks the end of a console command, so ...
                     // ... tell the shell ...
                     _OsShell.handleInput(this.buffer);
+					this.command_history.push(this.buffer); 
                     // ... and reset our buffer.
-					//this.lastCommand = this.buffer;
                     this.buffer = "";
-				}else if (chr === String.fromCharCode(38)){
-					//this.putText(); 
-				
+					this.current_line = "";
+					this.command_history_position++;
+				}else if (chr === String.fromCharCode(38)+"!"){ // up arrow
+					this.command_history_up();
+				}else if (chr === String.fromCharCode(40)+"!"){ // down arrow
+					this.command_history_down();
+				}else if (chr === String.fromCharCode(9)){ // tab
+					this.tab_completion();
+				}else if (chr === String.fromCharCode(8)){ //backspace detected!
+					this.removeLastCharacter();
+					this.buffer = this.buffer.substring(0, this.buffer.length-1); // its one shorter now
+					this.current_line = this.current_line.substring(0, this.current_line.length-1); // its one shorter now
                 } else {
                     // This is a "normal" character, so ...
-                    // ... draw it on the screen...
+                    // ... draw it on the screen... 
                     this.putText(chr);
                     // ... and add it to our buffer.
                     this.buffer += chr;
+					this.current_line += chr;
                 }
                 // TODO: Write a case for Ctrl-C.
             }
@@ -86,6 +98,11 @@ module TSOS {
 				// Move the current X position.
 				var offset = _DrawingContext.measureText(this.currentFont, this.currentFontSize, newSubstringDisplay);
 				this.currentXPosition = this.currentXPosition + offset;
+				
+				if( this.current_line.length > wordWrapLength ){ // wrap the buffer!
+					this.current_line = "";
+					this.advanceLine();
+				}
 				if(text.substring(0, wordWrapLength).length != 0 && text.length > wordWrapLength){
 					this.advanceLine();
 					this.putText(text.substring(wordWrapLength));
@@ -105,7 +122,6 @@ module TSOS {
                                      _FontHeightMargin;
 			
 			var lineNewSpace = this.currentFontSize + 12; // does 12 sound good for an offset?
-            // TODO: Handle scrolling. (iProject 1)
 			if (this.currentYPosition > _Canvas.height)
             {
 				// lets take what we see in the console, convert it to an image, move it slightly upwards so the oldest stuff just is cropped out and move the line space back up a few ticks so we dont loose it into oblivion
@@ -117,8 +133,60 @@ module TSOS {
         }
 		
 		public removeLastCharacter(): void{  // this is to handle backspaces
-			
+			_DrawingContext.clearRect(12, (this.currentYPosition-20), _DrawingContext.measureText(this.currentFont, this.currentFontSize, this.buffer), (this.currentYPosition + 12)); // put a nothing over where text used to be
+			var newSubstringDisplay = this.buffer.substring(0, (this.buffer.length-1)); //remove 1 from the buffer
+			this.currentXPosition = 12; // take into acct the >
+			this.putText(newSubstringDisplay); // draw the shorter string
+		}
+		
+		public command_history_up(): void {
+			if(this.command_history_position>0){
+				this.command_history_position--;
+				_DrawingContext.clearRect(12, (this.currentYPosition-20), _DrawingContext.measureText(this.currentFont, this.currentFontSize, this.buffer), (this.currentYPosition + 12)); 
+				this.currentXPosition = 12; // take into acct the >
+				this.buffer = this.command_history[this.command_history_position];
+				this.current_line = this.command_history[this.command_history_position];
+				this.putText(this.command_history[this.command_history_position]); // draw the shorter string
+			}
 			
 		}
+		public command_history_down(): void {
+			if(this.command_history_position<this.command_history.length-1){
+				this.command_history_position++;
+				_DrawingContext.clearRect(12, (this.currentYPosition-20), _DrawingContext.measureText(this.currentFont, this.currentFontSize, this.buffer), (this.currentYPosition + 12)); 
+				this.currentXPosition = 12; // take into acct the >
+				this.buffer = this.command_history[this.command_history_position];
+				this.current_line = this.command_history[this.command_history_position];
+				this.putText(this.command_history[this.command_history_position]); // draw the shorter string
+			}
+			
+		}
+		
+		public tab_completion(): void {
+			var arr = Object.keys(objSharedCommandList).map(function (key) { return objSharedCommandList[key]; }); // change object array to normal string array
+			for(var i=0; i<objSharedCommandList.length; i++){ // go through and break off the commands
+				officialCommandList[i] = arr[i]["command"];
+			}
+			var prefixTextToFind = this.buffer; //what we want to find
+			var matches = officialCommandList.filter(function(officialCommandListValue){ // do the thing!
+				if(officialCommandListValue) {
+					return (officialCommandListValue.substring(0, prefixTextToFind.length) === prefixTextToFind);
+				}
+			});
+			if(matches.length == 1){ // make sure we have something that matches before we replace the buffer
+				_DrawingContext.clearRect(12, (this.currentYPosition-20), _DrawingContext.measureText(this.currentFont, this.currentFontSize, this.buffer), (this.currentYPosition + 12));  // clear the room
+				this.currentXPosition = 12; // take into acct the >
+				this.buffer = matches[0];
+				this.current_line = matches[0];
+				this.putText(matches[0]); // print out first match
+			}else{
+				_DrawingContext.clearRect(12, (this.currentYPosition-20), _DrawingContext.measureText(this.currentFont, this.currentFontSize, this.buffer), (this.currentYPosition + 12));  // clear the room
+				this.putText("Suggested Commands: "+ matches.toString()); // print out first match
+				this.advanceLine();
+				this.putText(">"); // print out first match
+				this.putText(this.buffer); // print out first match
+			}
+		}
+		
     }
  }

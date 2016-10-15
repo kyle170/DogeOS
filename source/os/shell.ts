@@ -114,10 +114,11 @@ module TSOS {
                                   "load",
                                   "- loads a program in the User Program Input");
             this.commandList[this.commandList.length] = sc;
+			objSharedCommandList = this.commandList;
 
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
-
+			
             //
             // Display the initial prompt.
             this.putPrompt();
@@ -281,7 +282,7 @@ module TSOS {
 		
 		public shellHaiku(args) {
 			//things and stuff...nothing to see here
-			var adjective1 = new Array( "sad", "young", "happy", "coward", "brave", "little");
+			var adjective1 = new Array("sad", "young", "happy", "coward", "brave", "little");
 			var verb1 = new Array("runs", "sleeps", "seeks", "eats", "fight", "dream");
 			var adverb2 = new Array("quickly", "fully", "dimly", "hotly", "quite", "loudly");
 			var noun1 = new Array("colonist", "pirate", "slave", "raider", "muffalo", "boomrat" );
@@ -293,8 +294,8 @@ module TSOS {
 			var adverb3 = new Array("quietly", "gracefully", "knowingly", "peacefully", "intently", "silently");
 			var arNums = new Array();
 			//go through everything
-			for(var i=0;i<5;i++) { 
-			  arNums[i] = Math.round(Math.random() * adjective1.length);
+			for(var i=0;i<10;i++) { 
+			  arNums[i] = Math.round(Math.random() * 5);
 			}
 			//time to build!
 			var haiku = adjective1[arNums[0]] + " ";
@@ -441,14 +442,18 @@ module TSOS {
 			for(var i:number=0; i<programArray.length; i++){
 				if(Utils.checkForValidHex(programArray[i])){
 					isStillValidHex=true;
-					//_StdOut.putText("1");
 				}else{
 					isStillValidHex=false;
-					//_StdOut.putText("0");
 				}
 			}
 			if(isStillValidHex){
-				_StdOut.putText("Congradulations...thats valid hex code!");
+				_StdOut.putText("Congradulations...thats valid hex code!... lets do something with it!");
+				var generatedPID: number = -1; // ManagerOfMemory.LoadProg(programArray);
+				if(generatedPID != -1){
+					_StdOut.putText("We got a PID for ya: "+ generatedPID.toString());
+				}else{
+					_StdOut.putText("Sorry... I couldn't load that :(");
+				}
 			}else{
 				_StdOut.putText("Invalid Hex Code: ");
 				_StdOut.putText(program);

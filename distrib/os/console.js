@@ -10,19 +10,23 @@
 var TSOS;
 (function (TSOS) {
     var Console = (function () {
-        function Console(currentFont, currentFontSize, currentXPosition, currentYPosition, 
-            //public lastCommand = "";
-            buffer) {
+        function Console(currentFont, currentFontSize, currentXPosition, currentYPosition, buffer, current_line, command_history_position, command_history) {
             if (currentFont === void 0) { currentFont = _DefaultFontFamily; }
             if (currentFontSize === void 0) { currentFontSize = _DefaultFontSize; }
             if (currentXPosition === void 0) { currentXPosition = 0; }
             if (currentYPosition === void 0) { currentYPosition = _DefaultFontSize; }
             if (buffer === void 0) { buffer = ""; }
+            if (current_line === void 0) { current_line = ''; }
+            if (command_history_position === void 0) { command_history_position = 0; }
+            if (command_history === void 0) { command_history = new Array(); }
             this.currentFont = currentFont;
             this.currentFontSize = currentFontSize;
             this.currentXPosition = currentXPosition;
             this.currentYPosition = currentYPosition;
             this.buffer = buffer;
+            this.current_line = current_line;
+            this.command_history_position = command_history_position;
+            this.command_history = command_history;
         }
         Console.prototype.init = function () {
             this.clearScreen();
@@ -44,18 +48,33 @@ var TSOS;
                     // The enter key marks the end of a console command, so ...
                     // ... tell the shell ...
                     _OsShell.handleInput(this.buffer);
+                    this.command_history.push(this.buffer);
                     // ... and reset our buffer.
-                    //this.lastCommand = this.buffer;
                     this.buffer = "";
+                    this.current_line = "";
+                    this.command_history_position++;
                 }
-                else if (chr === String.fromCharCode(38)) {
+                else if (chr === String.fromCharCode(38) + "!") {
+                    this.command_history_up();
+                }
+                else if (chr === String.fromCharCode(40) + "!") {
+                    this.command_history_down();
+                }
+                else if (chr === String.fromCharCode(9)) {
+                    this.tab_completion();
+                }
+                else if (chr === String.fromCharCode(8)) {
+                    this.removeLastCharacter();
+                    this.buffer = this.buffer.substring(0, this.buffer.length - 1); // its one shorter now
+                    this.current_line = this.current_line.substring(0, this.current_line.length - 1); // its one shorter now
                 }
                 else {
                     // This is a "normal" character, so ...
-                    // ... draw it on the screen...
+                    // ... draw it on the screen... 
                     this.putText(chr);
                     // ... and add it to our buffer.
                     this.buffer += chr;
+                    this.current_line += chr;
                 }
             }
         };
@@ -83,6 +102,10 @@ var TSOS;
                 // Move the current X position.
                 var offset = _DrawingContext.measureText(this.currentFont, this.currentFontSize, newSubstringDisplay);
                 this.currentXPosition = this.currentXPosition + offset;
+                if (this.current_line.length > wordWrapLength) {
+                    this.current_line = "";
+                    this.advanceLine();
+                }
                 if (text.substring(0, wordWrapLength).length != 0 && text.length > wordWrapLength) {
                     this.advanceLine();
                     this.putText(text.substring(wordWrapLength));
@@ -100,7 +123,6 @@ var TSOS;
                 _DrawingContext.fontDescent(this.currentFont, this.currentFontSize) +
                 _FontHeightMargin;
             var lineNewSpace = this.currentFontSize + 12; // does 12 sound good for an offset?
-            // TODO: Handle scrolling. (iProject 1)
             if (this.currentYPosition > _Canvas.height) {
                 // lets take what we see in the console, convert it to an image, move it slightly upwards so the oldest stuff just is cropped out and move the line space back up a few ticks so we dont loose it into oblivion
                 var imageOCanvas = _DrawingContext.getImageData(0, lineNewSpace, _Canvas.width, _Canvas.height);
@@ -110,6 +132,56 @@ var TSOS;
             }
         };
         Console.prototype.removeLastCharacter = function () {
+            _DrawingContext.clearRect(12, (this.currentYPosition - 20), _DrawingContext.measureText(this.currentFont, this.currentFontSize, this.buffer), (this.currentYPosition + 12)); // put a nothing over where text used to be
+            var newSubstringDisplay = this.buffer.substring(0, (this.buffer.length - 1)); //remove 1 from the buffer
+            this.currentXPosition = 12; // take into acct the >
+            this.putText(newSubstringDisplay); // draw the shorter string
+        };
+        Console.prototype.command_history_up = function () {
+            if (this.command_history_position > 0) {
+                this.command_history_position--;
+                _DrawingContext.clearRect(12, (this.currentYPosition - 20), _DrawingContext.measureText(this.currentFont, this.currentFontSize, this.buffer), (this.currentYPosition + 12));
+                this.currentXPosition = 12; // take into acct the >
+                this.buffer = this.command_history[this.command_history_position];
+                this.current_line = this.command_history[this.command_history_position];
+                this.putText(this.command_history[this.command_history_position]); // draw the shorter string
+            }
+        };
+        Console.prototype.command_history_down = function () {
+            if (this.command_history_position < this.command_history.length - 1) {
+                this.command_history_position++;
+                _DrawingContext.clearRect(12, (this.currentYPosition - 20), _DrawingContext.measureText(this.currentFont, this.currentFontSize, this.buffer), (this.currentYPosition + 12));
+                this.currentXPosition = 12; // take into acct the >
+                this.buffer = this.command_history[this.command_history_position];
+                this.current_line = this.command_history[this.command_history_position];
+                this.putText(this.command_history[this.command_history_position]); // draw the shorter string
+            }
+        };
+        Console.prototype.tab_completion = function () {
+            var arr = Object.keys(objSharedCommandList).map(function (key) { return objSharedCommandList[key]; }); // change object array to normal string array
+            for (var i = 0; i < objSharedCommandList.length; i++) {
+                officialCommandList[i] = arr[i]["command"];
+            }
+            var prefixTextToFind = this.buffer; //what we want to find
+            var matches = officialCommandList.filter(function (officialCommandListValue) {
+                if (officialCommandListValue) {
+                    return (officialCommandListValue.substring(0, prefixTextToFind.length) === prefixTextToFind);
+                }
+            });
+            if (matches.length == 1) {
+                _DrawingContext.clearRect(12, (this.currentYPosition - 20), _DrawingContext.measureText(this.currentFont, this.currentFontSize, this.buffer), (this.currentYPosition + 12)); // clear the room
+                this.currentXPosition = 12; // take into acct the >
+                this.buffer = matches[0];
+                this.current_line = matches[0];
+                this.putText(matches[0]); // print out first match
+            }
+            else {
+                _DrawingContext.clearRect(12, (this.currentYPosition - 20), _DrawingContext.measureText(this.currentFont, this.currentFontSize, this.buffer), (this.currentYPosition + 12)); // clear the room
+                this.putText("Suggested Commands: " + matches.toString()); // print out first match
+                this.advanceLine();
+                this.putText(">"); // print out first match
+                this.putText(this.buffer); // print out first match
+            }
         };
         return Console;
     }());
