@@ -15,7 +15,7 @@ var TSOS;
             if (currentFontSize === void 0) { currentFontSize = _DefaultFontSize; }
             if (currentXPosition === void 0) { currentXPosition = 0; }
             if (currentYPosition === void 0) { currentYPosition = _DefaultFontSize; }
-            if (buffer === void 0) { buffer = ""; }
+            if (buffer === void 0) { buffer = ''; }
             if (current_line === void 0) { current_line = ''; }
             if (command_history_position === void 0) { command_history_position = 0; }
             if (command_history === void 0) { command_history = new Array(); }

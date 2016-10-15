@@ -17,7 +17,7 @@ module TSOS {
                     public currentFontSize = _DefaultFontSize,
                     public currentXPosition = 0,
                     public currentYPosition = _DefaultFontSize,
-					public buffer = "",
+					public buffer = '',
 					public current_line = '',
 					public command_history_position = 0,
                     public command_history = new Array()) {

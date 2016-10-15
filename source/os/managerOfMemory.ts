@@ -1,5 +1,6 @@
 /* 
 The butler of memories!
+We got 768k to work with!
  */   
 
 module TSOS {

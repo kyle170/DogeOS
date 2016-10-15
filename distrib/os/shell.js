@@ -64,7 +64,7 @@ var TSOS;
             // blue screen of death
             sc = new TSOS.ShellCommand(this.shellBSOD, "bsod", "- simulates a blue screen of death");
             this.commandList[this.commandList.length] = sc;
-            // load a progra
+            // load a program
             sc = new TSOS.ShellCommand(this.shellLoad, "load", "- loads a program in the User Program Input");
             this.commandList[this.commandList.length] = sc;
             objSharedCommandList = this.commandList;
@@ -389,6 +389,7 @@ var TSOS;
                     _StdOut.putText("We got a PID for ya: " + generatedPID.toString());
                 }
                 else {
+                    _StdOut.advanceLine();
                     _StdOut.putText("Sorry... I couldn't load that :(");
                 }
             }

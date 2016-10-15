@@ -109,7 +109,7 @@ module TSOS {
                                   "- simulates a blue screen of death");
             this.commandList[this.commandList.length] = sc;
 			
-			// load a progra
+			// load a program
             sc = new ShellCommand(this.shellLoad,
                                   "load",
                                   "- loads a program in the User Program Input");
@@ -452,6 +452,7 @@ module TSOS {
 				if(generatedPID != -1){
 					_StdOut.putText("We got a PID for ya: "+ generatedPID.toString());
 				}else{
+					_StdOut.advanceLine();
 					_StdOut.putText("Sorry... I couldn't load that :(");
 				}
 			}else{
