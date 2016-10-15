@@ -383,7 +383,14 @@ var TSOS;
                 }
             }
             if (isStillValidHex) {
-                _StdOut.putText("Congradulations...thats valid hex code!");
+                _StdOut.putText("Congradulations...thats valid hex code!... lets do something with it!");
+                var generatedPID = -1; // ManagerOfMemory.LoadProg(programArray);
+                if (generatedPID != -1) {
+                    _StdOut.putText("We got a PID for ya: " + generatedPID.toString());
+                }
+                else {
+                    _StdOut.putText("Sorry... I couldn't load that :(");
+                }
             }
             else {
                 _StdOut.putText("Invalid Hex Code: ");

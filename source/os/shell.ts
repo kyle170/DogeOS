@@ -442,14 +442,18 @@ module TSOS {
 			for(var i:number=0; i<programArray.length; i++){
 				if(Utils.checkForValidHex(programArray[i])){
 					isStillValidHex=true;
-					//_StdOut.putText("1");
 				}else{
 					isStillValidHex=false;
-					//_StdOut.putText("0");
 				}
 			}
 			if(isStillValidHex){
-				_StdOut.putText("Congradulations...thats valid hex code!");
+				_StdOut.putText("Congradulations...thats valid hex code!... lets do something with it!");
+				var generatedPID: number = -1; // ManagerOfMemory.LoadProg(programArray);
+				if(generatedPID != -1){
+					_StdOut.putText("We got a PID for ya: "+ generatedPID.toString());
+				}else{
+					_StdOut.putText("Sorry... I couldn't load that :(");
+				}
 			}else{
 				_StdOut.putText("Invalid Hex Code: ");
 				_StdOut.putText(program);
