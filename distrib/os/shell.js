@@ -67,6 +67,7 @@ var TSOS;
             // load a progra
             sc = new TSOS.ShellCommand(this.shellLoad, "load", "- loads a program in the User Program Input");
             this.commandList[this.commandList.length] = sc;
+            objSharedCommandList = this.commandList;
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
             //
@@ -232,8 +233,8 @@ var TSOS;
             var adverb3 = new Array("quietly", "gracefully", "knowingly", "peacefully", "intently", "silently");
             var arNums = new Array();
             //go through everything
-            for (var i = 0; i < 5; i++) {
-                arNums[i] = Math.round(Math.random() * adjective1.length);
+            for (var i = 0; i < 10; i++) {
+                arNums[i] = Math.round(Math.random() * 5);
             }
             //time to build!
             var haiku = adjective1[arNums[0]] + " ";

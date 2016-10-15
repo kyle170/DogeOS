@@ -10,7 +10,7 @@
 //
 // Global CONSTANTS (TypeScript 1.5 introduced const. Very cool.)
 //
-var APP_NAME = "KOS"; // 'cause Bob and I were at a loss for a better name.
+var APP_NAME = "KOS"; // 'Something Something Kyles's OS
 var APP_VERSION = "9000.07"; // What did you expect?
 var CPU_CLOCK_INTERVAL = 100; // This is in ms (milliseconds) so 1000 = 1 second.
 var TIMER_IRQ = 0; // Pages 23 (timer), 9 (interrupts), and 561 (interrupt priority).
@@ -35,6 +35,8 @@ var _KernelInterruptQueue; // Initializing this to null (which I would normally 
 var _KernelInputQueue = null; // Is this better? I don't like uninitialized variables. But I also don't like using the type specifier 'any'
 var _KernelBuffers = null; // when clearly 'any' is not what we want. There is likely a better way, but what is it?
 //Something we need that i feel we just dont have initialized
+var objSharedCommandList = [];
+var officialCommandList = [];
 // Standard input and output
 var _StdIn; // Same "to null or not to null" issue as above.
 var _StdOut;

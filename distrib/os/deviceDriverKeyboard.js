@@ -65,9 +65,9 @@ var TSOS;
                 }
                 _KernelInputQueue.enqueue(chr);
             }
-            else if ((keyCode >= 186) && (keyCode <= 222)) {
+            else if (keyCode >= 186 && keyCode <= 222) {
                 if (isShifted) {
-                    var symbolsShift2 = { 222: "\"", 221: "}", 220: "|", 219: "{", 192: "~", 191: "?", 190: ">", 189: "_", 188: "<", 187: "+", 186: ":" };
+                    var symbolsShift2 = { 222: "\"", 221: "}", 220: "|", 219: "{", 192: "~", 191: "?", 55: "&", 190: ">", 189: "_", 188: "<", 187: "+", 186: ":" };
                     chr = symbolsShift2[keyCode];
                 }
                 else {
@@ -84,7 +84,7 @@ var TSOS;
             }
             else if (keyCode == 38 || keyCode == 39 || keyCode == 40) {
                 if (!isShifted) {
-                    chr = keyCode.toString(); // convert a thing to a string
+                    chr = String.fromCharCode(keyCode) + "!";
                     _KernelInputQueue.enqueue(chr);
                 }
             }
