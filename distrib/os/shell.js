@@ -68,6 +68,9 @@ var TSOS;
             // load a program
             sc = new TSOS.ShellCommand(this.shellLoad, "load", "- loads a program in the User Program Input");
             this.commandList[this.commandList.length] = sc;
+            // run a program
+            sc = new TSOS.ShellCommand(this.shellRun, "run", "- runs a loaded program given a PID value");
+            this.commandList[this.commandList.length] = sc;
             objSharedCommandList = this.commandList;
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
@@ -328,6 +331,9 @@ var TSOS;
                     case "load":
                         _StdOut.putText("run this command after you have valid hex inputed intop the User Program Input");
                         break;
+                    case "run":
+                        _StdOut.putText("run will execute the program with the PID that is specified... Ex: run 0");
+                        break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
                 }
@@ -397,6 +403,12 @@ var TSOS;
             else {
                 _StdOut.putText("Invalid Hex Code: ");
                 _StdOut.putText(program);
+            }
+        };
+        Shell.prototype.shellRun = function (args) {
+            if (args.length > 0) {
+                var topic = args[0];
+                _StdOut.putText("Attempting to run PID: " + args[0]);
             }
         };
         Shell.prototype.shellRot13 = function (args) {

@@ -115,6 +115,12 @@ module TSOS {
                                   "load",
                                   "- loads a program in the User Program Input");
             this.commandList[this.commandList.length] = sc;
+			
+			// run a program
+            sc = new ShellCommand(this.shellRun,
+                                  "run",
+                                  "- runs a loaded program given a PID value");
+            this.commandList[this.commandList.length] = sc;
 			objSharedCommandList = this.commandList;
 
             // ps  - list the running processes and their IDs
@@ -394,6 +400,9 @@ module TSOS {
 					case "load":
                         _StdOut.putText("run this command after you have valid hex inputed intop the User Program Input");
                         break;
+					case "run":
+						_StdOut.putText("run will execute the program with the PID that is specified... Ex: run 0");
+                        break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
                 }
@@ -459,6 +468,13 @@ module TSOS {
 			}else{
 				_StdOut.putText("Invalid Hex Code: ");
 				_StdOut.putText(program);
+			}
+		}
+		
+		public shellRun(args){
+			if (args.length > 0) {
+                var topic = args[0];
+				_StdOut.putText("Attempting to run PID: "+  args[0]);
 			}
 		}
 

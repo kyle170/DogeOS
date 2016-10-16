@@ -9,8 +9,7 @@ module TSOS {
 			//we're going to load the program in here!
 			//return the pid if loaded
 			var ramBlock: RAM = new RAM();
-			var ramBlockLocation: number = 1;
-			var ramAddress: number = 0; // cause we start at 0 baby!
+			var ramBlockLocation: number = 0; // cause we start at 0 baby!
 			
 			//clear the memory incase something was in there  --- On second thought lets wait to see how this plays out before I go crazy... EDIT: TOO LATE
 
@@ -20,7 +19,7 @@ module TSOS {
 			
 			// invoke the PCB and do stuff (mainly we want a PID from this)
 			var pcb = new ProcessControlBlock();
-			pcb.RAMLimit = ramBlockLocation  * 255 + 255; // max is the block its in, multiplied by the size it can be, with a 255 byte overhead
+			pcb.RAMLimit = ramBlockLocation  * 256 + 255; // max is the block its in, multiplied by the size it can be, with a 255 byte overhead
 			pcb.RAMBase = ramBlockLocation * 256; // yayayay
 			
 
