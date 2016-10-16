@@ -1,0 +1,27 @@
+﻿
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch is up-to-date with 'origin/master'.
+#
+# Changes to be committed:
+#	modified:   .gitignore
+#	modified:   distrib/globals.js
+#	modified:   distrib/host/control.js
+#	modified:   distrib/host/cpu.js
+#	new file:   distrib/host/memory.js
+#	modified:   distrib/os/kernel.js
+#	new file:   distrib/os/memoryManager.js
+#	modified:   distrib/os/pcb.js
+#	modified:   distrib/os/queue.js
+#	modified:   distrib/os/shell.js
+#	new file:   distrib/processStates.js
+#
+# Changes not staged for commit:
+#	modified:   source/host/memory.ts
+#	modified:   source/os/pcb.ts
+#
+# Untracked files:
+#	distrib/os/processManager.js
+#
+

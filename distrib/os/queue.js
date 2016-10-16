@@ -30,13 +30,6 @@ var TSOS;
             }
             return retVal;
         };
-        Queue.prototype.dequeueToIndex = function (index) {
-            var retVal = null;
-            if (this.q.length > index) {
-                retVal = this.q.splice(index, 1); // grab the splice of the retVal at index with 1
-            }
-            return retVal;
-        };
         Queue.prototype.toString = function () {
             var retVal = "";
             for (var i in this.q) {

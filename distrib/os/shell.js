@@ -2,7 +2,6 @@
 ///<reference path="../utils.ts" />
 ///<reference path="shellCommand.ts" />
 ///<reference path="userCommand.ts" />
-///<reference path="managerOfMemory.ts" />
 /* ------------
    Shell.ts
 
@@ -397,9 +396,19 @@ var TSOS;
             }
             if (isStillValidHex) {
                 //_StdOut.putText("Congradulations...thats valid hex code!... lets do something with it!");
-                var generatedPID = managerOfMemory.LoadProgram(programArray);
-                if (generatedPID != -1) {
-                    _StdOut.putText("We got a PID for ya: " + generatedPID.toString());
+                var programString = '';
+                for (var i = 0; i < programArray.length; i++) {
+                    programString += programArray[i];
+                }
+                var chars = programString.split('');
+                var doubles = [];
+                for (var i = 0; i < chars.length; i += 2) {
+                    doubles.push(chars[i] + chars[i + 1]);
+                }
+                var processMan = new TSOS.ProcessManager;
+                var num = new processMan.load(doubles, 1);
+                if (num != -1) {
+                    _StdOut.putText("We got a PID for ya: " + num.toString());
                 }
                 else {
                     _StdOut.advanceLine();
@@ -416,15 +425,6 @@ var TSOS;
                 for (var i = 0; i < args.length; i++) {
                     _StdOut.putText("Attempting to run PID: " + args[i]);
                     _StdOut.advanceLine();
-                    var pcb = _KernelResidentQueue.dequeueToIndex(args[i]);
-                    _StdOut.putText(JSON.stringify(pcb)); // Just verifying that things are loaded
-                    _StdOut.advanceLine();
-                    if (pcb) {
-                        _KernelReadyQueue.enqueue(pcb);
-                    }
-                    else {
-                        _StdOut.putText("PID: " + args[i] + " is not loaded (ready queue)"); //something goes here
-                    }
                 }
             }
             else {

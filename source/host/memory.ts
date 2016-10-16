@@ -25,6 +25,18 @@ module TSOS {
         public setByte(loc: number, data: string): void {
             this.memory[loc] = data;
         }
-        
+        public getSize(): number {
+            return this.memory.length;
+        }
+		public printMem(){
+            console.log(this.memory);
+        }
+		public toString(){
+            var output = '';
+            for(var i = 0; i < this.memory.length; i++){
+                output += this.memory[i] + ' ';
+            }
+            return output;
+        }
     }
 }

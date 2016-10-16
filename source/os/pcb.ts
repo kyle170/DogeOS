@@ -14,7 +14,16 @@ module TSOS {
         static currentProcessId: number = 1;
 		
         constructor(priority: number){
-			
+			this.priority = priority;
+			this.processID = PCB.currentProcessId++;
+			this.acc = 0;
+			this.XRegister = 0;
+			this.YRegister = 0; 
+			this.ZFlag = 0;
+			this.programCounter = 0;
+			this.processState = TSOS.ProcessState.New;
+			this.baseRegister = -1;
+			this.limitRegister = -1;
         } 
 		
         public update( pc: number, Acc: number, XReg: number, YReg: number, Zflag: number ): void {
