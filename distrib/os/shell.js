@@ -2,6 +2,7 @@
 ///<reference path="../utils.ts" />
 ///<reference path="shellCommand.ts" />
 ///<reference path="userCommand.ts" />
+///<reference path="managerOfMemory.ts" />
 /* ------------
    Shell.ts
 
@@ -383,8 +384,8 @@ var TSOS;
                 }
             }
             if (isStillValidHex) {
-                _StdOut.putText("Congradulations...thats valid hex code!... lets do something with it!");
-                var generatedPID = -1; // ManagerOfMemory.LoadProg(programArray);
+                //_StdOut.putText("Congradulations...thats valid hex code!... lets do something with it!");
+                var generatedPID = TSOS.ManagerOfMemory.LoadProgram(programArray);
                 if (generatedPID != -1) {
                     _StdOut.putText("We got a PID for ya: " + generatedPID.toString());
                 }

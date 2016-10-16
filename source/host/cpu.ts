@@ -67,43 +67,40 @@ module TSOS {
 				case this.OP_A9:
 					//this.; 
 					break;
-				case this.OP_AD;
+				case this.OP_AD:
 					//this.; 
 					break;
-				case this.OP_8D;
+				case this.OP_6D:
 					//this.(); 
 					break;
-				case this.OP_6D;
+				case this.OP_A2:
 					//this.(); 
 					break;
-				case this.OP_A2;
+				case this.OP_AE:
 					//this.(); 
 					break;
-				case this.OP_AE;
+				case this.OP_A0:
 					//this.(); 
 					break;
-				case this.OP_A0;
+				case this.OP_AC:
 					//this.(); 
 					break;
-				case this.OP_AC;
+				case this.OP_EA:
 					//this.(); 
 					break;
-				case this.OP_EA;
+				case this.OP_00:
 					//this.(); 
 					break;
-				case this.OP_00;
+				case this.OP_EC:
 					//this.(); 
 					break;
-				case this.OP_EC;
+				case this.OP_D0:
 					//this.(); 
 					break;
-				case this.OP_D0;
+				case this.OP_EE:
 					//this.(); 
 					break;
-				case this.OP_EE;
-					//this.(); 
-					break;
-				case this.OP_FF;
+				case this.OP_FF:
 					//this.(); 
 					break;
 				default:

@@ -82,55 +82,39 @@ var TSOS;
                     //this.; 
                     break;
                 case this.OP_AD:
-                    ;
                     //this.; 
                     break;
-                case this.OP_8D:
-                    ;
-                    //this.(); 
-                    break;
                 case this.OP_6D:
-                    ;
                     //this.(); 
                     break;
                 case this.OP_A2:
-                    ;
                     //this.(); 
                     break;
                 case this.OP_AE:
-                    ;
                     //this.(); 
                     break;
                 case this.OP_A0:
-                    ;
                     //this.(); 
                     break;
                 case this.OP_AC:
-                    ;
                     //this.(); 
                     break;
                 case this.OP_EA:
-                    ;
                     //this.(); 
                     break;
                 case this.OP_00:
-                    ;
                     //this.(); 
                     break;
                 case this.OP_EC:
-                    ;
                     //this.(); 
                     break;
                 case this.OP_D0:
-                    ;
                     //this.(); 
                     break;
                 case this.OP_EE:
-                    ;
                     //this.(); 
                     break;
                 case this.OP_FF:
-                    ;
                     //this.(); 
                     break;
                 default:
