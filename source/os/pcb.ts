@@ -21,7 +21,7 @@ module TSOS {
         public Counter: number = 0;	// Because who doesnt liek to count?
         public Accumulator: number = 0;		// I dont know why but I just love the word accumulator
 		
-        public RamBase: number = 0;			// start of the memory block/address for the program (lower limit)
-        public RamLimit: number = 0;		// end of the memory block/address for the program (upper limit)
+        public RAMBase: number = 0;			// start of the memory block/address for the program (lower limit)
+        public RAMLimit: number = 0;		// end of the memory block/address for the program (upper limit)
     }
 }

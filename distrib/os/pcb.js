@@ -21,8 +21,8 @@ var TSOS;
             this.PID = 0; // Process Identifier... Kinda important
             this.Counter = 0; // Because who doesnt liek to count?
             this.Accumulator = 0; // I dont know why but I just love the word accumulator
-            this.RamBase = 0; // start of the memory block/address for the program (lower limit)
-            this.RamLimit = 0; // end of the memory block/address for the program (upper limit)
+            this.RAMBase = 0; // start of the memory block/address for the program (lower limit)
+            this.RAMLimit = 0; // end of the memory block/address for the program (upper limit)
         }
         return ProcessControlBlock;
     }());
