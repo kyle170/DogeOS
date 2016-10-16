@@ -372,6 +372,12 @@ var TSOS;
             _StdOut.bsod();
             _StdOut.resetXY();
             _Kernel.krnShutdown();
+            var BSOD_jingle = document.getElementById("BSOD_jingle");
+            var BSOD_image = document.getElementById("BSOD_image");
+            BSOD_jingle.play();
+            var c = document.getElementById("display");
+            var ctx = c.getContext("2d");
+            ctx.drawImage(BSOD_image, 0, 0);
         };
         Shell.prototype.shellLoad = function (args) {
             var program = document.getElementById('taProgramInput').value; //bring in value from html5 input

@@ -440,6 +440,12 @@ module TSOS {
             _StdOut.bsod();
             _StdOut.resetXY(); 
 			_Kernel.krnShutdown();
+			var BSOD_jingle = document.getElementById("BSOD_jingle");
+			var BSOD_image = document.getElementById("BSOD_image");
+			BSOD_jingle.play();
+			var c = document.getElementById("display");
+			var ctx = c.getContext("2d");
+			ctx.drawImage(BSOD_image, 0, 0);
         }
 		
 		public shellLoad(args){
