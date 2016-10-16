@@ -1,28 +1,28 @@
-/* This is the Process Control Block
-
-Is it bad everytime I hear `pcb` I think of a printed circuit board?.... yes?.... ok :/
- */  
-
 module TSOS {
-    export class ProcessControlBlock {
-        /*
-			--- A little cheatcheat and remindwer for the states ---
-			0 = new
-			1 = running
-			2 = waiting
-			3 = ready
-			4 = terminated
-		*/
-		static LatestPID = -1;		// number of programs loaded so far (also PID assigner)
-        public State: number = 0;  	// what state is the program in?
-        public X: number = 0;		// X flags
-        public Y: number = 0;		// Y Flags
-        public Z: number = 0;		// Z Flags (kinda less important...but like...ok...whatever... its only a boolean really... may change it later down the road)
-		public PID: number = ++ProcessControlBlock.LatestPID;		// Process Identifier... Kinda important
-        public Counter: number = 0;	// Because who doesnt liek to count?
-        public Accumulator: number = 0;		// I dont know why but I just love the word accumulator
+    export class PCB {
+        public priority: number;           // Importance
+        public processID: number;           // Int
+        public acc: number;           // Number from 0-255
+        public XRegister: number;           // Number from 0-255
+        public YRegister: number;           // Number from 0-255
+        public ZFlag: number;           // 0 or 1
+        public programCounter: number;           // Location of current program execution
+        public processState: TSOS.ProcessState; // Enum of 'NEW', 'READY', 'WAITING', 'HALTED', 'RUNNING', 'TERMINATED'
+        public baseRegister: number;           // Where memory access starts
+        public limitRegister: number;           // Where memory access ends
+        
+        static currentProcessId: number = 1;
 		
-        public RAMBase: number = 0;			// start of the memory block/address for the program (lower limit)
-        public RAMLimit: number = 0;		// end of the memory block/address for the program (upper limit)
-    }
+        constructor(priority: number){
+			
+        } 
+		
+        public update( pc: number, Acc: number, XReg: number, YReg: number, Zflag: number ): void {
+            this.programCounter = pc;
+            this.acc = Acc;
+            this.XRegister = XReg;
+            this.YRegister = YReg;
+            this.ZFlag = Zflag;
+        }
+    } 
 }

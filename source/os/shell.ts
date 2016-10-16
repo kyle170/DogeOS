@@ -2,7 +2,6 @@
 ///<reference path="../utils.ts" />
 ///<reference path="shellCommand.ts" />
 ///<reference path="userCommand.ts" />
-///<reference path="managerOfMemory.ts" />
 
 
 /* ------------
@@ -23,6 +22,7 @@ module TSOS {
         public commandList = [];
         public curses = "[fuvg],[cvff],[shpx],[phag],[pbpxfhpxre],[zbgureshpxre],[gvgf]";
         public apologies = "[sorry]";
+		
 
         constructor() {
         }
@@ -452,7 +452,7 @@ module TSOS {
 			var program: string = document.getElementById('taProgramInput').value; //bring in value from html5 input
 			program = Utils.trim(program); // remove white
 			var isStillValidHex: boolean=true; // set false if any aprt is not hex
-			var programArray = program.split(' ');
+			var programArray: Array<string> = program.split(' ');
 			if (program.length==0){isStillValidHex=false;} //disable if nothing there
 			
 			for(var i:number=0; i<programArray.length; i++){
@@ -464,9 +464,19 @@ module TSOS {
 			}
 			if(isStillValidHex){
 				//_StdOut.putText("Congradulations...thats valid hex code!... lets do something with it!");
-				var generatedPID: number = managerOfMemory.LoadProgram(programArray);
-				if(generatedPID != -1){
-					_StdOut.putText("We got a PID for ya: "+ generatedPID.toString());
+				var programString = '';
+				for(var i = 0; i < programArray.length; i++){
+                        programString += programArray[i];
+                }
+				var chars = programString.split('');
+                var doubles = [];
+                for(var i = 0; i < chars.length; i += 2){
+                    doubles.push(chars[i] + chars[i+1]);
+                }
+				var processMan = new TSOS.ProcessManager;
+				var num = new  processMan.load(doubles, 1); 
+				if(num != -1){
+					_StdOut.putText("We got a PID for ya: "+ num.toString());
 				}else{
 					_StdOut.advanceLine();
 					_StdOut.putText("Sorry... I couldn't load that :(");
@@ -482,15 +492,7 @@ module TSOS {
 				for(var i=0; i<args.length; i++){
 					_StdOut.putText("Attempting to run PID: "+  args[i]);
 					_StdOut.advanceLine();
-					var pcb: ProcessControlBlock = _KernelResidentQueue.dequeueToIndex(args[i]);
-					_StdOut.putText(JSON.stringify(pcb)); // Just verifying that things are loaded
-					_StdOut.advanceLine();
-					if(pcb){
-						_KernelReadyQueue.enqueue(pcb);
-						
-					}else{
-						_StdOut.putText("PID: "+args[i]+" is not loaded (ready queue)"); //something goes here
-					}
+					//_CPU.runProcess(pid);
 				}
 			}else{
 				_StdOut.putText("No arguements provided (do you actually want to run something or just waste my time?)");

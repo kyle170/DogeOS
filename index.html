@@ -16,9 +16,8 @@
    <!-- Host (Virtual Machine / Hardware Simulation) Routines -->
    <script type="text/javascript" src="distrib/host/control.js"></script>
    <script type="text/javascript" src="distrib/host/devices.js"></script>
+   <script type="text/javascript" src="distrib/host/memory.js"></script>
    <script type="text/javascript" src="distrib/host/cpu.js"></script>
-   <script type="text/javascript" src="distrib/host/ram.js"></script>
-   <script type="text/javascript" src="distrib/host/byte.js"></script>
 
    <!-- Virtual OS Routines: Make sure Kernel code is last, since it needs those above it. -->
    <script type="text/javascript" src="distrib/os/interrupt.js"></script>
@@ -27,7 +26,8 @@
    <script type="text/javascript" src="distrib/os/deviceDriver.js"></script>
    <script type="text/javascript" src="distrib/os/deviceDriverKeyboard.js"></script>
    <script type="text/javascript" src="distrib/os/queue.js"></script>
-   <script type="text/javascript" src="distrib/os/managerOfMemory.js"></script>
+   <script type="text/javascript" src="distrib/os/memoryManager.js"></script>
+   <script type="text/javascript" src="distrib/os/processManager.js"></script>
    <script type="text/javascript" src="distrib/os/pcb.js"></script>
    <script type="text/javascript" src="distrib/os/shell.js"></script>
    <script type="text/javascript" src="distrib/os/shellCommand.js"></script>
@@ -36,8 +36,9 @@
 	   
    <!-- Other Routines -->
    <script type="text/javascript" src="distrib/utils.js"></script>
+    <script type="text/javascript" src="distrib/processStates.js"></script>
    <!-- Uncomment this line below to enable GLaDOS testing -->
-   <script type="text/javascript" src="http://alanclasses.github.io/TSOS/test/glados-ip2.js"></script> 
+    <script type="text/javascript" src="http://alanclasses.github.io/TSOS/test/glados-ip2.js"></script>
 </head>
 
 <body onload="onDocumentLoad()">
