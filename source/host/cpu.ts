@@ -18,28 +18,28 @@
 module TSOS {
 
     export class Cpu {
-
+		//begin the OP codes here (static cause we DO NOT want them changing)
+		static OP_A9: number = 169;
+		static OP_AD: number = 173;
+		static OP_8D: number = 141;
+		static OP_6D: number = 109;
+		static OP_A2: number = 162;
+		static OP_AE: number = 174;
+		static OP_A0: number = 160;
+		static OP_AC: number = 172;
+		static OP_EA: number = 234;
+		static OP_00: number = 0; // duh...what else were you expecting here?
+		static OP_EC: number = 236;
+		static OP_D0: number = 208;
+		static OP_EE: number = 238;
+		static OP_FF: number = 255;
+	
         constructor(public PC: number = 0,
                     public Acc: number = 0,
                     public Xreg: number = 0,
                     public Yreg: number = 0,
                     public Zflag: number = 0,
-                    public isExecuting: boolean = false,
-					//begin the OP codes here (static cause we DO NOT want them changing)
-					public OP_A9: number = 169,
-					public OP_AD: number = 173,
-					public OP_8D: number = 141,
-					public OP_6D: number = 109,
-					public OP_A2: number = 162,
-					public OP_AE: number = 174,
-					public OP_A0: number = 160,
-					public OP_AC: number = 172,
-					public OP_EA: number = 234,
-					public OP_00: number = 0, // duh...what else were you expecting here?
-					public OP_EC: number = 236,
-					public OP_D0: number = 208,
-					public OP_EE: number = 238,
-					public OP_FF: number = 255) {
+                    public isExecuting: boolean = false) {
 
         }
 
@@ -62,46 +62,47 @@ module TSOS {
         }
 		
 		// this is how the 6502 will know what to do on each op code
-		public ExecuteInstruction(operation: number): void {
-			switch(operation){ // switch case here because if/else's would be too many
-				case this.OP_A9:
-					//this.; 
+		public ExecuteInstruction(operation: Byte): void {
+			var operationDecimal: number = operation.GetDecimal(); // from the byte representation to the decimal... its easier to work like this
+			switch(operationDecimal){ // switch case here because if/else's would be too many
+				case Cpu.OP_A9:
+					this.LoadTheAccumulator(); 
 					break;
-				case this.OP_AD:
-					//this.; 
+				case Cpu.OP_AD:
+					this.LoadAccumulatedRAM(); 
 					break;
-				case this.OP_6D:
-					//this.(); 
+				case Cpu.OP_6D:
+					this.AddCarry(); 
 					break;
-				case this.OP_A2:
-					//this.(); 
+				case Cpu.OP_A2:
+					this.LoadXConstructor(); 
 					break;
-				case this.OP_AE:
-					//this.(); 
+				case Cpu.OP_AE:
+					this.LoadXRAM(); 
 					break;
-				case this.OP_A0:
-					//this.(); 
+				case Cpu.OP_A0:
+					this.LoadYConstructor(); 
 					break;
-				case this.OP_AC:
-					//this.(); 
+				case Cpu.OP_AC:
+					this.LoadYRAM(); 
 					break;
-				case this.OP_EA:
-					//this.(); 
+				case Cpu.OP_EA:
+					this.NoOperation(); 
 					break;
-				case this.OP_00:
-					//this.(); 
+				case Cpu.OP_00:
+					this.DoneWithExecution(); 
 					break;
-				case this.OP_EC:
-					//this.(); 
+				case Cpu.OP_EC:
+					this.Compare(); 
 					break;
-				case this.OP_D0:
-					//this.(); 
+				case Cpu.OP_D0:
+					this.Branch(); 
 					break;
-				case this.OP_EE:
-					//this.(); 
+				case Cpu.OP_EE:
+					this.Incriment(); 
 					break;
-				case this.OP_FF:
-					//this.(); 
+				case Cpu.OP_FF:
+					this.SystemCall(); 
 					break;
 				default:
 					//what do here?... halp!
@@ -111,11 +112,80 @@ module TSOS {
 				//Note: 10/15/16 @ 8:27PM.... confusion between break; and bark; ... the words are starting to looze their meanings @_@
 				
 			}
-			
-			
-			
+		}
+		
+		
+		//begin the methods that control the OP code calls
+		
+		private LoadTheAccumulator(): void{
 			
 			
 		}
+		
+		private LoadAccumulatedRAM(): void{
+			
+			
+		}
+		
+		private AddCarry(): void{
+			
+			
+		}
+		
+		private LoadXConstructor(): void{
+			
+			
+		}
+		
+		private LoadXRAM(): void{
+			
+			
+		}
+		
+		private LoadYConstructor(): void{
+			
+			
+		}
+		
+		private LoadYRAM(): void{
+			
+			
+		}
+		
+		private NoOperation(): void{
+			
+			
+		}
+		
+		private DoneWithExecution(): void{
+			
+			
+		}
+		
+		private Compare(): void{
+			
+			
+		}
+		
+		private Branch(): void{
+			
+			
+		}
+		
+		private Incriment(): void{
+			
+			
+		}
+		
+		
+		private SystemCall(): void{
+			
+			
+		}
+		
+
+		
+		
+		
     }
 }
