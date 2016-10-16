@@ -1,4 +1,5 @@
 ///<reference path="../globals.ts" />
+///<reference path="../os/managerOfMemory.ts" />
 
 /* ------------
      CPU.ts
@@ -58,7 +59,8 @@ module TSOS {
             // Do the real work here. Be sure to set this.isExecuting appropriately.
 			
 			
-			// I fear what I have to do here @_@
+			// I fear what I have to do here @_@     EDIT 16.10.2016@1:09PM: Oh...no soo bad
+			this.ExecuteInstruction(managerOfMemory.GetByte(this.PC));
         }
 		
 		// this is how the 6502 will know what to do on each op code

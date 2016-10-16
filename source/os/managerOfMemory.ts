@@ -5,13 +5,25 @@ We got 768k to work with!
 
 module TSOS {
     export class ManagerOfMemory {
+		private Memory: Array<RAM>; // ram in or machine
+		
+		
 		static ramBlockLocation: number = 0; // cause we start at 0 baby!
 		
 		
-        public static LoadProgram(program: Array<string>): number {
+		constructor(){
+			this.Memory = new Array<RAM>();		//create our memory in ram
+			this.Memory[0] = new RAM();			// create only 1 block of memory for now
+		}
+		
+		
+		
+        public LoadProgram(program: Array<string>): number {
 			//we're going to load the program in here!
 			//return the pid if loaded
 			var ramBlock: RAM = new RAM();
+			
+		
 			
 			//clear the memory incase something was in there  --- On second thought lets wait to see how this plays out before I go crazy... EDIT: TOO LATE
 
@@ -25,6 +37,7 @@ module TSOS {
 			pcb.RAMBase = ManagerOfMemory.ramBlockLocation * 256; // yayayay
 			
 			_KernelResidentQueue.enqueue(pcb); // puts PID in resident queue
+			this.Memory[ManagerOfMemory.ramBlockLocation] = ramBlock;
 			
 			_StdOut.putText("Program Length: "+program.length+" | Stored in RAM Block: "+ManagerOfMemory.ramBlockLocation+" | Bytes: ("+pcb.RAMBase+"-"+(pcb.RAMBase+program.length)+")");
 			_StdOut.advanceLine();
@@ -36,6 +49,10 @@ module TSOS {
 			return pcb.PID;
 			
 			//
+		}
+		
+		public GetByte(address: number): Byte {
+			return this.Memory[0].Get(address);
 		}
     }
 } 

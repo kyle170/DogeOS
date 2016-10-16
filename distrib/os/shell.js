@@ -397,7 +397,7 @@ var TSOS;
             }
             if (isStillValidHex) {
                 //_StdOut.putText("Congradulations...thats valid hex code!... lets do something with it!");
-                var generatedPID = TSOS.ManagerOfMemory.LoadProgram(programArray);
+                var generatedPID = managerOfMemory.LoadProgram(programArray);
                 if (generatedPID != -1) {
                     _StdOut.putText("We got a PID for ya: " + generatedPID.toString());
                 }

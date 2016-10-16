@@ -6,8 +6,10 @@ var TSOS;
 (function (TSOS) {
     var ManagerOfMemory = (function () {
         function ManagerOfMemory() {
+            this.Memory = new Array(); //create our memory in ram
+            this.Memory[0] = new TSOS.RAM(); // create only 1 block of memory for now
         }
-        ManagerOfMemory.LoadProgram = function (program) {
+        ManagerOfMemory.prototype.LoadProgram = function (program) {
             //we're going to load the program in here!
             //return the pid if loaded
             var ramBlock = new TSOS.RAM();
@@ -20,12 +22,16 @@ var TSOS;
             pcb.RAMLimit = ManagerOfMemory.ramBlockLocation * 256 + 255; // max is the block its in, multiplied by the size it can be, with a 255 byte overhead
             pcb.RAMBase = ManagerOfMemory.ramBlockLocation * 256; // yayayay
             _KernelResidentQueue.enqueue(pcb); // puts PID in resident queue
+            this.Memory[ManagerOfMemory.ramBlockLocation] = ramBlock;
             _StdOut.putText("Program Length: " + program.length + " | Stored in RAM Block: " + ManagerOfMemory.ramBlockLocation + " | Bytes: (" + pcb.RAMBase + "-" + (pcb.RAMBase + program.length) + ")");
             _StdOut.advanceLine();
             //things are looking good...lets increase the block location if we're all good here
             ++ManagerOfMemory.ramBlockLocation;
             return pcb.PID;
             //
+        };
+        ManagerOfMemory.prototype.GetByte = function (address) {
+            return this.Memory[0].Get(address);
         };
         ManagerOfMemory.ramBlockLocation = 0; // cause we start at 0 baby!
         return ManagerOfMemory;
