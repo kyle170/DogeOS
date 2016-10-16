@@ -25,6 +25,8 @@ module TSOS {
             // Initialize our global queues.
             _KernelInterruptQueue = new Queue();  // A (currently) non-priority queue for interrupt requests (IRQs).
             _KernelBuffers = new Array();         // Buffers... for the kernel.
+			_KernelReadyQueue = new Queue();
+			_KernelResidentQueue = new Queue();
             _KernelInputQueue = new Queue();      // Where device input lands before being processed out somewhere.
 
             // Initialize the console.

@@ -32,6 +32,14 @@ module TSOS {
             }
             return retVal;
         }
+		
+		public dequeueToIndex(index: number){
+			var retVal = null;
+			if(this.q.length > index){
+				retVal = this.q.splice(index, 1); // grab the splice of the retVal at index with 1
+			}
+			return retVal;
+		}
 
         public toString() {
             var retVal = "";

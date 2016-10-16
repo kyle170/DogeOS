@@ -94,30 +94,47 @@ var TSOS;
             }
         };
         //begin the methods that control the OP code calls
+        // A9:LDA
         Cpu.prototype.LoadTheAccumulator = function () {
         };
+        // AD:LDA
         Cpu.prototype.LoadAccumulatedRAM = function () {
         };
+        //whoops...almost forgot that we have to store its values in RAM
+        // 8D:STA
+        Cpu.prototype.StoreTheAccumulator = function () {
+        };
+        // 6D:ADC
         Cpu.prototype.AddCarry = function () {
         };
+        // A2:LDX
         Cpu.prototype.LoadXConstructor = function () {
         };
+        // AE:LDX
         Cpu.prototype.LoadXRAM = function () {
         };
+        // A0:LDY
         Cpu.prototype.LoadYConstructor = function () {
         };
+        // AC:LDY
         Cpu.prototype.LoadYRAM = function () {
         };
+        // EA:NOOP
         Cpu.prototype.NoOperation = function () {
         };
+        // 00:BRK
         Cpu.prototype.DoneWithExecution = function () {
         };
+        // EC:CPX
         Cpu.prototype.Compare = function () {
         };
+        // D0:BNE
         Cpu.prototype.Branch = function () {
         };
+        // EE:INC
         Cpu.prototype.Incriment = function () {
         };
+        // FF:SYS
         Cpu.prototype.SystemCall = function () {
         };
         //begin the OP codes here (static cause we DO NOT want them changing)

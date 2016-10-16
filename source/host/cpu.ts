@@ -117,67 +117,91 @@ module TSOS {
 		
 		//begin the methods that control the OP code calls
 		
+		// A9:LDA
 		private LoadTheAccumulator(): void{
 			
 			
 		}
 		
+		
+		// AD:LDA
 		private LoadAccumulatedRAM(): void{
 			
 			
 		}
 		
+		//whoops...almost forgot that we have to store its values in RAM
+		// 8D:STA
+		private StoreTheAccumulator(): void{
+			
+			
+			
+		}
+		
+		
+		// 6D:ADC
 		private AddCarry(): void{
 			
 			
 		}
 		
+		
+		// A2:LDX
 		private LoadXConstructor(): void{
 			
 			
 		}
 		
+		// AE:LDX
 		private LoadXRAM(): void{
 			
 			
 		}
 		
+		// A0:LDY
 		private LoadYConstructor(): void{
 			
 			
 		}
 		
+		// AC:LDY
 		private LoadYRAM(): void{
 			
 			
 		}
 		
+		// EA:NOOP
 		private NoOperation(): void{
 			
 			
 		}
 		
+		// 00:BRK
 		private DoneWithExecution(): void{
 			
 			
 		}
 		
+		// EC:CPX
 		private Compare(): void{
 			
 			
 		}
 		
+		
+		// D0:BNE
 		private Branch(): void{
 			
 			
 		}
 		
+		// EE:INC
 		private Incriment(): void{
 			
 			
 		}
 		
-		
+		// FF:SYS
 		private SystemCall(): void{
 			
 			

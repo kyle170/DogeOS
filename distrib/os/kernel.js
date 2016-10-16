@@ -24,6 +24,8 @@ var TSOS;
             // Initialize our global queues.
             _KernelInterruptQueue = new TSOS.Queue(); // A (currently) non-priority queue for interrupt requests (IRQs).
             _KernelBuffers = new Array(); // Buffers... for the kernel.
+            _KernelReadyQueue = new TSOS.Queue();
+            _KernelResidentQueue = new TSOS.Queue();
             _KernelInputQueue = new TSOS.Queue(); // Where device input lands before being processed out somewhere.
             // Initialize the console.
             _Console = new TSOS.Console(); // The command line interface / console I/O device.

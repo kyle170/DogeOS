@@ -24,6 +24,7 @@ module TSOS {
 			pcb.RAMLimit = ManagerOfMemory.ramBlockLocation  * 256 + 255; // max is the block its in, multiplied by the size it can be, with a 255 byte overhead
 			pcb.RAMBase = ManagerOfMemory.ramBlockLocation * 256; // yayayay
 			
+			_KernelResidentQueue.enqueue(pcb); // puts PID in resident queue
 			
 			_StdOut.putText("Program Length: "+program.length+" | Stored in RAM Block: "+ManagerOfMemory.ramBlockLocation+" | Bytes: ("+pcb.RAMBase+"-"+(pcb.RAMBase+program.length)+")");
 			_StdOut.advanceLine();

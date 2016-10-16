@@ -482,6 +482,15 @@ module TSOS {
 				for(var i=0; i<args.length; i++){
 					_StdOut.putText("Attempting to run PID: "+  args[i]);
 					_StdOut.advanceLine();
+					var pcb: ProcessControlBlock = _KernelResidentQueue.dequeueToIndex(args[i]);
+					_StdOut.putText(JSON.stringify(pcb)); // Just verifying that things are loaded
+					_StdOut.advanceLine();
+					if(pcb){
+						_KernelReadyQueue.enqueue(pcb);
+						
+					}else{
+						_StdOut.putText("PID: "+args[i]+" is not loaded (ready queue)"); //something goes here
+					}
 				}
 			}else{
 				_StdOut.putText("No arguements provided (do you actually want to run something or just waste my time?)");
