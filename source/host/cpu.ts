@@ -24,7 +24,22 @@ module TSOS {
                     public Xreg: number = 0,
                     public Yreg: number = 0,
                     public Zflag: number = 0,
-                    public isExecuting: boolean = false) {
+                    public isExecuting: boolean = false,
+					//begin the OP codes here (static cause we DO NOT want them changing)
+					public OP_A9: number = 169,
+					public OP_AD: number = 173,
+					public OP_8D: number = 141,
+					public OP_6D: number = 109,
+					public OP_A2: number = 162,
+					public OP_AE: number = 174,
+					public OP_A0: number = 160,
+					public OP_AC: number = 172,
+					public OP_EA: number = 234,
+					public OP_00: number = 0, // duh...what else were you expecting here?
+					public OP_EC: number = 236,
+					public OP_D0: number = 208,
+					public OP_EE: number = 238,
+					public OP_FF: number = 255) {
 
         }
 
@@ -45,5 +60,65 @@ module TSOS {
 			
 			// I fear what I have to do here @_@
         }
+		
+		// this is how the 6502 will know what to do on each op code
+		public ExecuteInstruction(operation: number): void {
+			switch(operation){ // switch case here because if/else's would be too many
+				case this.OP_A9:
+					//this.; 
+					break;
+				case this.OP_AD;
+					//this.; 
+					break;
+				case this.OP_8D;
+					//this.(); 
+					break;
+				case this.OP_6D;
+					//this.(); 
+					break;
+				case this.OP_A2;
+					//this.(); 
+					break;
+				case this.OP_AE;
+					//this.(); 
+					break;
+				case this.OP_A0;
+					//this.(); 
+					break;
+				case this.OP_AC;
+					//this.(); 
+					break;
+				case this.OP_EA;
+					//this.(); 
+					break;
+				case this.OP_00;
+					//this.(); 
+					break;
+				case this.OP_EC;
+					//this.(); 
+					break;
+				case this.OP_D0;
+					//this.(); 
+					break;
+				case this.OP_EE;
+					//this.(); 
+					break;
+				case this.OP_FF;
+					//this.(); 
+					break;
+				default:
+					//what do here?... halp!
+					//something.jpg
+					break;
+				
+				//Note: 10/15/16 @ 8:27PM.... confusion between break; and bark; ... the words are starting to looze their meanings @_@
+				
+			}
+			
+			
+			
+			
+			
+		}
     }
 }

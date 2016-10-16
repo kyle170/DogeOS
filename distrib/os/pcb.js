@@ -1,9 +1,13 @@
-/* This is the Process Control Block */
+/* This is the Process Control Block
+
+Is it bad everytime I hear `pcb` I think of a printed circuit board?.... yes?.... ok :/
+ */
 var TSOS;
 (function (TSOS) {
     var ProcessControlBlock = (function () {
         function ProcessControlBlock() {
             /*
+                --- A little cheatcheat and remindwer for the states ---
                 0 = new
                 1 = running
                 2 = waiting
@@ -13,7 +17,7 @@ var TSOS;
             this.State = 0; // what state is the program in?
             this.X = 0; // X flags
             this.Y = 0; // Y Flags
-            this.Z = 0; // Z Flags (kinda less important...but like...ok...whatever)
+            this.Z = 0; // Z Flags (kinda less important...but like...ok...whatever... its only a boolean really... may change it later down the road)
             this.PID = 0; // Process Identifier... Kinda important
             this.Counter = 0; // Because who doesnt liek to count?
             this.Accumulator = 0; // I dont know why but I just love the word accumulator
