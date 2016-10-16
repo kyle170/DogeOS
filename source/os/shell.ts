@@ -473,8 +473,12 @@ module TSOS {
 		
 		public shellRun(args){
 			if (args.length > 0) {
-                var topic = args[0];
-				_StdOut.putText("Attempting to run PID: "+  args[0]);
+				for(var i=0; i<args.length; i++){
+					_StdOut.putText("Attempting to run PID: "+  args[i]);
+					_StdOut.advanceLine();
+				}
+			}else{
+				_StdOut.putText("No arguements provided (do you actually want to run something or just waste my time?)");
 			}
 		}
 

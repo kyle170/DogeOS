@@ -19,7 +19,7 @@ var TSOS;
             var pcb = new TSOS.ProcessControlBlock();
             pcb.RAMLimit = ManagerOfMemory.ramBlockLocation * 256 + 255; // max is the block its in, multiplied by the size it can be, with a 255 byte overhead
             pcb.RAMBase = ManagerOfMemory.ramBlockLocation * 256; // yayayay
-            _StdOut.putText("Program Length: " + program.length + " | Stored in RAM Block: " + ManagerOfMemory.ramBlockLocation + " | Bytes: (" + pcb.RAMBase + "-" + pcb.RAMLimit + ")");
+            _StdOut.putText("Program Length: " + program.length + " | Stored in RAM Block: " + ManagerOfMemory.ramBlockLocation + " | Bytes: (" + pcb.RAMBase + "-" + (pcb.RAMBase + program.length) + ")");
             _StdOut.advanceLine();
             //things are looking good...lets increase the block location if we're all good here
             ++ManagerOfMemory.ramBlockLocation;
