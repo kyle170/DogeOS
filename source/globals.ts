@@ -28,6 +28,7 @@ const KEYBOARD_IRQ: number = 1;
 var _CPU: TSOS.Cpu;  // Utilize TypeScript's type annotation system to ensure that _CPU is an instance of the Cpu class.
 var _OSclock: number = 0;  // Page 23.
 
+
 var _Mode: number = 0;     // (currently unused)  0 = Kernel Mode, 1 = User Mode.  See page 21.
 
 var _Canvas: HTMLCanvasElement;         // Initialized in Control.hostInit().
@@ -48,6 +49,7 @@ var _KernelBuffers: any[] = null;   // when clearly 'any' is not what we want. T
 //Something we need that i feel we just dont have initialized
 var objSharedCommandList = [];
 var officialCommandList = [];
+var programsLoaded = [];
 
 // Standard input and output
 var _StdIn;    // Same "to null or not to null" issue as above.

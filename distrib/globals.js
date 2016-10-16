@@ -37,6 +37,7 @@ var _KernelBuffers = null; // when clearly 'any' is not what we want. There is l
 //Something we need that i feel we just dont have initialized
 var objSharedCommandList = [];
 var officialCommandList = [];
+var programsLoaded = [];
 // Standard input and output
 var _StdIn; // Same "to null or not to null" issue as above.
 var _StdOut;

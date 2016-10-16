@@ -13,11 +13,12 @@ module TSOS {
 			3 = ready
 			4 = terminated
 		*/
+		static LatestPID = -1;		// number of programs loaded so far (also PID assigner)
         public State: number = 0;  	// what state is the program in?
         public X: number = 0;		// X flags
         public Y: number = 0;		// Y Flags
         public Z: number = 0;		// Z Flags (kinda less important...but like...ok...whatever... its only a boolean really... may change it later down the road)
-		public PID: number = 0;		// Process Identifier... Kinda important
+		public PID: number = ++ProcessControlBlock.LatestPID;		// Process Identifier... Kinda important
         public Counter: number = 0;	// Because who doesnt liek to count?
         public Accumulator: number = 0;		// I dont know why but I just love the word accumulator
 		
