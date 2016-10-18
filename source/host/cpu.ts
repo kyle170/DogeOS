@@ -82,37 +82,59 @@ module TSOS {
 					var temp: string =  _MemoryManager.read(this.currentPCB, this.PC); // get the current infoz from memory!
 					this.Acc = parseInt(temp, 16); //make sure we're good here (http://www.w3schools.com/jsref/jsref_parseint.asp)
 					this.PC++; // add a cycle!
+					_StdOut.putText("A9 Run!");
+					_StdOut.advanceLine();
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'AD'){  // Load acculuminator from memory  (forgot how to spell)
 					var temp: string = _MemoryManager.read(this.currentPCB, this.PC);
 					var temp2: number = parseInt(temp, 16);
 					this.PC++;
 					temp = _MemoryManager.read(this.currentPCB, temp2);
 					this.Acc = parseInt(temp, 16);
-					this.PC++;				
-				}else if(_MemoryManager.read(this.currentPCB, this.PC) == '8D'){ // Store acculuminator in memory 
-					
+					this.PC++;
+					_StdOut.putText("AD Run!");
+					_StdOut.advanceLine();
+				}else if(_MemoryManager.read(this.currentPCB, this.PC) == '8D'){ // Store acculuminator in memory
+					var temp: string = _MemoryManager.read(this.currentPCB, this.PC);
+					var temp2: number = parseInt(temp, 16);
+					this.PC++;
+					_MemoryManager.write(this.currentPCB, temp2, this.Acc.toString(16)); // I think?... seems to output the right thing
+					this.PC++;
+					_StdOut.putText("8D Run!");
+					_StdOut.advanceLine();
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == '6D'){ // Add with carry 
-					
+					_StdOut.putText("6D Run!");
+					_StdOut.advanceLine();
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'A2'){ // Load X Register with constant 
-					
+					_StdOut.putText("A2 Run!");
+					_StdOut.advanceLine();
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'AE'){ // Load X Register from memory 
-					
+					_StdOut.putText("AE Run!");
+					_StdOut.advanceLine();
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'A0'){ // Load Y Register with constant 
-					
+					_StdOut.putText("A0 Run!");
+					_StdOut.advanceLine();
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'AC'){ // Load Y Register from memory
-					
+					_StdOut.putText("AC Run!");
+					_StdOut.advanceLine();
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'EC'){ // Compare byte at addr to X register, set z flag if equal
-					
+					_StdOut.putText("EC Run!");
+					_StdOut.advanceLine();
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'D0'){ // Branch N bytes if z flag = 0 (byte = N)
-					
+					_StdOut.putText("D0 Run!");
+					_StdOut.advanceLine();
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'EE'){ // EE increment a byte at addr 
-					
+					_StdOut.putText("EE Run!");
+					_StdOut.advanceLine();
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'FF'){ // System call: {{{{TBD}}}}
-					
+					_StdOut.putText("FF Run!");
+					_StdOut.advanceLine();
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'EA'){ // No OP
-					
+					_StdOut.putText("EA Run!");
+					_StdOut.advanceLine();
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == '00'){ // BREAK PROGRAM (sys call) {{{{Something went terribly right!}}}}
 					this.isExecuting = false; // stop the damn thing!
+					_StdOut.putText("00 Run!");
+					_StdOut.advanceLine();
 				}else{
 					//what do I do again?
 				}
