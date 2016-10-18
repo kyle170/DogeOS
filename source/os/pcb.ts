@@ -1,7 +1,7 @@
 module TSOS {
     export class PCB {
-        public priority: number;           // Importance
-        public processID: number;           // Int
+        public priority: number;           // Importance (remeber that lower is better!)
+        public processID: number;           // Int (PID, its how we identify them)
         public acc: number;           // Number from 0-255
         public XRegister: number;           // Number from 0-255
         public YRegister: number;           // Number from 0-255

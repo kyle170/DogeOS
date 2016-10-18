@@ -19,11 +19,11 @@ var TSOS;
                 this.memory[start + i] = '00';
             }
         };
-        Memory.prototype.getByte = function (loc) {
-            return this.memory[loc];
+        Memory.prototype.getByte = function (memLoc) {
+            return this.memory[memLoc];
         };
-        Memory.prototype.setByte = function (loc, data) {
-            this.memory[loc] = data;
+        Memory.prototype.setByte = function (memLoc, data) {
+            this.memory[memLoc] = data;
         };
         Memory.prototype.getSize = function () {
             return this.memory.length;

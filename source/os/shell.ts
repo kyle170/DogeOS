@@ -473,10 +473,9 @@ module TSOS {
                 for(var i = 0; i < chars.length; i += 2){
                     doubles.push(chars[i] + chars[i+1]);
                 }
-				var processMan = new TSOS.ProcessManager;
-				var num = new  processMan.load(doubles, 1); 
+				var num = _ProcessManager.load(doubles, 1); 
 				if(num != -1){
-					_StdOut.putText("We got a PID for ya: "+ num.toString());
+					_StdOut.putText("We got a PID for ya: "+ num);
 				}else{
 					_StdOut.advanceLine();
 					_StdOut.putText("Sorry... I couldn't load that :(");

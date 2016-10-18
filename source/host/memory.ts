@@ -19,11 +19,11 @@ module TSOS {
                 this.memory[start + i] = '00';
             }
         }
-        public getByte(loc: number): string { // get the byte at the specified location
-            return this.memory[loc];
+        public getByte(memLoc: number): string { // get the byte at the specified location
+            return this.memory[memLoc];
         }
-        public setByte(loc: number, data: string): void { //set a byte at the location with the data provided
-            this.memory[loc] = data;
+        public setByte(memLoc: number, data: string): void { //set a byte at the location with the data provided
+            this.memory[memLoc] = data;
         }
         public getSize(): number { // how big is the memory?
             return this.memory.length;

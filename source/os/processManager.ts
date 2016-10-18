@@ -1,5 +1,6 @@
 module TSOS {
     export class ProcessManager {
+		private processes;
         constructor(private maxProcesses: number){
         }
 		
@@ -11,9 +12,7 @@ module TSOS {
 		//This loads the PCB (Process Control Block, adn sees if the max defined value is exceeded...if not it assigns a process number to the pcb and alloicates the memoryu for it)
         public load(program: Array<string>, priority: number): number {
             var pcb = new PCB(priority);
-            if(this.processes.length <= this.maxProcesses){
-                this.processes[pcb.processID] = pcb;
-            }
+            this.processes[pcb.processID] = pcb;
             _MemoryManager.allocateMemory(pcb, program);
             return pcb.processID;
         }
@@ -26,6 +25,5 @@ module TSOS {
         public getPCB(pid: number): TSOS.PCB {
             return this.processes[pid];
         }
-        private processes;
     }
 }

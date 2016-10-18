@@ -26,6 +26,12 @@ module TSOS {
             _KernelInterruptQueue = new Queue();  // A (currently) non-priority queue for interrupt requests (IRQs).
             _KernelBuffers = new Array();         // Buffers... for the kernel.
             _KernelInputQueue = new Queue();      // Where device input lands before being processed out somewhere.
+			
+			
+			_ProcessManager = new ProcessManager(3);
+            _MemoryManager = new MemoryManager(3);
+            _ProcessManager.init();
+            _MemoryManager.init();
 
             // Initialize the console.
             _Console = new Console();          // The command line interface / console I/O device.

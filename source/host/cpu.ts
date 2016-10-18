@@ -46,7 +46,7 @@ module TSOS {
 			//set the PCB with the PID of the process
             this.currentPCB = _ProcessManager.getPCB(pid);
             if(this.currentPCB.processState === ProcessState.Terminated){
-                _StdOut.putText('This process has already been terminated');
+                _StdOut.putText('This process has already been terminated or doesnt exist');
             } else {
                 this.currentPCB.processState = ProcessState.Running;
                 this.loadFromPCB();
@@ -67,7 +67,6 @@ module TSOS {
         public updatePCB(): void {
 			//UPDATE THE PCB IF ITS NOT EMPYTY
             if(this.currentPCB !== null){
-                TSOS.Control.updateProcessDisplay(this.currentPCB);
                 this.currentPCB.update(this.PC, this.Acc, this.Xreg, this.Yreg, this.Zflag);
             }
         }
@@ -78,8 +77,7 @@ module TSOS {
             // TODO: Accumulate CPU usage and profiling statistics here. 
             if(this.currentPCB !== null && this.isExecuting){
 				switch(_MemoryManager.read(this.currentPCB, this.PC)){
-					case 'A9': // Load acc with constant 
-						break;
+					case 'A9': break;// Load acc with constant 
 					case 'AD': break;// Load acc from memory 
 					case '8D': break;// Store acc in memory 
 					case '6D': break;// Add with carry (adds contents from addr to acc and stores in acc)
