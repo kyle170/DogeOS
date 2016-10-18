@@ -518,7 +518,7 @@ module TSOS {
                 for(var i = 0; i < chars.length; i += 2){
                     doubles.push(chars[i] + chars[i+1]);
                 }
-				var num = _ProcessManager.load(doubles, 1); 
+				var num = _ProcessManager.load(doubles); 
 				if(num != -1){
 					_StdOut.putText("We got a PID for ya: "+ num );
 				}else{
