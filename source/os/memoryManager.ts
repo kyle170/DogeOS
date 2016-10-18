@@ -3,11 +3,11 @@ module TSOS {
         private memoryTotalSize: number = _Memory.MemorySize;
 		
 		constructor(){
-			
+			// nothing needed...just a palceholder
 		}
 		
 		public init(){
-			
+			// nothing needed...just a palceholder
 		}
 		
 		
@@ -38,9 +38,17 @@ module TSOS {
 			
 		}
 		
-		public alloicateMemoryForPCB(ProcessControlBlock: TSOS.PCB, ProgramData: Array<String>): void {
+		public alloicateMemoryForProgram(ProcessControlBlock: TSOS.PCB, ProgramData: Array<String>): void {
 			// program comes in as a string of doubles... we must write it in the memory!
-			
+			_Memory.clearMem(); // clear anything that was previously in there
+			for(var i:number=0; i<=(ProcessControlBlock.LimReg-ProcessControlBlock.BaseReg); i++){
+				var data = ProgramData[i];
+				if(data !== undefined){ // if its not nothing
+					_Memory.setByte(ProcessControlBlock.BaseReg+i, data); 	// set the data
+				}else{
+					_Memory.setByte(ProcessControlBlock.BaseReg+i, '00');	// set a blank (nothing)
+				}
+			}	
 		}
 		
     }

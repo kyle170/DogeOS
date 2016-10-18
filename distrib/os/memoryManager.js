@@ -3,8 +3,10 @@ var TSOS;
     var MemoryManager = (function () {
         function MemoryManager() {
             this.memoryTotalSize = _Memory.MemorySize;
+            // nothing needed...just a palceholder
         }
         MemoryManager.prototype.init = function () {
+            // nothing needed...just a palceholder
         };
         MemoryManager.prototype.writeToMemory = function (ProcessControlBlock, MemoryLocation, dataToWrite) {
             // write the data to memory, checking if it is within bounds first
@@ -32,8 +34,18 @@ var TSOS;
                 _StdOut.putText("Memory Bounds Violation Error!"); // return fatal error if its outside (memory seeking missile program)
             }
         };
-        MemoryManager.prototype.alloicateMemoryForPCB = function (ProcessControlBlock, ProgramData) {
+        MemoryManager.prototype.alloicateMemoryForProgram = function (ProcessControlBlock, ProgramData) {
             // program comes in as a string of doubles... we must write it in the memory!
+            _Memory.clearMem(); // clear anything that was previously in there
+            for (var i = 0; i <= (ProcessControlBlock.LimReg - ProcessControlBlock.BaseReg); i++) {
+                var data = ProgramData[i];
+                if (data !== undefined) {
+                    _Memory.setByte(ProcessControlBlock.BaseReg + i, data); // set the data
+                }
+                else {
+                    _Memory.setByte(ProcessControlBlock.BaseReg + i, '00'); // set a blank (nothing)
+                }
+            }
         };
         return MemoryManager;
     }());
