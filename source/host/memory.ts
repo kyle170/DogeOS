@@ -19,8 +19,14 @@ module TSOS {
 			return this.memory[memLoc];
 		}
 		
-		public setByte(memLoc: number, dataToSet: string){
+		public setByte(memLoc: number, dataToSet: string): void {
 			this.memory[memLoc] = dataToSet;
+		}
+		
+		public clearMem(): void {
+			for(var i:number=0; i<this.memorySize; i++){
+				this.memory[i] = '00';
+			}
 		}
 		
 		public toString(): string {
