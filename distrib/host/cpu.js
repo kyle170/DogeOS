@@ -186,6 +186,7 @@ var TSOS;
                     _StdOut.advanceLine();
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == 'EA') {
+                    this.PC++;
                     _StdOut.putText("EA Run (nothing to do)!");
                     _StdOut.advanceLine();
                 }

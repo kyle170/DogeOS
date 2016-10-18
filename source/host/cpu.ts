@@ -167,6 +167,7 @@ module TSOS {
 					_StdOut.putText("FF Run!");
 					_StdOut.advanceLine();
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'EA'){ // No OP
+					this.PC++;
 					_StdOut.putText("EA Run (nothing to do)!");
 					_StdOut.advanceLine();
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == '00'){ // BREAK PROGRAM (sys call) {{{{Something went terribly right!}}}}
