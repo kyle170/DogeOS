@@ -83,7 +83,7 @@ var TSOS;
                     + memoryTables[positionInRow++] + "  "
                     + memoryTables[positionInRow++] + "  "
                     + memoryTables[positionInRow++] + "  "
-                    + "&#13;&#10;";
+                    + "&#13;&#10;"; // new line
             }
             document.getElementById('taMemoryStatus').innerHTML = output;
             // udpate the html pcb

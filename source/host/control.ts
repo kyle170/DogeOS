@@ -86,7 +86,7 @@ module TSOS {
 		
 		public static memoryUpdate(): void {
 				var output: string = "";
-				var memoryTables: array = _Memory.toString().split(" ");
+				var memoryTables = _Memory.toString().split(" ");
 				var positionInRow:number = 0;
 				for(var i:number=0; i<768; i+=8){
 					output+= "0x"+i+"	"	+memoryTables[positionInRow++]+"  "
@@ -97,14 +97,13 @@ module TSOS {
 											+memoryTables[positionInRow++]+"  "
 											+memoryTables[positionInRow++]+"  "
 											+memoryTables[positionInRow++]+"  "
-							+"&#13;&#10;";
+										+"&#13;&#10;"; // new line
 				}
 				
 				
 				document.getElementById('taMemoryStatus').innerHTML = output;
 			// udpate the html pcb
 		}
-
 
         //
         // Host Events

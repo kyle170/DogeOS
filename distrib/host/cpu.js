@@ -213,12 +213,20 @@ var TSOS;
                     // soo.... accroding to this reasarch... if the X is true, I need to return the byte in the y register to the console???
                     // and if there is a 2? in the x register?... not there yet
                     if (this.Yreg === 1) {
+                        // #$01 in X reg = print the integer stored in the Y register.
                         _StdOut.putText(this.Yreg + "");
                         _StdOut.advanceLine();
                     }
                     else {
-                        // ???? 
+                        //  #$02 in X reg = print the 00-terminated string stored at the address in the Y register.
                         this.PC++;
+                        temp2 = this.Yreg;
+                        temp = _MemoryManager.read(this.currentPCB, temp2);
+                        while (temp !== '00') {
+                            temp = String.fromCharCode(parseInt(temp, 16));
+                            _StdOut.putText(temp);
+                        }
+                        _StdOut.advanceLine();
                     }
                     this.PC++;
                     _StdOut.putText("FF Run!");
