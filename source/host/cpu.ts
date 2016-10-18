@@ -102,7 +102,6 @@ module TSOS {
 					_StdOut.putText("8D Run!");
 					_StdOut.advanceLine();
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == '6D'){ // Add with carry 
-					this.PC++;
 					var temp: string = _MemoryManager.read(this.currentPCB, this.PC);
 					var temp2: number =  parseInt(temp, 16);
 					this.PC++;
@@ -111,7 +110,7 @@ module TSOS {
 					this.PC++;
 					_StdOut.putText("6D Run!");
 					_StdOut.advanceLine();
-				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'A2'){ // Load X Register with constant 
+				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'A2'){ // Load X Register with consrtaint 
 					var temp: string = _MemoryManager.read(this.currentPCB, this.PC);
 					var temp2: number = parseInt(temp, 16);
 					this.Xreg = temp2;
@@ -119,6 +118,13 @@ module TSOS {
 					_StdOut.putText("A2 Run!");
 					_StdOut.advanceLine();
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'AE'){ // Load X Register from memory 
+					var temp: string = _MemoryManager.read(this.currentPCB, this.PC);
+					var temp2: number = parseInt(temp, 16);
+					this.PC++;
+					temp = _MemoryManager.read(this.currentPCB, temp2);
+					temp2 = parseInt(temp, 16);
+					this.Xreg = temp2;
+					this.PC++;
 					_StdOut.putText("AE Run!");
 					_StdOut.advanceLine();
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'A0'){ // Load Y Register with constant 

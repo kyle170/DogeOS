@@ -111,7 +111,6 @@ var TSOS;
                     _StdOut.advanceLine();
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == '6D') {
-                    this.PC++;
                     var temp = _MemoryManager.read(this.currentPCB, this.PC);
                     var temp2 = parseInt(temp, 16);
                     this.PC++;
@@ -130,6 +129,13 @@ var TSOS;
                     _StdOut.advanceLine();
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == 'AE') {
+                    var temp = _MemoryManager.read(this.currentPCB, this.PC);
+                    var temp2 = parseInt(temp, 16);
+                    this.PC++;
+                    temp = _MemoryManager.read(this.currentPCB, temp2);
+                    temp2 = parseInt(temp, 16);
+                    this.Xreg = temp2;
+                    this.PC++;
                     _StdOut.putText("AE Run!");
                     _StdOut.advanceLine();
                 }
