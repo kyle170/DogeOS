@@ -18,13 +18,13 @@
 module TSOS {
     export class Cpu {
         constructor(
-                public PC:          number   = 0,
-                public Acc:         number   = 0,
-                public Xreg:        number   = 0,
-                public Yreg:        number   = 0,
-                public Zflag:       number   = 0,
-                public isExecuting: boolean  = false,
-                public currentPCB:  TSOS.PCB = null
+                public PC: number   = 0,   	// program counter
+                public Acc: number   = 0,	// accumulator
+                public Xreg: number   = 0,	// x register nuber	
+                public Yreg: number   = 0,	// Y register number
+                public Zflag:number   = 0,	// ZEE FLAG (mostly usless but whatever)
+                public isExecuting: boolean  = false,	// status.... do I have something to do or just sit here?	
+                public currentPCB: TSOS.PCB = null	// yes... this contains the PCB.... questions?
                 ) {
         }
 
@@ -33,7 +33,7 @@ module TSOS {
         }
 
         private loadFromPCB(): void {
-			//things are loaded
+			//things are loaded... made sure they're current
 			this.PC = this.currentPCB.programCounter;
             this.Acc = this.currentPCB.acc;
             this.Xreg = this.currentPCB.XRegister;
@@ -76,23 +76,40 @@ module TSOS {
             _Kernel.krnTrace('CPU cycle');
             // TODO: Accumulate CPU usage and profiling statistics here. 
             if(this.currentPCB !== null && this.isExecuting){
-				switch(_MemoryManager.read(this.currentPCB, this.PC)){
-					case 'A9': break;// Load acc with constant 
-					case 'AD': break;// Load acc from memory 
-					case '8D': break;// Store acc in memory 
-					case '6D': break;// Add with carry (adds contents from addr to acc and stores in acc)
-					case 'A2': break;// Load X Register with constant 
-					case 'AE': break;// Load X Register from memory 
-					case 'A0': break;// Load Y Register with constant 
-					case 'AC': break;// Load Y Register from memory
-					case 'EC': break;// Compare byte at addr to X register, set z flag if equal
-					case 'D0': break;// Branch N bytes if z flag = 0 (byte = N)
-					case 'EE': break;// EE increment a byte at addr 
-					case 'FF': break;// System call:
-					case 'EA': break;// No OP
-					case '00': break;// BREAK PROGRAM (sys call)
-					default: break;
+				if(_MemoryManager.read(this.currentPCB, this.PC) == 'A9'){ // Load acc with constant 
+					
+					
+				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'AD'){  // Load acc from memory 
+				
+				}else if(_MemoryManager.read(this.currentPCB, this.PC) == '8D'){ // Store acc in memory 
+					
+				}else if(_MemoryManager.read(this.currentPCB, this.PC) == '6D'){ // Add with carry (adds contents from addr to acc and stores in acc)
+					
+				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'A2'){ // Load X Register with constant 
+					
+				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'AE'){ // Load X Register from memory 
+					
+				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'A0'){ // Load Y Register with constant 
+					
+				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'AC'){ // Load Y Register from memory
+					
+				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'EC'){ // Compare byte at addr to X register, set z flag if equal
+					
+				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'D0'){ // Branch N bytes if z flag = 0 (byte = N)
+					
+				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'EE'){ // EE increment a byte at addr 
+					
+				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'FF'){ // System call: {{{{TBD}}}}
+					
+				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'EA'){ // No OP
+					
+				}else if(_MemoryManager.read(this.currentPCB, this.PC) == '00'){ // BREAK PROGRAM (sys call) {{{{Something went terribly right!}}}}
+					
+				}else{
+					//what do I do again?
 				}
+					
+				
 			}
 			if(this.currentPCB !== null){
                 this.updatePCB();
