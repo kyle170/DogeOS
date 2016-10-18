@@ -1,5 +1,6 @@
 module TSOS {
-    export class PCB {
+	export enum ProcessState { New, Ready, Waiting, Halted, Running, Terminated }; // condense and rince
+    export class PCB { 
         public priority: number;           // Importance (remeber that lower is better!)
         public processID: number;           // Int (PID, its how we identify them)
         public acc: number;           // Number from 0-255

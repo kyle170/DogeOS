@@ -344,14 +344,23 @@ var TSOS;
                         break;
                     case "music":
                         _StdOut.putText("Plays music from the Donkey Kong Country game in order:");
+                        _StdOut.advanceLine();
                         _StdOut.putText("1-Opening Fanfare");
+                        _StdOut.advanceLine();
                         _StdOut.putText("2-Theme");
+                        _StdOut.advanceLine();
                         _StdOut.putText("3-Simian Segue");
+                        _StdOut.advanceLine();
                         _StdOut.putText("4-DK Island Swing");
+                        _StdOut.advanceLine();
                         _StdOut.putText("5-Cranky's Theme");
+                        _StdOut.advanceLine();
                         _StdOut.putText("6-Cave Dweller Concert");
+                        _StdOut.advanceLine();
                         _StdOut.putText("7-Bonus Room Blitz");
+                        _StdOut.advanceLine();
                         _StdOut.putText("8-Aquatic Ambiance");
+                        _StdOut.advanceLine();
                         _StdOut.putText("...");
                         break;
                     default:
@@ -459,6 +468,7 @@ var TSOS;
         Shell.prototype.shellDomIsLove = function (args) {
             //placeholder for what is to come
             _StdOut.putText("You will be find Dom's love overwhelming soon.");
+            _StdOut.advanceLine();
             _StdOut.putText("This is just a placeholder for what is to come!");
         };
         Shell.prototype.shellRot13 = function (args) {
