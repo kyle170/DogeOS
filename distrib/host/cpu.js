@@ -88,7 +88,7 @@ var TSOS;
                     var temp = _MemoryManager.read(this.currentPCB, this.PC); // get the current infoz from memory!
                     this.Acc = parseInt(temp, 16); //make sure we're good here (http://www.w3schools.com/jsref/jsref_parseint.asp)
                     this.PC++; // add a cycle!
-                    _StdOut.putText("A9 Run!");
+                    _StdOut.putText("A9 Run! - " + this.Acc);
                     _StdOut.advanceLine();
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == 'AD') {
@@ -98,7 +98,7 @@ var TSOS;
                     temp = _MemoryManager.read(this.currentPCB, temp2);
                     this.Acc = parseInt(temp, 16);
                     this.PC++;
-                    _StdOut.putText("AD Run!");
+                    _StdOut.putText("AD Run! - " + this.Acc);
                     _StdOut.advanceLine();
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == '8D') {
@@ -117,7 +117,7 @@ var TSOS;
                     temp = _MemoryManager.read(this.currentPCB, temp2);
                     this.Acc = (this.Acc + parseInt(temp, 16));
                     this.PC++;
-                    _StdOut.putText("6D Run!");
+                    _StdOut.putText("6D Run! - " + this.Acc);
                     _StdOut.advanceLine();
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == 'A2') {
@@ -125,7 +125,7 @@ var TSOS;
                     var temp2 = parseInt(temp, 16);
                     this.Xreg = temp2;
                     this.PC++;
-                    _StdOut.putText("A2 Run!");
+                    _StdOut.putText("A2 Run! - " + this.Xreg);
                     _StdOut.advanceLine();
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == 'AE') {
@@ -136,7 +136,7 @@ var TSOS;
                     temp2 = parseInt(temp, 16);
                     this.Xreg = temp2;
                     this.PC++;
-                    _StdOut.putText("AE Run!");
+                    _StdOut.putText("AE Run! - " + this.Xreg);
                     _StdOut.advanceLine();
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == 'A0') {
@@ -144,7 +144,7 @@ var TSOS;
                     var temp2 = parseInt(temp, 16);
                     this.Yreg = temp2;
                     this.PC++;
-                    _StdOut.putText("A0 Run!");
+                    _StdOut.putText("A0 Run! - " + this.Yreg);
                     _StdOut.advanceLine();
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == 'AC') {
@@ -155,11 +155,22 @@ var TSOS;
                     temp2 = parseInt(temp, 16);
                     this.Yreg = temp2;
                     this.PC++;
-                    _StdOut.putText("AC Run!");
+                    _StdOut.putText("AC Run! - " + this.Yreg);
                     _StdOut.advanceLine();
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == 'EC') {
-                    _StdOut.putText("EC Run!");
+                    var temp = _MemoryManager.read(this.currentPCB, this.PC);
+                    var temp2 = parseInt(temp, 16);
+                    this.PC++;
+                    temp = _MemoryManager.read(this.currentPCB, temp2);
+                    temp2 = parseInt(temp, 16);
+                    if (this.Xreg = temp2) {
+                        this.Zflag = 1;
+                    }
+                    else {
+                        this.Zflag = 0;
+                    }
+                    _StdOut.putText("EC Run! - " + this.Zflag);
                     _StdOut.advanceLine();
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == 'D0') {
