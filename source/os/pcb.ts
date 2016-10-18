@@ -1,20 +1,20 @@
 module TSOS {
     export class PCB {
 		// allow these to be accessed by other class methods
-        public priority: number;           // Importance (remeber that lower is better!)
+        public priority: number;           	// Importance (remeber that lower is better!)
         public processID: number;           // Int (PID, its how we identify them)
-        public acc: number;           // Number from 0-255
+        public acc: number;           		// Number from 0-255
         public XRegister: number;           // Number from 0-255
         public YRegister: number;           // Number from 0-255
-        public ZFlag: number;           // 0 or 1
-        public programCounter: number;           // Location of current program execution
-        public processState: string; // Enum of 'NEW', 'READY', 'WAITING', 'HALTED', 'RUNNING', 'TERMINATED'
-        public baseRegister: number;           // Where memory access starts
-        public limitRegister: number;           // Where memory access ends
+        public ZFlag: number;           	// 0 or 1
+        public programCounter: number;      // Location of current program execution
+        public processState: string; 		//'NEW', 'READY', 'WAITING', 'HALTED', 'RUNNING', 'TERMINATED'
+        public baseRegister: number;        // Where memory access starts
+        public limitRegister: number;       // Where memory access ends
         
-        static currentProcessId: number = 0; // want this globally accessable... start with 0
+        static currentProcessId: number = 0;	// want this globally accessable... start with 0
 		
-        constructor(priority: number){				// things we need to start with 
+        constructor(priority: number){	// things we need to start with Invoke on initial load
 			this.priority = priority;
 			this.processID = PCB.currentProcessId++;
 			this.acc = 0;
