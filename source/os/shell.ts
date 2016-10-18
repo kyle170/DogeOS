@@ -121,6 +121,12 @@ module TSOS {
                                   "run",
                                   "- runs a loaded program given a PID value");
             this.commandList[this.commandList.length] = sc;
+			
+			// DOMISLOVE
+            sc = new ShellCommand(this.shellDomIsLove,
+                                  "domislove",
+                                  "- What else would Dom be if not love?");
+            this.commandList[this.commandList.length] = sc;
 			objSharedCommandList = this.commandList;
 
             // ps  - list the running processes and their IDs
@@ -403,6 +409,9 @@ module TSOS {
 					case "run":
 						_StdOut.putText("run will execute the program with the PID that is specified... Ex: run 0");
                         break;
+					case "domislove":
+						_StdOut.putText("Who knows what wacky things Dom is up to?... Maybe Love?");
+                        break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
                 }
@@ -475,7 +484,7 @@ module TSOS {
                 }
 				var num = _ProcessManager.load(doubles, 1); 
 				if(num != -1){
-					_StdOut.putText("We got a PID for ya: "+ num);
+					_StdOut.putText("We got a PID for ya: "+ num );
 				}else{
 					_StdOut.advanceLine();
 					_StdOut.putText("Sorry... I couldn't load that :(");
@@ -496,6 +505,12 @@ module TSOS {
 			}else{
 				_StdOut.putText("No arguements provided (do you actually want to run something or just waste my time?)");
 			}
+		}
+		
+		public shellDomIsLove(args){
+			//placeholder for what is to come
+			_StdOut.putText("You will be find Dom's love overwhelming soon.");
+			_StdOut.putText("This is just a placeholder for what is to come!");
 		}
 
         public shellRot13(args) {

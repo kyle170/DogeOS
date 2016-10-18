@@ -11,9 +11,7 @@ var TSOS;
         //This loads the PCB (Process Control Block, adn sees if the max defined value is exceeded...if not it assigns a process number to the pcb and alloicates the memoryu for it)
         ProcessManager.prototype.load = function (program, priority) {
             var pcb = new TSOS.PCB(priority);
-            if (this.processes.length <= this.maxProcesses) {
-                this.processes[pcb.processID] = pcb;
-            }
+            this.processes[pcb.processID] = pcb;
             _MemoryManager.allocateMemory(pcb, program);
             return pcb.processID;
         };

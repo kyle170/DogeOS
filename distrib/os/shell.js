@@ -70,6 +70,9 @@ var TSOS;
             // run a program
             sc = new TSOS.ShellCommand(this.shellRun, "run", "- runs a loaded program given a PID value");
             this.commandList[this.commandList.length] = sc;
+            // DOMISLOVE
+            sc = new TSOS.ShellCommand(this.shellDomIsLove, "domislove", "- What else would Dom be if not love?");
+            this.commandList[this.commandList.length] = sc;
             objSharedCommandList = this.commandList;
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
@@ -333,6 +336,9 @@ var TSOS;
                     case "run":
                         _StdOut.putText("run will execute the program with the PID that is specified... Ex: run 0");
                         break;
+                    case "domislove":
+                        _StdOut.putText("Who knows what wacky things Dom is up to?... Maybe Love?");
+                        break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
                 }
@@ -429,6 +435,11 @@ var TSOS;
             else {
                 _StdOut.putText("No arguements provided (do you actually want to run something or just waste my time?)");
             }
+        };
+        Shell.prototype.shellDomIsLove = function (args) {
+            //placeholder for what is to come
+            _StdOut.putText("You will be find Dom's love overwhelming soon.");
+            _StdOut.putText("This is just a placeholder for what is to come!");
         };
         Shell.prototype.shellRot13 = function (args) {
             if (args.length > 0) {
