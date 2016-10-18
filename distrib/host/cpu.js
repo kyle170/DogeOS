@@ -83,8 +83,8 @@ var TSOS;
             // TODO: Accumulate CPU usage and profiling statistics here. 
             if (this.currentPCB !== null && this.isExecuting) {
                 //I had a thought... why not auto incriment the process counter here instead of have it incriment every time?
-                this.PC++; // because its smarter to do it here.... because reasons...
                 if (_MemoryManager.read(this.currentPCB, this.PC) == 'A9') {
+                    this.PC++;
                     var temp = _MemoryManager.read(this.currentPCB, this.PC); // get the current infoz from memory!
                     this.Acc = parseInt(temp, 16); //make sure we're good here (http://www.w3schools.com/jsref/jsref_parseint.asp)
                     this.PC++; // add a cycle!
@@ -92,6 +92,7 @@ var TSOS;
                     _StdOut.advanceLine();
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == 'AD') {
+                    this.PC++;
                     var temp = _MemoryManager.read(this.currentPCB, this.PC);
                     var temp2 = parseInt(temp, 16);
                     this.PC++;
@@ -102,6 +103,7 @@ var TSOS;
                     _StdOut.advanceLine();
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == '8D') {
+                    this.PC++;
                     var temp = _MemoryManager.read(this.currentPCB, this.PC);
                     var temp2 = parseInt(temp, 16);
                     this.PC++;
@@ -111,6 +113,7 @@ var TSOS;
                     _StdOut.advanceLine();
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == '6D') {
+                    this.PC++;
                     var temp = _MemoryManager.read(this.currentPCB, this.PC);
                     var temp2 = parseInt(temp, 16);
                     this.PC++;
@@ -121,6 +124,7 @@ var TSOS;
                     _StdOut.advanceLine();
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == 'A2') {
+                    this.PC++;
                     var temp = _MemoryManager.read(this.currentPCB, this.PC);
                     var temp2 = parseInt(temp, 16);
                     this.Xreg = temp2;
@@ -129,6 +133,7 @@ var TSOS;
                     _StdOut.advanceLine();
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == 'AE') {
+                    this.PC++;
                     var temp = _MemoryManager.read(this.currentPCB, this.PC);
                     var temp2 = parseInt(temp, 16);
                     this.PC++;
@@ -140,6 +145,7 @@ var TSOS;
                     _StdOut.advanceLine();
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == 'A0') {
+                    this.PC++;
                     var temp = _MemoryManager.read(this.currentPCB, this.PC);
                     var temp2 = parseInt(temp, 16);
                     this.Yreg = temp2;
@@ -148,6 +154,7 @@ var TSOS;
                     _StdOut.advanceLine();
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == 'AC') {
+                    this.PC++;
                     var temp = _MemoryManager.read(this.currentPCB, this.PC);
                     var temp2 = parseInt(temp, 16);
                     this.PC++;
@@ -159,6 +166,7 @@ var TSOS;
                     _StdOut.advanceLine();
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == 'EC') {
+                    this.PC++;
                     var temp = _MemoryManager.read(this.currentPCB, this.PC);
                     var temp2 = parseInt(temp, 16);
                     this.PC++;
@@ -174,6 +182,7 @@ var TSOS;
                     _StdOut.advanceLine();
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == 'D0') {
+                    this.PC++;
                     if (this.Zflag = 0) {
                         var temp = _MemoryManager.read(this.currentPCB, this.PC);
                         var temp2 = parseInt(temp, 16);
@@ -182,10 +191,11 @@ var TSOS;
                     else {
                         this.PC++;
                     }
-                    _StdOut.putText("D0 Run!");
+                    _StdOut.putText("D0 Run! - ZFlag:" + this.Zflag + " - OP MOVE POS: " + this.PC);
                     _StdOut.advanceLine();
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == 'EE') {
+                    this.PC++;
                     var temp = _MemoryManager.read(this.currentPCB, this.PC);
                     var temp2 = parseInt(temp, 16);
                     this.PC++;
@@ -197,10 +207,20 @@ var TSOS;
                     _StdOut.advanceLine();
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == 'FF') {
+                    // soo.... accroding to this reasarch... if the X is true, I need to return the byte in the y register to the console???
+                    // and if there is a 2? in the x register?... not there yet
+                    if (this.Yreg === 1) {
+                        _StdOut.putText(this.Yreg + "");
+                        _StdOut.advanceLine();
+                    }
+                    else {
+                    }
+                    this.PC++;
                     _StdOut.putText("FF Run!");
                     _StdOut.advanceLine();
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == 'EA') {
+                    this.PC++;
                     _StdOut.putText("EA Run (nothing to do)!");
                     _StdOut.advanceLine();
                 }
