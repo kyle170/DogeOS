@@ -222,7 +222,6 @@ module TSOS {
 						_StdOut.advanceLine();
 					}else if(_MemoryManager.read(this.currentPCB, this.PC) == '00'){ // BREAK PROGRAM (sys call) {{{{Something went terribly right!}}}}
 						this.isExecuting = false; // stop the damn thing!
-						_MemoryManager.deallocateMemory(this.currentPCB); 	// free up the space -- not implemented yet
 						this.currentPCB.processState = "TERMINATED";
 						TSOS.Control.cpuUpdate();
 						this.updatePCB();
