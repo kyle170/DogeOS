@@ -104,7 +104,21 @@ module TSOS {
 				document.getElementById('taMemoryStatus').innerHTML = output;
 			// udpate the html pcb
 		}
-
+		
+		public static singleCPUStepMode(){
+			if(_CPU.singleStepMode){
+				_CPU.singleStepMode = false;
+				_CPU.singleStepAuth = true;
+				document.getElementById('btnCPUStepMode').value = "Single Step Mode [DISABLED]";
+			}else{
+				_CPU.singleStepMode = true;
+				document.getElementById('btnCPUStepMode').value = "Single Step Mode [ENABLED]";
+			}
+		}
+		
+		public static allowCPUStep(){
+			_CPU.singleStepAuth = true;
+		}
         //
         // Host Events
         //
@@ -115,6 +129,8 @@ module TSOS {
             // .. enable the Halt and Reset buttons ...
             (<HTMLButtonElement>document.getElementById("btnHaltOS")).disabled = false;
             (<HTMLButtonElement>document.getElementById("btnReset")).disabled = false;
+			(<HTMLButtonElement>document.getElementById("btnCPUStepMode")).disabled = false;
+			(<HTMLButtonElement>document.getElementById("btnSingleStepCPU")).disabled = false;
 
             // .. set focus on the OS console display ...
             document.getElementById("display").focus();
@@ -122,7 +138,7 @@ module TSOS {
             // ... Create and initialize the CPU (because it's part of the hardware)  ...
             _CPU = new Cpu();  // Note: We could simulate multi-core systems by instantiating more than one instance of the CPU here.
             _CPU.init();       //       There's more to do, like dealing with scheduling and such, but this would be a start. Pretty cool.
-			_Memory = new Memory(); // start out with 256 bits!
+			_Memory = new Memory(256); // start out with 256 bits!
             _Memory.init(); // initialize time!
 
             // ... then set the host clock pulse ...

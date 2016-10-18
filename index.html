@@ -72,6 +72,23 @@
              value="Reset"
              tabindex="2"
              onclick="TSOS.Control.hostBtnReset_click(this);">
+		<input type="button"
+             id = "btnCPUStepMode"
+             name="btnCPUStepMode"
+             class="normal_button"
+			 style="width:200px"
+			 disabled="disabled"
+             value="Single Step Mode [DISABLED]"
+             tabindex="2"
+             onclick="TSOS.Control.singleCPUStepMode(this);">
+		<input type="button"
+             id = "btnSingleStepCPU"
+             name="brnSingleStepCPU"
+             class="normal_button"
+             disabled="disabled"
+             value="Step CPU"
+             tabindex="2"
+             onclick="TSOS.Control.allowCPUStep(this);">
    </div>
    <span id="aboveTheConsole">The time is: <span id="timeArea">xx:xx:xx x/x/x</span> || Status: <span id="statusArea">No Status....yet....</span></span>
    <br>
