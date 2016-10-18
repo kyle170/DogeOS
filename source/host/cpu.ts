@@ -79,7 +79,8 @@ module TSOS {
 				if(_MemoryManager.read(this.currentPCB, this.PC) == 'A9'){ // Load accumulator with constant 
 					//Lets get this stareted!
 					this.PC++;
-					this.Acc = _MemoryManager.read(this.currentPCB, this.pc);
+					var temp: string =  _MemoryManager.read(this.currentPCB, this.PC);
+					this.Acc = parseInt(temp, 16);
 					this.PC++;					
 					
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'AD'){  // Load acculuminator from memory  (forgot how to spell)

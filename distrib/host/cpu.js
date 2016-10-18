@@ -85,7 +85,8 @@ var TSOS;
                 if (_MemoryManager.read(this.currentPCB, this.PC) == 'A9') {
                     //Lets get this stareted!
                     this.PC++;
-                    this.Acc = _MemoryManager.read(this.currentPCB, this.pc);
+                    var temp = _MemoryManager.read(this.currentPCB, this.PC);
+                    this.Acc = parseInt(temp, 16);
                     this.PC++;
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == 'AD') {

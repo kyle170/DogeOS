@@ -127,6 +127,12 @@ module TSOS {
                                   "domislove",
                                   "- What else would Dom be if not love?");
             this.commandList[this.commandList.length] = sc;
+			
+			// DOMISLOVE
+            sc = new ShellCommand(this.shellMusic,
+                                  "music",
+                                  "- Music from the Donkey Kong Country Game... what a classic!");
+            this.commandList[this.commandList.length] = sc;
 			objSharedCommandList = this.commandList;
 
             // ps  - list the running processes and their IDs
@@ -412,6 +418,19 @@ module TSOS {
 					case "domislove":
 						_StdOut.putText("Who knows what wacky things Dom is up to?... Maybe Love?");
                         break;
+					case "music":
+						_StdOut.putText("Plays music from the Donkey Kong Country game in order:");
+						_StdOut.putText("1-Opening Fanfare");
+						_StdOut.putText("2-Theme");
+						_StdOut.putText("3-Simian Segue");
+						_StdOut.putText("4-DK Island Swing");
+						_StdOut.putText("5-Cranky's Theme");
+						_StdOut.putText("6-Cave Dweller Concert");
+						_StdOut.putText("7-Bonus Room Blitz");
+						_StdOut.putText("8-Aquatic Ambiance");
+						_StdOut.putText("...");
+						
+                        break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
                 }
@@ -456,6 +475,11 @@ module TSOS {
 			var ctx = c.getContext("2d");
 			ctx.drawImage(BSOD_image, 0, 0);
         }
+		
+		public shellMusic(args){
+			var donkeyKongCountrymusic = document.getElementById("donkeyKongCountrymusic");
+			donkeyKongCountrymusic.play();
+		}
 		
 		public shellLoad(args){
 			var program: string = document.getElementById('taProgramInput').value; //bring in value from html5 input
