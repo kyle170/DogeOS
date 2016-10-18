@@ -140,6 +140,10 @@ var TSOS;
                     _StdOut.advanceLine();
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == 'A0') {
+                    var temp = _MemoryManager.read(this.currentPCB, this.PC);
+                    var temp2 = parseInt(temp, 16);
+                    this.Yreg = temp2;
+                    this.PC++;
                     _StdOut.putText("A0 Run!");
                     _StdOut.advanceLine();
                 }
@@ -164,12 +168,13 @@ var TSOS;
                     _StdOut.advanceLine();
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == 'EA') {
-                    _StdOut.putText("EA Run!");
+                    _StdOut.putText("EA Run (nothing to do)!");
                     _StdOut.advanceLine();
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == '00') {
                     this.isExecuting = false; // stop the damn thing!
-                    _StdOut.putText("00 Run!");
+                    _MemoryManager.deallocateMemory(this.currentPCB); // free up the space
+                    _StdOut.putText("PROGRAM COMPLETE -- 00 Run!");
                     _StdOut.advanceLine();
                 }
                 else {

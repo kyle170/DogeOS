@@ -127,7 +127,11 @@ module TSOS {
 					this.PC++;
 					_StdOut.putText("AE Run!");
 					_StdOut.advanceLine();
-				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'A0'){ // Load Y Register with constant 
+				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'A0'){ // Load Y Register with constant
+					var temp: string = _MemoryManager.read(this.currentPCB, this.PC);
+					var temp2: number = parseInt(temp, 16);
+					this.Yreg = temp2;
+					this.PC++;
 					_StdOut.putText("A0 Run!");
 					_StdOut.advanceLine();
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'AC'){ // Load Y Register from memory
@@ -146,11 +150,12 @@ module TSOS {
 					_StdOut.putText("FF Run!");
 					_StdOut.advanceLine();
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'EA'){ // No OP
-					_StdOut.putText("EA Run!");
+					_StdOut.putText("EA Run (nothing to do)!");
 					_StdOut.advanceLine();
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == '00'){ // BREAK PROGRAM (sys call) {{{{Something went terribly right!}}}}
 					this.isExecuting = false; // stop the damn thing!
-					_StdOut.putText("00 Run!");
+					_MemoryManager.deallocateMemory(this.currentPCB); 	// free up the space
+					_StdOut.putText("PROGRAM COMPLETE -- 00 Run!");
 					_StdOut.advanceLine();
 				}else{
 					//what do I do again?
