@@ -102,6 +102,13 @@ module TSOS {
 					_StdOut.putText("8D Run!");
 					_StdOut.advanceLine();
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == '6D'){ // Add with carry 
+					this.PC++;
+					var temp: string = _MemoryManager.read(this.currentPCB, this.PC);
+					var temp2: number =  parseInt(temp, 16);
+					this.PC++;
+					temp = _MemoryManager.read(this.currentPCB, temp2);
+					this.Acc = (this.Acc + parseInt(temp, 16));
+					this.PC++;
 					_StdOut.putText("6D Run!");
 					_StdOut.advanceLine();
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'A2'){ // Load X Register with constant 
