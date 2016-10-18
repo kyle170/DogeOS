@@ -160,19 +160,25 @@ module TSOS {
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'D0'){ // Branch N bytes if z flag = 0 (byte = N)
 					_StdOut.putText("D0 Run!");
 					_StdOut.advanceLine();
-				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'EE'){ // EE increment a byte at addr 
-					_StdOut.putText("EE Run!");
+				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'EE'){ // EE increment a byte at addr
+					var temp: string = _MemoryManager.read(this.currentPCB, this.PC);
+					var temp2: number = parseInt(temp, 16);
+					this.PC++;
+					temp = _MemoryManager.read(this.currentPCB, this.PC); 
+					var temp3: number = parseInt(temp, 16);
+					temp3++;
+					_MemoryManager.write(this.currentPCB, temp2, temp3.toString(16));
+					_StdOut.putText("EE Run! - "+temp2+" ->"+temp3);
 					_StdOut.advanceLine();
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'FF'){ // System call: {{{{TBD}}}}
 					_StdOut.putText("FF Run!");
 					_StdOut.advanceLine();
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'EA'){ // No OP
-					this.PC++;
 					_StdOut.putText("EA Run (nothing to do)!");
 					_StdOut.advanceLine();
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == '00'){ // BREAK PROGRAM (sys call) {{{{Something went terribly right!}}}}
 					this.isExecuting = false; // stop the damn thing!
-					_MemoryManager.deallocateMemory(this.currentPCB); 	// free up the space
+					_MemoryManager.deallocateMemory(this.currentPCB); 	// free up the space -- not implemented yet
 					this.currentPCB.processState = "TERMINATED";
 					this.updatePCB();
 					// time to set everything back to normal

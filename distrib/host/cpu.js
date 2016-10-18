@@ -178,7 +178,14 @@ var TSOS;
                     _StdOut.advanceLine();
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == 'EE') {
-                    _StdOut.putText("EE Run!");
+                    var temp = _MemoryManager.read(this.currentPCB, this.PC);
+                    var temp2 = parseInt(temp, 16);
+                    this.PC++;
+                    temp = _MemoryManager.read(this.currentPCB, this.PC);
+                    var temp3 = parseInt(temp, 16);
+                    temp3++;
+                    _MemoryManager.write(this.currentPCB, temp2, temp3.toString(16));
+                    _StdOut.putText("EE Run! - " + temp2 + " ->" + temp3);
                     _StdOut.advanceLine();
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == 'FF') {
@@ -186,13 +193,12 @@ var TSOS;
                     _StdOut.advanceLine();
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == 'EA') {
-                    this.PC++;
                     _StdOut.putText("EA Run (nothing to do)!");
                     _StdOut.advanceLine();
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == '00') {
                     this.isExecuting = false; // stop the damn thing!
-                    _MemoryManager.deallocateMemory(this.currentPCB); // free up the space
+                    _MemoryManager.deallocateMemory(this.currentPCB); // free up the space -- not implemented yet
                     this.currentPCB.processState = "TERMINATED";
                     this.updatePCB();
                     // time to set everything back to normal
