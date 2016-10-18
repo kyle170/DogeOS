@@ -96,7 +96,6 @@ var TSOS;
                     temp = _MemoryManager.read(this.currentPCB, temp2);
                     this.Acc = parseInt(temp, 16);
                     this.PC++;
-                    alert("Got to the AD!");
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == '8D') {
                 }
@@ -121,6 +120,7 @@ var TSOS;
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == 'EA') {
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == '00') {
+                    this.isExecuting = false; // stop the damn thing!
                 }
                 else {
                 }

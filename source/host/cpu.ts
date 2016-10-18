@@ -88,8 +88,7 @@ module TSOS {
 					this.PC++;
 					temp = _MemoryManager.read(this.currentPCB, temp2);
 					this.Acc = parseInt(temp, 16);
-					this.PC++;
-					alert("Got to the AD!");				
+					this.PC++;				
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == '8D'){ // Store acculuminator in memory 
 					
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == '6D'){ // Add with carry 
@@ -113,7 +112,7 @@ module TSOS {
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'EA'){ // No OP
 					
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == '00'){ // BREAK PROGRAM (sys call) {{{{Something went terribly right!}}}}
-					
+					this.isExecuting = false; // stop the damn thing!
 				}else{
 					//what do I do again?
 				}
