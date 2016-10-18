@@ -83,6 +83,8 @@ var TSOS;
             // TODO: Accumulate CPU usage and profiling statistics here. 
             if (this.currentPCB !== null && this.isExecuting) {
                 //I had a thought... why not auto incriment the process counter here instead of have it incriment every time?
+                _StdOut.putText("RUN: " + _MemoryManager.read(this.currentPCB, this.PC));
+                _StdOut.advanceLine();
                 if (_MemoryManager.read(this.currentPCB, this.PC) == 'A9') {
                     this.PC++;
                     var temp = _MemoryManager.read(this.currentPCB, this.PC); // get the current infoz from memory!
@@ -241,6 +243,7 @@ var TSOS;
                 }
                 else {
                     //what do I do again?
+                    _StdOut.putText("UNKNOWN INSTRUCTION: " + _MemoryManager.read(this.currentPCB, this.PC));
                     this.PC++; // count as instruction because yah...
                 }
             }
