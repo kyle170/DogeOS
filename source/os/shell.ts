@@ -128,12 +128,21 @@ module TSOS {
                                   "- What else would Dom be if not love?");
             this.commandList[this.commandList.length] = sc;
 			
-			// DOMISLOVE
+			// music
             sc = new ShellCommand(this.shellMusic,
                                   "music",
                                   "- Music from the Donkey Kong Country Game... what a classic!");
             this.commandList[this.commandList.length] = sc;
+			
+			// list loaded pids
+            sc = new ShellCommand(this.shellListLoadedPids,
+                                  "pids",
+                                  "- Lists the loaded pids that have been loaded...duh!");
+            this.commandList[this.commandList.length] = sc;
+			
 			objSharedCommandList = this.commandList;
+			
+			
 
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
@@ -438,7 +447,9 @@ module TSOS {
 						_StdOut.putText("8-Aquatic Ambiance");
 						_StdOut.advanceLine();
 						_StdOut.putText("...");
-						
+                        break;
+					case "pids":
+						_StdOut.putText("Outputs the list of loaded pids currently");
                         break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
@@ -545,6 +556,21 @@ module TSOS {
 			_StdOut.putText("You will be find Dom's love overwhelming soon.");
 			_StdOut.advanceLine();
 			_StdOut.putText("This is just a placeholder for what is to come!");
+		}
+		
+		public shellListLoadedPids(args){
+			//lists the loaded pids, up to 9
+			var processes: string = "";
+			for (var i: number=0; i<10; i++){
+				if(_ProcessManager.doesProcessExist(i)){
+					processes += i+", ";
+				}else{
+					// nothing here
+				}
+			}
+			processes = processes.substring(0, (processes.length-2));
+			_StdOut.putText("NOTE: THIS DOESNT WORK YET!");
+			_StdOut.putText("The Following processes have been loaded: "+processes);
 		}
 
         public shellRot13(args) {

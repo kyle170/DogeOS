@@ -73,8 +73,11 @@ var TSOS;
             // DOMISLOVE
             sc = new TSOS.ShellCommand(this.shellDomIsLove, "domislove", "- What else would Dom be if not love?");
             this.commandList[this.commandList.length] = sc;
-            // DOMISLOVE
+            // music
             sc = new TSOS.ShellCommand(this.shellMusic, "music", "- Music from the Donkey Kong Country Game... what a classic!");
+            this.commandList[this.commandList.length] = sc;
+            // list loaded pids
+            sc = new TSOS.ShellCommand(this.shellListLoadedPids, "pids", "- Lists the loaded pids that have been loaded...duh!");
             this.commandList[this.commandList.length] = sc;
             objSharedCommandList = this.commandList;
             // ps  - list the running processes and their IDs
@@ -363,6 +366,9 @@ var TSOS;
                         _StdOut.advanceLine();
                         _StdOut.putText("...");
                         break;
+                    case "pids":
+                        _StdOut.putText("Outputs the list of loaded pids currently");
+                        break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
                 }
@@ -470,6 +476,20 @@ var TSOS;
             _StdOut.putText("You will be find Dom's love overwhelming soon.");
             _StdOut.advanceLine();
             _StdOut.putText("This is just a placeholder for what is to come!");
+        };
+        Shell.prototype.shellListLoadedPids = function (args) {
+            //lists the loaded pids, up to 9
+            var processes = "";
+            for (var i = 0; i < 10; i++) {
+                if (_ProcessManager.doesProcessExist(i)) {
+                    processes += i + ", ";
+                }
+                else {
+                }
+            }
+            processes = processes.substring(0, (processes.length - 2));
+            _StdOut.putText("NOTE: THIS DOESNT WORK YET!");
+            _StdOut.putText("The Following processes have been loaded: " + processes);
         };
         Shell.prototype.shellRot13 = function (args) {
             if (args.length > 0) {

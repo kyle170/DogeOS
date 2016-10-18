@@ -2,7 +2,7 @@ var TSOS;
 (function (TSOS) {
     var Memory = (function () {
         function Memory(size) {
-            this.memory = new Array(size);
+            this.memory = new Array(size); // make sure we know that we're working with memory here!
         }
         Memory.prototype.init = function () {
             for (var i = 0; i < this.memory.length; i++) {
@@ -27,9 +27,6 @@ var TSOS;
         };
         Memory.prototype.getSize = function () {
             return this.memory.length;
-        };
-        Memory.prototype.printMem = function () {
-            console.log(this.memory);
         };
         Memory.prototype.toString = function () {
             var output = '';

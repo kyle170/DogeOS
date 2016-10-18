@@ -15,7 +15,7 @@ module TSOS {
         
         static currentProcessId: number = 1; // want this globally accessable
 		
-        constructor(priority: number){
+        constructor(priority: number){				// things we need to start with 
 			this.priority = priority;
 			this.processID = PCB.currentProcessId++;
 			this.acc = 0;
