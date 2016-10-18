@@ -78,11 +78,15 @@ var TSOS;
             }
         };
         Cpu.prototype.cycle = function () {
-            this.PC = this.PC % (this.currentPCB.limitRegister - this.currentPCB.baseRegister);
+            this.PC = this.PC % (this.currentPCB.limitRegister - this.currentPCB.baseRegister); // makin sure things are good before we begin
             _Kernel.krnTrace('CPU cycle');
             // TODO: Accumulate CPU usage and profiling statistics here. 
             if (this.currentPCB !== null && this.isExecuting) {
                 if (_MemoryManager.read(this.currentPCB, this.PC) == 'A9') {
+                    //Lets get this stareted!
+                    this.PC++;
+                    this.Acc = _MemoryManager.read(this.currentPCB, this.pc);
+                    this.PC++;
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == 'AD') {
                 }
