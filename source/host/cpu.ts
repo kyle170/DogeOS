@@ -110,14 +110,14 @@ module TSOS {
 					this.PC++;
 					_StdOut.putText("6D Run!");
 					_StdOut.advanceLine();
-				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'A2'){ // Load X Register with consrtaint 
+				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'A2'){ // Load X Register with consr
 					var temp: string = _MemoryManager.read(this.currentPCB, this.PC);
 					var temp2: number = parseInt(temp, 16);
 					this.Xreg = temp2;
 					this.PC++;
 					_StdOut.putText("A2 Run!");
 					_StdOut.advanceLine();
-				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'AE'){ // Load X Register from memory 
+				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'AE'){ // Load X Register from mem 
 					var temp: string = _MemoryManager.read(this.currentPCB, this.PC);
 					var temp2: number = parseInt(temp, 16);
 					this.PC++;
@@ -127,14 +127,21 @@ module TSOS {
 					this.PC++;
 					_StdOut.putText("AE Run!");
 					_StdOut.advanceLine();
-				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'A0'){ // Load Y Register with constant
+				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'A0'){ // Load Y Register with consr
 					var temp: string = _MemoryManager.read(this.currentPCB, this.PC);
 					var temp2: number = parseInt(temp, 16);
 					this.Yreg = temp2;
 					this.PC++;
 					_StdOut.putText("A0 Run!");
 					_StdOut.advanceLine();
-				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'AC'){ // Load Y Register from memory
+				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'AC'){ // Load Y Register from mem
+					var temp: string = _MemoryManager.read(this.currentPCB, this.PC);
+					var temp2: number = parseInt(temp, 16);
+					this.PC++;
+					temp = _MemoryManager.read(this.currentPCB, temp2);
+					temp2 = parseInt(temp, 16);
+					this.Yreg = temp2;
+					this.PC++;
 					_StdOut.putText("AC Run!");
 					_StdOut.advanceLine();
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'EC'){ // Compare byte at addr to X register, set z flag if equal
