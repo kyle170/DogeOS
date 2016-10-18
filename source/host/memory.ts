@@ -1,6 +1,7 @@
 module TSOS {
     export class Memory {
         private memory;						// something to be shared across all things!
+		
         constructor(size: number){
             this.memory = new Array(size); // make sure we know that we're working with memory here!
         }

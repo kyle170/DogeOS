@@ -34,8 +34,8 @@ var TSOS;
             for (var i = 0; i < this.allocated.length; i++) {
                 if (this.allocated[i] === -1) {
                     this.allocated[i] = pcb.processID; // assign that it is allocated
-                    pcb.baseRegister = i * 256; // let the pcb know the start or block of its program memory
-                    pcb.limitRegister = pcb.baseRegister + 255; // its max is 255 (not 256 cause.. reasons ) above its base!
+                    pcb.baseRegister = (i * 256); // let the pcb know the start or block of its program memory
+                    pcb.limitRegister = (pcb.baseRegister + 255); // its max is 255 (not 256 cause.. reasons ) above its base!
                     break; // hop out of we're all good here
                 }
             }

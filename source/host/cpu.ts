@@ -63,13 +63,12 @@ module TSOS {
             this.Yreg = pcb.YRegister;
             this.Zflag = pcb.ZFlag;
         }
-
-        public updatePCB(): void {
-			//UPDATE THE PCB IF ITS NOT EMPYTY
-            if(this.currentPCB !== null){
+		
+		public updatePCB(){
+			if(this.currentPCB !== null){
                 this.currentPCB.update(this.PC, this.Acc, this.Xreg, this.Yreg, this.Zflag);
             }
-        }
+		}
 
         public cycle(): void {
             this.PC = this.PC % (this.currentPCB.limitRegister - this.currentPCB.baseRegister); // makin sure things are good before we begin
@@ -77,7 +76,7 @@ module TSOS {
             // TODO: Accumulate CPU usage and profiling statistics here. 
             if(this.currentPCB !== null && this.isExecuting){
 				//I had a thought... why not auto incriment the process counter here instead of have it incriment every time?
-				_StdOut.putText("-- RUN: "+_MemoryManager.read(this.currentPCB, this.PC)+ " --"); 
+				_StdOut.putText("-- RUN: "+_MemoryManager.read(this.currentPCB, this.PC)+ ", MEM: "+ _MemoryManager.read(this.currentPCB, this.PC+1)+" --"); 
 				_StdOut.advanceLine();
 				if(_MemoryManager.read(this.currentPCB, this.PC) == 'A9'){ // Load accumulator with constant
 					this.PC++;
@@ -197,7 +196,8 @@ module TSOS {
 						_StdOut.advanceLine();
 					} else {
 						// ???? 
-				
+						this.PC++;
+					
 					}
 					this.PC++;
 					_StdOut.putText("FF Run!");
@@ -223,12 +223,13 @@ module TSOS {
 				}else{
 					//what do I do again?
 					_StdOut.putText("UNKNOWN INSTRUCTION: "+_MemoryManager.read(this.currentPCB, this.PC));
+					_StdOut.advanceLine();
 					this.PC++; // count as instruction because yah...
 				}
 				
 			}
 			if(this.currentPCB !== null){
-                this.updatePCB(); // update the things!
+                this.updatePCB();
             }
         }
     }

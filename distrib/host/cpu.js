@@ -72,7 +72,6 @@ var TSOS;
             this.Zflag = pcb.ZFlag;
         };
         Cpu.prototype.updatePCB = function () {
-            //UPDATE THE PCB IF ITS NOT EMPYTY
             if (this.currentPCB !== null) {
                 this.currentPCB.update(this.PC, this.Acc, this.Xreg, this.Yreg, this.Zflag);
             }
@@ -83,7 +82,7 @@ var TSOS;
             // TODO: Accumulate CPU usage and profiling statistics here. 
             if (this.currentPCB !== null && this.isExecuting) {
                 //I had a thought... why not auto incriment the process counter here instead of have it incriment every time?
-                _StdOut.putText("-- RUN: " + _MemoryManager.read(this.currentPCB, this.PC) + " --");
+                _StdOut.putText("-- RUN: " + _MemoryManager.read(this.currentPCB, this.PC) + ", MEM: " + _MemoryManager.read(this.currentPCB, this.PC + 1) + " --");
                 _StdOut.advanceLine();
                 if (_MemoryManager.read(this.currentPCB, this.PC) == 'A9') {
                     this.PC++;
@@ -216,6 +215,8 @@ var TSOS;
                         _StdOut.advanceLine();
                     }
                     else {
+                        // ???? 
+                        this.PC++;
                     }
                     this.PC++;
                     _StdOut.putText("FF Run!");
@@ -244,11 +245,12 @@ var TSOS;
                 else {
                     //what do I do again?
                     _StdOut.putText("UNKNOWN INSTRUCTION: " + _MemoryManager.read(this.currentPCB, this.PC));
+                    _StdOut.advanceLine();
                     this.PC++; // count as instruction because yah...
                 }
             }
             if (this.currentPCB !== null) {
-                this.updatePCB(); // update the things!
+                this.updatePCB();
             }
         };
         return Cpu;
