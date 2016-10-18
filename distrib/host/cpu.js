@@ -88,6 +88,7 @@ var TSOS;
                     var temp = _MemoryManager.read(this.currentPCB, this.PC);
                     this.Acc = parseInt(temp, 16);
                     this.PC++;
+                    alert("I made it thus far!");
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == 'AD') {
                 }
