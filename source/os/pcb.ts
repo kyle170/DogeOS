@@ -1,5 +1,4 @@
 module TSOS {
-	export enum ProcessState { New, Ready, Waiting, Halted, Running, Terminated }; // condense and rince
     export class PCB {
 		// allow these to be accessed by other class methods
         public priority: number;           // Importance (remeber that lower is better!)
@@ -9,7 +8,7 @@ module TSOS {
         public YRegister: number;           // Number from 0-255
         public ZFlag: number;           // 0 or 1
         public programCounter: number;           // Location of current program execution
-        public processState: TSOS.ProcessState; // Enum of 'NEW', 'READY', 'WAITING', 'HALTED', 'RUNNING', 'TERMINATED'
+        public processState: string; // Enum of 'NEW', 'READY', 'WAITING', 'HALTED', 'RUNNING', 'TERMINATED'
         public baseRegister: number;           // Where memory access starts
         public limitRegister: number;           // Where memory access ends
         
@@ -23,7 +22,7 @@ module TSOS {
 			this.YRegister = 0; 
 			this.ZFlag = 0;
 			this.programCounter = 0;
-			this.processState = TSOS.ProcessState.New;
+			this.processState = "NEW";
 			this.baseRegister = -1;
 			this.limitRegister = -1;
         } 

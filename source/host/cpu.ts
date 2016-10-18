@@ -45,10 +45,10 @@ module TSOS {
         public runProcess(pid: number):void {
 			//set the PCB with the PID of the process
             this.currentPCB = _ProcessManager.getPCB(pid);
-            if(this.currentPCB.processState === ProcessState.Terminated){
+            if(this.currentPCB.processState === "TERMINATED"){
                 _StdOut.putText('This process has already been terminated or doesnt exist');
             } else {
-                this.currentPCB.processState = ProcessState.Running;
+                this.currentPCB.processState = "RUNNING";
                 this.loadFromPCB();
                 this.isExecuting = true;
 			}
@@ -173,6 +173,15 @@ module TSOS {
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == '00'){ // BREAK PROGRAM (sys call) {{{{Something went terribly right!}}}}
 					this.isExecuting = false; // stop the damn thing!
 					_MemoryManager.deallocateMemory(this.currentPCB); 	// free up the space
+					this.currentPCB.processState = "TERMINATED";
+					this.updatePCB();
+					// time to set everything back to normal
+					this.PC = 0;
+					this.Zflag = 0;
+					this.Yreg = 0;
+					this.Xreg = 0;
+					this.Acc = 0;
+					this.currentPCB = null;
 					_StdOut.putText("PROGRAM COMPLETE -- 00 Run!");
 					_StdOut.advanceLine();
 				}else{
