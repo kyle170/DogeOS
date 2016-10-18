@@ -77,9 +77,10 @@ module TSOS {
             // TODO: Accumulate CPU usage and profiling statistics here. 
             if(this.currentPCB !== null && this.isExecuting){
 				if(_MemoryManager.read(this.currentPCB, this.PC) == 'A9'){ // Load acc with constant 
-					
+					//Lets get this stareted!
 					
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'AD'){  // Load acc from memory 
+					//
 				
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == '8D'){ // Store acc in memory 
 					
@@ -112,8 +113,8 @@ module TSOS {
 				
 			}
 			if(this.currentPCB !== null){
-                this.updatePCB();
+                this.updatePCB(); // update the things!
             }
-        } // End of cycle
+        }
     }
 }

@@ -114,9 +114,9 @@ var TSOS;
                 }
             }
             if (this.currentPCB !== null) {
-                this.updatePCB();
+                this.updatePCB(); // update the things!
             }
-        }; // End of cycle
+        };
         return Cpu;
     }());
     TSOS.Cpu = Cpu;
