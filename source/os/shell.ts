@@ -500,7 +500,7 @@ module TSOS {
 				for(var i=0; i<args.length; i++){
 					_StdOut.putText("Attempting to run PID: "+  args[i]);
 					_StdOut.advanceLine();
-					//_CPU.runProcess(pid);
+					_CPU.runProcess(args[i]);
 				}
 			}else{
 				_StdOut.putText("No arguements provided (do you actually want to run something or just waste my time?)");

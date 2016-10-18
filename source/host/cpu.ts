@@ -72,19 +72,22 @@ module TSOS {
         }
 
         public cycle(): void {
-            this.PC = this.PC % (this.currentPCB.limitRegister - this.currentPCB.baseRegister);
+            this.PC = this.PC % (this.currentPCB.limitRegister - this.currentPCB.baseRegister); // makin sure things are good before we begin
             _Kernel.krnTrace('CPU cycle');
             // TODO: Accumulate CPU usage and profiling statistics here. 
             if(this.currentPCB !== null && this.isExecuting){
-				if(_MemoryManager.read(this.currentPCB, this.PC) == 'A9'){ // Load acc with constant 
+				if(_MemoryManager.read(this.currentPCB, this.PC) == 'A9'){ // Load accumulator with constant 
 					//Lets get this stareted!
+					this.PC++;
+					this.Acc = _MemoryManager.read(this.currentPCB, this.pc);
+					this.PC++;					
 					
-				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'AD'){  // Load acc from memory 
+				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'AD'){  // Load acculuminator from memory  (forgot how to spell)
 					//
 				
-				}else if(_MemoryManager.read(this.currentPCB, this.PC) == '8D'){ // Store acc in memory 
+				}else if(_MemoryManager.read(this.currentPCB, this.PC) == '8D'){ // Store acculuminator in memory 
 					
-				}else if(_MemoryManager.read(this.currentPCB, this.PC) == '6D'){ // Add with carry (adds contents from addr to acc and stores in acc)
+				}else if(_MemoryManager.read(this.currentPCB, this.PC) == '6D'){ // Add with carry 
 					
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'A2'){ // Load X Register with constant 
 					

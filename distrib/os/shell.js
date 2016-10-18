@@ -430,6 +430,7 @@ var TSOS;
                 for (var i = 0; i < args.length; i++) {
                     _StdOut.putText("Attempting to run PID: " + args[i]);
                     _StdOut.advanceLine();
+                    _CPU.runProcess(args[i]);
                 }
             }
             else {
