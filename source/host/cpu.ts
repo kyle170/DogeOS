@@ -76,17 +76,20 @@ module TSOS {
             _Kernel.krnTrace('CPU cycle');
             // TODO: Accumulate CPU usage and profiling statistics here. 
             if(this.currentPCB !== null && this.isExecuting){
+				//I had a thought... why not auto incriment the process counter here instead of have it incriment every time?
+				this.PC++; // because its smarter to do it here.... because reasons...
 				if(_MemoryManager.read(this.currentPCB, this.PC) == 'A9'){ // Load accumulator with constant 
-					//Lets get this stareted!
+					var temp: string =  _MemoryManager.read(this.currentPCB, this.PC); // get the current infoz from memory!
+					this.Acc = parseInt(temp, 16); //make sure we're good here (http://www.w3schools.com/jsref/jsref_parseint.asp)
+					this.PC++; // add a cycle!
+				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'AD'){  // Load acculuminator from memory  (forgot how to spell)
+					var temp: string = _MemoryManager.read(this.currentPCB, this.PC);
+					var temp2: number = parseInt(temp, 16);
 					this.PC++;
-					var temp: string =  _MemoryManager.read(this.currentPCB, this.PC);
+					temp = _MemoryManager.read(this.currentPCB, temp2);
 					this.Acc = parseInt(temp, 16);
 					this.PC++;
-						alert("I made it thus far!");
-					
-				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'AD'){  // Load acculuminator from memory  (forgot how to spell)
-					//
-				
+					alert("Got to the AD!");				
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == '8D'){ // Store acculuminator in memory 
 					
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == '6D'){ // Add with carry 

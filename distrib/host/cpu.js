@@ -82,15 +82,21 @@ var TSOS;
             _Kernel.krnTrace('CPU cycle');
             // TODO: Accumulate CPU usage and profiling statistics here. 
             if (this.currentPCB !== null && this.isExecuting) {
+                //I had a thought... why not auto incriment the process counter here instead of have it incriment every time?
+                this.PC++; // because its smarter to do it here.... because reasons...
                 if (_MemoryManager.read(this.currentPCB, this.PC) == 'A9') {
-                    //Lets get this stareted!
-                    this.PC++;
-                    var temp = _MemoryManager.read(this.currentPCB, this.PC);
-                    this.Acc = parseInt(temp, 16);
-                    this.PC++;
-                    alert("I made it thus far!");
+                    var temp = _MemoryManager.read(this.currentPCB, this.PC); // get the current infoz from memory!
+                    this.Acc = parseInt(temp, 16); //make sure we're good here (http://www.w3schools.com/jsref/jsref_parseint.asp)
+                    this.PC++; // add a cycle!
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == 'AD') {
+                    var temp = _MemoryManager.read(this.currentPCB, this.PC);
+                    var temp2 = parseInt(temp, 16);
+                    this.PC++;
+                    temp = _MemoryManager.read(this.currentPCB, temp2);
+                    this.Acc = parseInt(temp, 16);
+                    this.PC++;
+                    alert("Got to the AD!");
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == '8D') {
                 }

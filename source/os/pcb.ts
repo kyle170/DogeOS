@@ -1,6 +1,7 @@
 module TSOS {
 	export enum ProcessState { New, Ready, Waiting, Halted, Running, Terminated }; // condense and rince
-    export class PCB { 
+    export class PCB {
+		// allow these to be accessed by other class methods
         public priority: number;           // Importance (remeber that lower is better!)
         public processID: number;           // Int (PID, its how we identify them)
         public acc: number;           // Number from 0-255
@@ -12,7 +13,7 @@ module TSOS {
         public baseRegister: number;           // Where memory access starts
         public limitRegister: number;           // Where memory access ends
         
-        static currentProcessId: number = 1;
+        static currentProcessId: number = 1; // want this globally accessable
 		
         constructor(priority: number){
 			this.priority = priority;
@@ -27,7 +28,7 @@ module TSOS {
 			this.limitRegister = -1;
         } 
 		
-        public update( pc: number, Acc: number, XReg: number, YReg: number, Zflag: number ): void {
+        public update( pc: number, Acc: number, XReg: number, YReg: number, Zflag: number ): void { // give us the old update... err new one!
             this.programCounter = pc;
             this.acc = Acc;
             this.XRegister = XReg;
