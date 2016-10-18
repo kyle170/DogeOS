@@ -156,6 +156,8 @@ var TSOS;
                     _StdOut.advanceLine();
                 }
                 else {
+                    //what do I do again?
+                    this.PC++; // count as instruction because yah...
                 }
             }
             if (this.currentPCB !== null) {
