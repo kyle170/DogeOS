@@ -20,7 +20,7 @@ var TSOS;
             this.YRegister = YReg;
             this.ZFlag = Zflag;
         };
-        PCB.currentProcessId = 1; // want this globally accessable
+        PCB.currentProcessId = 0; // want this globally accessable
         return PCB;
     }());
     TSOS.PCB = PCB;

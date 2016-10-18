@@ -238,7 +238,7 @@ var TSOS;
                     this.Xreg = 0;
                     this.Acc = 0;
                     this.currentPCB = null;
-                    _StdOut.putText("PROGRAM COMPLETE -- 00 Run!");
+                    _StdOut.putText("PROGRAM COMPLETE -- 00");
                     _StdOut.advanceLine();
                 }
                 else {

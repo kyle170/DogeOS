@@ -197,6 +197,7 @@ module TSOS {
 						_StdOut.advanceLine();
 					} else {
 						// ???? 
+				
 					}
 					this.PC++;
 					_StdOut.putText("FF Run!");
@@ -217,14 +218,13 @@ module TSOS {
 					this.Xreg = 0;
 					this.Acc = 0;
 					this.currentPCB = null;
-					_StdOut.putText("PROGRAM COMPLETE -- 00 Run!");
+					_StdOut.putText("PROGRAM COMPLETE -- 00");
 					_StdOut.advanceLine();
 				}else{
 					//what do I do again?
 					_StdOut.putText("UNKNOWN INSTRUCTION: "+_MemoryManager.read(this.currentPCB, this.PC));
 					this.PC++; // count as instruction because yah...
 				}
-					
 				
 			}
 			if(this.currentPCB !== null){
