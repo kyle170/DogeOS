@@ -2,7 +2,7 @@ var TSOS;
 (function (TSOS) {
     var MemoryManager = (function () {
         function MemoryManager() {
-            this.memoryTotalSize = _Memory.MemorySize;
+            this.memoryTotalSize = _Memory.memorySize;
             // nothing needed...just a palceholder
         }
         MemoryManager.prototype.init = function () {
@@ -28,7 +28,7 @@ var TSOS;
                 violatesBounds = true;
             }
             if (!violatesBounds) {
-                return _Memory.getByte(ProcessControlBlock + MemoryLocation);
+                return _Memory.getByte(ProcessControlBlock.BaseReg + MemoryLocation);
             }
             else {
                 _StdOut.putText("Memory Bounds Violation Error!"); // return fatal error if its outside (memory seeking missile program)
@@ -37,8 +37,9 @@ var TSOS;
         MemoryManager.prototype.alloicateMemoryForProgram = function (ProcessControlBlock, ProgramData) {
             // program comes in as a string of doubles... we must write it in the memory!
             _Memory.clearMem(); // clear anything that was previously in there
+            var data; // create the variable that will have the data to put in the memory blocks defined
             for (var i = 0; i <= (ProcessControlBlock.LimReg - ProcessControlBlock.BaseReg); i++) {
-                var data = ProgramData[i];
+                data = ProgramData[i];
                 if (data !== undefined) {
                     _Memory.setByte(ProcessControlBlock.BaseReg + i, data); // set the data
                 }

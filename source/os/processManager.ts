@@ -15,7 +15,7 @@ module TSOS {
 		public load(programData: Array<String>): number {
 			//load the program into the memory and return a PID to work with
 			var ProcessControlBlock = new PCB();
-			this.processes[pcb.PID] = ProcessControlBlock;
+			this.processes[ProcessControlBlock.PID] = ProcessControlBlock;
 			_MemoryManager.alloicateMemoryForProgram(ProcessControlBlock, programData);
 			return ProcessControlBlock.PID;
 		}

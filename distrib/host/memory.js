@@ -19,7 +19,7 @@ var TSOS;
         };
         Memory.prototype.clearMem = function () {
             //clears the memory (yes... all of it)
-            for (var i = 0; i < this.memorySize; i++) {
+            for (var i = 0; i < this.memory.length; i++) {
                 this.memory[i] = '00';
             }
         };

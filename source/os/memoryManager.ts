@@ -1,6 +1,6 @@
 module TSOS {
     export class MemoryManager {
-        private memoryTotalSize: number = _Memory.MemorySize;
+        private memoryTotalSize: number = _Memory.memorySize;
 		
 		constructor(){
 			// nothing needed...just a palceholder
@@ -24,14 +24,14 @@ module TSOS {
 			}
 		}
 		
-		public readFromMemory(ProcessControlBlock: TSOS.pcb, MemoryLocation: number): void {
+		public readFromMemory(ProcessControlBlock: TSOS.PCB, MemoryLocation: number): string { 
 			// read the data from memory, again, checking if there is a bounds error!
 			var violatesBounds: boolean = false;
 			if(MemoryLocation < ProcessControlBlock.BaseReg || MemoryLocation > ProcessControlBlock.LimReg){ // checks if its within its own bounds!
 				violatesBounds = true;
 			}
 			if(!violatesBounds){
-				return _Memory.getByte(ProcessControlBlock+MemoryLocation);
+				return _Memory.getByte(ProcessControlBlock.BaseReg+MemoryLocation);
 			}else{
 				_StdOut.putText("Memory Bounds Violation Error!"); // return fatal error if its outside (memory seeking missile program)
 			}
@@ -41,8 +41,9 @@ module TSOS {
 		public alloicateMemoryForProgram(ProcessControlBlock: TSOS.PCB, ProgramData: Array<String>): void {
 			// program comes in as a string of doubles... we must write it in the memory!
 			_Memory.clearMem(); // clear anything that was previously in there
+			var data; // create the variable that will have the data to put in the memory blocks defined
 			for(var i:number=0; i<=(ProcessControlBlock.LimReg-ProcessControlBlock.BaseReg); i++){
-				var data = ProgramData[i];
+				data = ProgramData[i]; 
 				if(data !== undefined){ // if its not nothing
 					_Memory.setByte(ProcessControlBlock.BaseReg+i, data); 	// set the data
 				}else{

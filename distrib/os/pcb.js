@@ -2,7 +2,7 @@ var TSOS;
 (function (TSOS) {
     var PCB = (function () {
         function PCB() {
-            this.PID = PCB.CPid++;
+            this.PID = PCB.CPID++;
             this.Acc = 0;
             this.XReg = 0;
             this.YReg = 0;
@@ -14,7 +14,7 @@ var TSOS;
         }
         PCB.prototype.update_PCB = function (PC, Acc, XReg, YReg, Zflag) {
             this.PC = PC;
-            this.acc = Acc;
+            this.Acc = Acc;
             this.XReg = XReg;
             this.YReg = YReg;
             this.ZFlag = Zflag;

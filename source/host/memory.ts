@@ -24,7 +24,7 @@ module TSOS {
 		
 		public clearMem(): void {
 			//clears the memory (yes... all of it)
-			for(var i:number=0; i<this.memorySize; i++){
+			for(var i:number=0; i<this.memory.length; i++){
 				this.memory[i] = '00';
 			}
 		}
