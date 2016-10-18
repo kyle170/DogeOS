@@ -4,7 +4,7 @@ var TSOS;
         function ProcessManager(maxProcesses) {
             this.maxProcesses = maxProcesses;
         }
-        //Initalize the Process Manager class
+        //Initalize the Process Manager class 
         ProcessManager.prototype.init = function () {
             this.processes = [null];
         };

@@ -72,6 +72,8 @@ module TSOS {
 
         public cycle(): void {
             this.PC = this.PC % (this.currentPCB.limitRegister - this.currentPCB.baseRegister); // makin sure things are good before we begin
+			TSOS.Control.memoryUpdate();
+			TSOS.Control.cpuUpdate();
             _Kernel.krnTrace('CPU cycle');
             // TODO: Accumulate CPU usage and profiling statistics here. 
             if(this.currentPCB !== null && this.isExecuting){
@@ -210,6 +212,7 @@ module TSOS {
 					this.isExecuting = false; // stop the damn thing!
 					_MemoryManager.deallocateMemory(this.currentPCB); 	// free up the space -- not implemented yet
 					this.currentPCB.processState = "TERMINATED";
+					TSOS.Control.cpuUpdate();
 					this.updatePCB();
 					// time to set everything back to normal
 					this.PC = 0;

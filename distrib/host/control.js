@@ -62,6 +62,32 @@ var TSOS;
             taLog.value = str + taLog.value;
             // TODO in the future: Optionally update a log database or some streaming service.
         };
+        Control.cpuUpdate = function () {
+            document.getElementById("cpu.pc").textContent = _CPU.PC.toString();
+            document.getElementById("cpu.xreg").textContent = _CPU.Xreg.toString();
+            document.getElementById("cpu.yreg").textContent = _CPU.Yreg.toString();
+            document.getElementById("cpu.zflag").textContent = _CPU.Zflag.toString();
+            document.getElementById("cpu.isexecuting").textContent = _CPU.isExecuting.toString();
+            // udpate the html pcb
+        };
+        Control.memoryUpdate = function () {
+            var output = "";
+            var memoryTables = _Memory.toString().split(" ");
+            var positionInRow = 0;
+            for (var i = 0; i < 768; i += 8) {
+                output += "0x" + i + "	" + memoryTables[positionInRow++] + "  "
+                    + memoryTables[positionInRow++] + "  "
+                    + memoryTables[positionInRow++] + "  "
+                    + memoryTables[positionInRow++] + "  "
+                    + memoryTables[positionInRow++] + "  "
+                    + memoryTables[positionInRow++] + "  "
+                    + memoryTables[positionInRow++] + "  "
+                    + memoryTables[positionInRow++] + "  "
+                    + "&#13;&#10;";
+            }
+            document.getElementById('taMemoryStatus').innerHTML = output;
+            // udpate the html pcb
+        };
         //
         // Host Events
         //

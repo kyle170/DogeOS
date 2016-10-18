@@ -4,7 +4,7 @@ module TSOS {
         constructor(private maxProcesses: number){
         }
 		
-		//Initalize the Process Manager class
+		//Initalize the Process Manager class 
         public init(): void {
             this.processes = [null];
         }

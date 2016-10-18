@@ -73,6 +73,37 @@ module TSOS {
 
             // TODO in the future: Optionally update a log database or some streaming service.
         }
+		
+		
+		public static cpuUpdate(): void {
+				document.getElementById("cpu.pc").textContent= _CPU.PC.toString();
+				document.getElementById("cpu.xreg").textContent= _CPU.Xreg.toString();
+				document.getElementById("cpu.yreg").textContent= _CPU.Yreg.toString();
+				document.getElementById("cpu.zflag").textContent= _CPU.Zflag.toString();
+				document.getElementById("cpu.isexecuting").textContent= _CPU.isExecuting.toString();		
+			// udpate the html pcb
+		}
+		
+		public static memoryUpdate(): void {
+				var output: string = "";
+				var memoryTables: array = _Memory.toString().split(" ");
+				var positionInRow:number = 0;
+				for(var i:number=0; i<768; i+=8){
+					output+= "0x"+i+"	"	+memoryTables[positionInRow++]+"  "
+											+memoryTables[positionInRow++]+"  "
+											+memoryTables[positionInRow++]+"  "
+											+memoryTables[positionInRow++]+"  "
+											+memoryTables[positionInRow++]+"  "
+											+memoryTables[positionInRow++]+"  "
+											+memoryTables[positionInRow++]+"  "
+											+memoryTables[positionInRow++]+"  "
+							+"&#13;&#10;";
+				}
+				
+				
+				document.getElementById('taMemoryStatus').innerHTML = output;
+			// udpate the html pcb
+		}
 
 
         //

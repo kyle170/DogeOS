@@ -12,7 +12,7 @@ module TSOS {
         public baseRegister: number;           // Where memory access starts
         public limitRegister: number;           // Where memory access ends
         
-        static currentProcessId: number = 0; // want this globally accessable
+        static currentProcessId: number = 0; // want this globally accessable... start with 0
 		
         constructor(priority: number){				// things we need to start with 
 			this.priority = priority;

@@ -36,7 +36,7 @@ module TSOS {
             return this.memory.length;
         }
 		
-		public toString(){
+		public toString(){ // using this to print out to the status page
             var output = '';
             for(var i = 0; i < this.memory.length; i++){
                 output += this.memory[i] + ' ';
