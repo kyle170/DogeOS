@@ -174,6 +174,14 @@ var TSOS;
                     _StdOut.advanceLine();
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == 'D0') {
+                    if (this.Zflag = 0) {
+                        var temp = _MemoryManager.read(this.currentPCB, this.PC);
+                        var temp2 = parseInt(temp, 16);
+                        this.PC = this.PC + temp2;
+                    }
+                    else {
+                        this.PC++;
+                    }
                     _StdOut.putText("D0 Run!");
                     _StdOut.advanceLine();
                 }
@@ -185,7 +193,7 @@ var TSOS;
                     var temp3 = parseInt(temp, 16);
                     temp3++;
                     _MemoryManager.write(this.currentPCB, temp2, temp3.toString(16));
-                    _StdOut.putText("EE Run! - " + temp2 + " ->" + temp3);
+                    _StdOut.putText("EE Run! - " + temp2 + " -> " + temp3);
                     _StdOut.advanceLine();
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == 'FF') {

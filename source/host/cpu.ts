@@ -158,6 +158,13 @@ module TSOS {
 					_StdOut.putText("EC Run! - "+ this.Zflag);
 					_StdOut.advanceLine();
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'D0'){ // Branch N bytes if z flag = 0 (byte = N)
+					if(this.Zflag = 0){
+						var temp: string = _MemoryManager.read(this.currentPCB, this.PC);
+						var temp2: number = parseInt(temp, 16);
+						this.PC = this.PC + temp2;
+					} else {
+						this.PC++;
+					}
 					_StdOut.putText("D0 Run!");
 					_StdOut.advanceLine();
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'EE'){ // EE increment a byte at addr
@@ -168,7 +175,7 @@ module TSOS {
 					var temp3: number = parseInt(temp, 16);
 					temp3++;
 					_MemoryManager.write(this.currentPCB, temp2, temp3.toString(16));
-					_StdOut.putText("EE Run! - "+temp2+" ->"+temp3);
+					_StdOut.putText("EE Run! - "+temp2+" -> "+temp3);
 					_StdOut.advanceLine();
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'FF'){ // System call: {{{{TBD}}}}
 					_StdOut.putText("FF Run!");
