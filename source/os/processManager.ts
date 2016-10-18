@@ -16,16 +16,6 @@ module TSOS {
             _MemoryManager.allocateMemory(pcb, program); // alloicate the memory to the pcb (bring in the program)
             return pcb.processID; // return a sucessful int to the shell!
         }
-		//checks of the PID already exists
-        public doesProcessExist(pid: number): boolean {
-			//now used as a shell commmand to see whats loaded!
-				if(this.processes[pid] !== null || this.processes[pid] !== undefined){ // if it doesnt NOT exist... send back as true
-					return true;
-				}else{
-					return false;														// not here
-				}
-        }
-		
 		//this gets the PID from the PCB
         public getPCB(pid: number): TSOS.PCB {
             return this.processes[pid];

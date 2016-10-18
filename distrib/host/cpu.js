@@ -122,6 +122,10 @@ var TSOS;
                     _StdOut.advanceLine();
                 }
                 else if (_MemoryManager.read(this.currentPCB, this.PC) == 'A2') {
+                    var temp = _MemoryManager.read(this.currentPCB, this.PC);
+                    var temp2 = parseInt(temp, 16);
+                    this.Xreg = temp2;
+                    this.PC++;
                     _StdOut.putText("A2 Run!");
                     _StdOut.advanceLine();
                 }

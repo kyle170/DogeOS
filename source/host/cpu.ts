@@ -112,6 +112,10 @@ module TSOS {
 					_StdOut.putText("6D Run!");
 					_StdOut.advanceLine();
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'A2'){ // Load X Register with constant 
+					var temp: string = _MemoryManager.read(this.currentPCB, this.PC);
+					var temp2: number = parseInt(temp, 16);
+					this.Xreg = temp2;
+					this.PC++;
 					_StdOut.putText("A2 Run!");
 					_StdOut.advanceLine();
 				}else if(_MemoryManager.read(this.currentPCB, this.PC) == 'AE'){ // Load X Register from memory 
