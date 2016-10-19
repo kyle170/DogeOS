@@ -37,9 +37,10 @@ var TSOS;
         MemoryManager.prototype.alloicateMemoryForProgram = function (ProcessControlBlock, ProgramData) {
             // program comes in as a string of doubles... we must write it in the memory!
             _Memory.clearMem(); // clear anything that was previously in there
-            var data; // create the variable that will have the data to put in the memory blocks defined
+            ProcessControlBlock.BaseReg = 0; //set base limit
+            ProcessControlBlock.LimReg = ProcessControlBlock.BaseReg + 255; // set max limit
             for (var i = 0; i <= (ProcessControlBlock.LimReg - ProcessControlBlock.BaseReg); i++) {
-                data = ProgramData[i];
+                var data = ProgramData[i];
                 if (data !== undefined) {
                     _Memory.setByte(ProcessControlBlock.BaseReg + i, data); // set the data
                 }

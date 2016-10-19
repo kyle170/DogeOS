@@ -12,12 +12,12 @@ var TSOS;
             this.BaseReg = -1;
             this.LimReg = -1;
         }
-        PCB.prototype.update_PCB = function (PC, Acc, XReg, YReg, Zflag) {
+        PCB.prototype.update_PCB = function (PC, Acc, XReg, YReg, ZFlag) {
             this.PC = PC;
             this.Acc = Acc;
             this.XReg = XReg;
             this.YReg = YReg;
-            this.ZFlag = Zflag;
+            this.ZFlag = ZFlag;
         };
         // allow these to be accessed by other class methods
         PCB.CPID = 0; // want this globally accessable... start with 0

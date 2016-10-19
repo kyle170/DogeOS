@@ -13,14 +13,23 @@ module TSOS {
         public LimReg: number;		// Where memory access ends
         		
         constructor(){	// things we need to start with Invoke on initial load
-			this.PID = PCB.CPID++; this.Acc = 0; this.XReg = 0; this.YReg = 0; 
-			this.ZFlag = 0; this.PC = 0; this.PS = "NEW"; this.BaseReg = -1; 
+			this.PID = PCB.CPID++;
+			this.Acc = 0;
+			this.XReg = 0;
+			this.YReg = 0; 
+			this.ZFlag = 0;
+			this.PC = 0;
+			this.PS = "NEW";
+			this.BaseReg = -1; 
 			this.LimReg = -1;
         } 
 		
-        public update_PCB( PC: number, Acc: number, XReg: number, YReg: number, Zflag: number ): void { // give us the old update... err new one!
-            this.PC = PC; this.Acc = Acc; this.XReg = XReg;
-            this.YReg = YReg; this.ZFlag = Zflag;
+        public update_PCB( PC: number, Acc: number, XReg: number, YReg: number, ZFlag: number ): void { // give us the old update... err new one!
+            this.PC = PC;
+			this.Acc = Acc;
+			this.XReg = XReg;
+            this.YReg = YReg;
+			this.ZFlag = ZFlag;
         }
     } 
 }

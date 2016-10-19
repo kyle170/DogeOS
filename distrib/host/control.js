@@ -64,9 +64,9 @@ var TSOS;
         };
         Control.cpuUpdate = function () {
             document.getElementById("cpu.pc").textContent = _CPU.PC.toString();
-            document.getElementById("cpu.xreg").textContent = _CPU.Xreg.toString();
-            document.getElementById("cpu.yreg").textContent = _CPU.Yreg.toString();
-            document.getElementById("cpu.zflag").textContent = _CPU.Zflag.toString();
+            document.getElementById("cpu.xreg").textContent = _CPU.XReg.toString();
+            document.getElementById("cpu.yreg").textContent = _CPU.YReg.toString();
+            document.getElementById("cpu.zflag").textContent = _CPU.ZFlag.toString();
             document.getElementById("cpu.isexecuting").textContent = _CPU.isExecuting.toString();
             // udpate the html pcb
         };
