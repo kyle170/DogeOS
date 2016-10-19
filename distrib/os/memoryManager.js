@@ -11,35 +11,37 @@ var TSOS;
         MemoryManager.prototype.writeToMemory = function (ProcessControlBlock, MemoryLocation, dataToWrite) {
             // write the data to memory, checking if it is within bounds first
             var violatesBounds = false;
-            if (MemoryLocation < ProcessControlBlock.BaseReg || MemoryLocation > ProcessControlBlock.LimReg) {
+            if ((ProcessControlBlock.BaseReg + MemoryLocation) < ProcessControlBlock.BaseReg || (ProcessControlBlock.BaseReg + MemoryLocation) > ProcessControlBlock.LimReg) {
                 violatesBounds = true;
             }
             if (!violatesBounds) {
                 return _Memory.setByte((ProcessControlBlock.BaseReg + MemoryLocation), dataToWrite); // send command to setByte to write data at location with data within its bounds
             }
             else {
-                _StdOut.putText("Memory Bounds Violation Error!"); // return fatal error if its outside (memory seeking missile program)
+                _StdOut.putText("Memory Bounds Violation Error! - Tying to read: " + (ProcessControlBlock.BaseReg + MemoryLocation)); // return fatal error if its outside (memory seeking missile program)
+                _StdOut.advanceLine();
             }
         };
         MemoryManager.prototype.readFromMemory = function (ProcessControlBlock, MemoryLocation) {
             // read the data from memory, again, checking if there is a bounds error!
             var violatesBounds = false;
-            if (MemoryLocation < ProcessControlBlock.BaseReg || MemoryLocation > ProcessControlBlock.LimReg) {
+            if ((ProcessControlBlock.BaseReg + MemoryLocation) < ProcessControlBlock.BaseReg || (ProcessControlBlock.BaseReg + MemoryLocation) > ProcessControlBlock.LimReg) {
                 violatesBounds = true;
             }
             if (!violatesBounds) {
                 return _Memory.getByte(ProcessControlBlock.BaseReg + MemoryLocation);
             }
             else {
-                _StdOut.putText("Memory Bounds Violation Error!"); // return fatal error if its outside (memory seeking missile program)
+                _StdOut.putText("Memory Bounds Violation Error! - Tying to read: " + (ProcessControlBlock.BaseReg + MemoryLocation)); // return fatal error if its outside (memory seeking missile program)
+                _StdOut.advanceLine();
             }
         };
         MemoryManager.prototype.alloicateMemoryForProgram = function (ProcessControlBlock, ProgramData) {
             // program comes in as a string of doubles... we must write it in the memory!
-            _Memory.clearMem(); // clear anything that was previously in there
-            ProcessControlBlock.BaseReg = 0; //set base limit
+            //_Memory.clearMem(); // clear anything that was previously in there
+            ProcessControlBlock.BaseReg = (ProcessControlBlock.PID * 256); //set base limit
             ProcessControlBlock.LimReg = ProcessControlBlock.BaseReg + 255; // set max limit
-            for (var i = 0; i <= (ProcessControlBlock.LimReg - ProcessControlBlock.BaseReg); i++) {
+            for (var i = 0; i < (ProcessControlBlock.LimReg - ProcessControlBlock.BaseReg); i++) {
                 var data = ProgramData[i];
                 if (data !== undefined) {
                     _Memory.setByte(ProcessControlBlock.BaseReg + i, data); // set the data
