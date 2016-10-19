@@ -426,7 +426,7 @@ var TSOS;
                 for (var i = 0; i < chars.length; i += 2) {
                     doubles.push(chars[i] + chars[i + 1]);
                 }
-                var num = _ProcessManager.load(doubles);
+                var num = _ProcessManager.load(doubles); //push em in and hope for the best
                 if (num != -1) {
                     _StdOut.putText("We got a PID for ya: " + num);
                 }

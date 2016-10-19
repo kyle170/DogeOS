@@ -37,6 +37,5 @@ module TSOS {
 			}
 			return output;
 		}
-		
     }
 }

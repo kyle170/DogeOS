@@ -497,15 +497,15 @@ module TSOS {
 			if(isStillValidHex){
 				//_StdOut.putText("Congradulations...thats valid hex code!... lets do something with it!");
 				var programString = '';
-				for(var i = 0; i < programArray.length; i++){
+				for(var i = 0; i < programArray.length; i++){ // break em up by clumps
                         programString += programArray[i];
                 }
 				var chars = programString.split('');
                 var doubles = [];
-                for(var i = 0; i < chars.length; i += 2){
+                for(var i = 0; i < chars.length; i += 2){ // ensure they're going in togeather (AC)
                     doubles.push(chars[i] + chars[i+1]);
                 }
-				var num = _ProcessManager.load(doubles); 
+				var num = _ProcessManager.load(doubles); 	//push em in and hope for the best
 				if(num != -1){
 					_StdOut.putText("We got a PID for ya: "+ num );
 				}else{

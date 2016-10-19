@@ -10,7 +10,6 @@ module TSOS {
 			// nothing needed...just a palceholder
 		}
 		
-		
 		public writeToMemory(ProcessControlBlock: TSOS.PCB, MemoryLocation: number, dataToWrite: string): void {
 			// write the data to memory, checking if it is within bounds first
 			var violatesBounds: boolean = false;
@@ -37,7 +36,6 @@ module TSOS {
 				_StdOut.putText("Memory Bounds Violation Error! - Tying to read: "+(ProcessControlBlock.BaseReg+MemoryLocation)); // return fatal error if its outside (memory seeking missile program)
 				_StdOut.advanceLine();
 			}
-			
 		}
 		
 		public alloicateMemoryForProgram(ProcessControlBlock: TSOS.PCB, ProgramData: Array<string>): void {
