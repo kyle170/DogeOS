@@ -394,6 +394,8 @@ var TSOS;
         Shell.prototype.shellMusic = function (args) {
             var music = document.getElementById("music");
             music.play();
+            _StdOut.putText("Playing music from https://www.youtube.com/watch?v=cA9g-YjfGxo");
+            _StdOut.advanceLine();
         };
         Shell.prototype.shellLoad = function (args) {
             var program = document.getElementById('taProgramInput').value; //bring in value from html5 input
