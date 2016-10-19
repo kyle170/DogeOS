@@ -91,15 +91,13 @@ var TSOS;
                 // TODO: Accumulate CPU usage and profiling statistics here. 
                 if (this.currentPCB !== null && this.isExecuting) {
                     //I had a thought... why not auto incriment the process counter here instead of have it incriment every time?
-                    _StdOut.putText("-- RUN: " + _MemoryManager.readFromMemory(this.currentPCB, this.PC) + ", MEM: " + _MemoryManager.readFromMemory(this.currentPCB, this.PC + 1) + " --");
-                    _StdOut.advanceLine();
+                    //_StdOut.putText("-- RUN: "+_MemoryManager.readFromMemory(this.currentPCB, this.PC)+ ", MEM: "+ _MemoryManager.readFromMemory(this.currentPCB, this.PC+1)+" --"); 
+                    //_StdOut.advanceLine();
                     if (_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'A9') {
                         this.PC++;
                         var temp = _MemoryManager.readFromMemory(this.currentPCB, this.PC); // get the current infoz from memory!
                         this.Acc = parseInt(temp, 16); //make sure we're good here (http://www.w3schools.com/jsref/jsref_parseint.asp)
                         this.PC++; // add a cycle!
-                        _StdOut.putText("A9 Run! - " + this.Acc);
-                        _StdOut.advanceLine();
                     }
                     else if (_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'AD') {
                         this.PC++;
@@ -109,8 +107,6 @@ var TSOS;
                         temp = _MemoryManager.readFromMemory(this.currentPCB, temp2);
                         this.Acc = parseInt(temp, 16);
                         this.PC++;
-                        _StdOut.putText("AD Run! - " + this.Acc);
-                        _StdOut.advanceLine();
                     }
                     else if (_MemoryManager.readFromMemory(this.currentPCB, this.PC) == '8D') {
                         this.PC++;
@@ -119,8 +115,6 @@ var TSOS;
                         this.PC++;
                         _MemoryManager.writeToMemory(this.currentPCB, temp2, this.Acc.toString(16)); // I think?... seems to output the right thing
                         this.PC++;
-                        _StdOut.putText("8D Run!");
-                        _StdOut.advanceLine();
                     }
                     else if (_MemoryManager.readFromMemory(this.currentPCB, this.PC) == '6D') {
                         this.PC++;
@@ -130,8 +124,6 @@ var TSOS;
                         temp = _MemoryManager.readFromMemory(this.currentPCB, temp2);
                         this.Acc = (this.Acc + parseInt(temp, 16));
                         this.PC++;
-                        _StdOut.putText("6D Run! - " + this.Acc);
-                        _StdOut.advanceLine();
                     }
                     else if (_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'A2') {
                         this.PC++;
@@ -139,8 +131,6 @@ var TSOS;
                         var temp2 = parseInt(temp, 16);
                         this.XReg = temp2;
                         this.PC++;
-                        _StdOut.putText("A2 Run! - " + this.XReg);
-                        _StdOut.advanceLine();
                     }
                     else if (_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'AE') {
                         this.PC++;
@@ -151,8 +141,6 @@ var TSOS;
                         temp2 = parseInt(temp, 16);
                         this.XReg = temp2;
                         this.PC++;
-                        _StdOut.putText("AE Run! - " + this.XReg);
-                        _StdOut.advanceLine();
                     }
                     else if (_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'A0') {
                         this.PC++;
@@ -160,8 +148,6 @@ var TSOS;
                         var temp2 = parseInt(temp, 16);
                         this.YReg = temp2;
                         this.PC++;
-                        _StdOut.putText("A0 Run! - " + this.YReg);
-                        _StdOut.advanceLine();
                     }
                     else if (_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'AC') {
                         this.PC++;
@@ -172,8 +158,6 @@ var TSOS;
                         temp2 = parseInt(temp, 16);
                         this.YReg = temp2;
                         this.PC++;
-                        _StdOut.putText("AC Run! - " + this.YReg);
-                        _StdOut.advanceLine();
                     }
                     else if (_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'EC') {
                         this.PC++;
@@ -189,21 +173,18 @@ var TSOS;
                             this.ZFlag = 1;
                         }
                         this.PC++;
-                        _StdOut.putText("EC Run! - " + this.ZFlag);
-                        _StdOut.advanceLine();
                     }
                     else if (_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'D0') {
                         this.PC++;
                         if (this.ZFlag === 0) {
                             var temp = _MemoryManager.readFromMemory(this.currentPCB, this.PC);
+                            this.PC++; // one byte jump
                             var temp2 = parseInt(temp, 16);
                             this.PC = this.PC + temp2;
                         }
                         else {
                             this.PC++;
                         }
-                        _StdOut.putText("D0 Run! - ZFlag:" + this.ZFlag + " - OP MOVE POS: " + this.PC);
-                        _StdOut.advanceLine();
                     }
                     else if (_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'EE') {
                         this.PC++;
@@ -214,41 +195,37 @@ var TSOS;
                         var temp3 = parseInt(temp, 16);
                         temp3++;
                         _MemoryManager.writeToMemory(this.currentPCB, temp2, temp3.toString(16));
-                        _StdOut.putText("EE Run! - " + temp2 + " -> " + temp3);
-                        _StdOut.advanceLine();
                     }
                     else if (_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'FF') {
                         // soo.... accroding to this reasarch... if the X is true, I need to return the byte in the y register to the console???
                         // and if there is a 2? in the x register?... not there yet
+                        var tempString = "";
                         if (this.YReg === 1) {
                             // #$01 in X reg = print the integer stored in the Y register.
-                            _StdOut.putText(this.YReg + "");
-                            _StdOut.advanceLine();
+                            tempString += this.YReg;
                         }
                         else {
                             //  #$02 in X reg = print the 00-terminated string stored at the address in the Y register.
-                            this.PC++;
-                            temp2 = this.YReg;
-                            temp = _MemoryManager.readFromMemory(this.currentPCB, temp2);
+                            var tempaddr = this.YReg;
+                            var temp = _MemoryManager.readFromMemory(this.currentPCB, tempaddr);
                             while (temp !== '00') {
-                                temp = String.fromCharCode(parseInt(temp, 16));
-                                _StdOut.putText(temp);
+                                var character = String.fromCharCode(parseInt(temp, 16));
+                                tempString += character;
+                                tempaddr++;
+                                var temp = _MemoryManager.readFromMemory(this.currentPCB, tempaddr);
                             }
+                            _StdOut.putText(tempString);
                             _StdOut.advanceLine();
                         }
                         this.PC++;
-                        _StdOut.putText("FF Run!");
-                        _StdOut.advanceLine();
                     }
                     else if (_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'EA') {
                         this.PC++;
-                        _StdOut.putText("EA Run (nothing to do)!");
-                        _StdOut.advanceLine();
                     }
                     else if (_MemoryManager.readFromMemory(this.currentPCB, this.PC) == '00') {
+                        TSOS.Control.cpuUpdate();
                         this.isExecuting = false; // stop the damn thing!
                         this.currentPCB.PS = "TERMINATED";
-                        TSOS.Control.cpuUpdate();
                         this.updatePCB();
                         // time to set everything back to normal
                         this.PC = 0;
@@ -257,8 +234,6 @@ var TSOS;
                         this.XReg = 0;
                         this.Acc = 0;
                         this.currentPCB = null;
-                        _StdOut.putText("PROGRAM COMPLETE -- 00");
-                        _StdOut.advanceLine();
                     }
                     else {
                         //what do I do again?
