@@ -50,6 +50,7 @@ var TSOS;
                     _Memory.setByte(ProcessControlBlock.BaseReg + i, '00'); // set a blank (nothing)
                 }
             }
+            TSOS.Control.memoryUpdate();
         };
         return MemoryManager;
     }());
