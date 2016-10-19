@@ -474,8 +474,10 @@ module TSOS {
 		public shellMusic(args){
 			var music = document.getElementById("music");
 			music.play();
-			_StdOut.putText("Playing music from https://www.youtube.com/watch?v=cA9g-YjfGxo");
+			_StdOut.putText("Playing music from:");
 			_StdOut.advanceLine();
+			_StdOut.putText("https://www.youtube.com/watch?v=cA9g-YjfGxo");
+			_StdOut.advanceLine(); 
 		}
 		
 		public shellLoad(args){
