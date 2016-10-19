@@ -76,6 +76,7 @@ module TSOS {
 		
 		
 		public static cpuUpdate(): void {
+				document.getElementById("cpu.instr").textContent=_MemoryManager.readFromMemory(_CPU.currentPCB, _CPU.PC);
 				document.getElementById("cpu.pc").textContent= _CPU.PC.toString();
 				document.getElementById("cpu.xreg").textContent= _CPU.XReg.toString();
 				document.getElementById("cpu.yreg").textContent= _CPU.YReg.toString();

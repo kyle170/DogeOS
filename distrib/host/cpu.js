@@ -84,8 +84,9 @@ var TSOS;
         };
         Cpu.prototype.cycle = function () {
             if (this.singleStepAuth) {
-                this.PC = this.PC % (this.currentPCB.LimReg - this.currentPCB.BaseReg); // makin sure things are good before we begin
+                this.PC = this.PC % 256; // loop back if goes out of bounds
                 TSOS.Control.cpuUpdate();
+                TSOS.Control.memoryUpdate();
                 _Kernel.krnTrace('CPU cycle');
                 // TODO: Accumulate CPU usage and profiling statistics here. 
                 if (this.currentPCB !== null && this.isExecuting) {
@@ -181,12 +182,13 @@ var TSOS;
                         this.PC++;
                         temp = _MemoryManager.readFromMemory(this.currentPCB, temp2);
                         temp2 = parseInt(temp, 16);
-                        if (this.XReg = temp2) {
-                            this.ZFlag = 1;
-                        }
-                        else {
+                        if (this.XReg !== temp2) {
                             this.ZFlag = 0;
                         }
+                        else {
+                            this.ZFlag = 1;
+                        }
+                        this.PC++;
                         _StdOut.putText("EC Run! - " + this.ZFlag);
                         _StdOut.advanceLine();
                     }

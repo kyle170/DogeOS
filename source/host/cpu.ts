@@ -74,8 +74,9 @@ module TSOS {
 
         public cycle(): void {
 			if(this.singleStepAuth){ // does the cpu have the authority to step?
-				this.PC = this.PC % (this.currentPCB.LimReg - this.currentPCB.BaseReg); // makin sure things are good before we begin
+				this.PC = this.PC % 256; // loop back if goes out of bounds
 				TSOS.Control.cpuUpdate();
+				TSOS.Control.memoryUpdate();
 				_Kernel.krnTrace('CPU cycle');
 				// TODO: Accumulate CPU usage and profiling statistics here. 
 				if(this.currentPCB !== null && this.isExecuting){
@@ -163,17 +164,18 @@ module TSOS {
 						this.PC++;
 						temp = _MemoryManager.readFromMemory(this.currentPCB, temp2);
 						temp2 = parseInt(temp, 16);
-						if(this.XReg = temp2){
-							this.ZFlag = 1;
-						}else{
+						if(this.XReg !== temp2){
 							this.ZFlag = 0;
+						}else{
+							this.ZFlag = 1;
 						}
+						this.PC++;
 						_StdOut.putText("EC Run! - "+ this.ZFlag);
 						_StdOut.advanceLine();
 					}else if(_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'D0'){ // Branch N bytes if z flag = 0 (byte = N)
 						this.PC++;
 						if(this.ZFlag === 0){
-							var temp: string = _MemoryManager.readFromMemory(this.currentPCB, this.PC);
+							var temp =  _MemoryManager.readFromMemory(this.currentPCB, this.PC);
 							var temp2: number = parseInt(temp, 16);
 							this.PC = this.PC + temp2;
 						} else {

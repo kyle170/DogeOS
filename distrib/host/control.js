@@ -63,6 +63,7 @@ var TSOS;
             // TODO in the future: Optionally update a log database or some streaming service.
         };
         Control.cpuUpdate = function () {
+            document.getElementById("cpu.instr").textContent = _MemoryManager.readFromMemory(_CPU.currentPCB, _CPU.PC);
             document.getElementById("cpu.pc").textContent = _CPU.PC.toString();
             document.getElementById("cpu.xreg").textContent = _CPU.XReg.toString();
             document.getElementById("cpu.yreg").textContent = _CPU.YReg.toString();
