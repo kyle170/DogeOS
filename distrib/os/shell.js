@@ -74,7 +74,7 @@ var TSOS;
             sc = new TSOS.ShellCommand(this.shellDomIsLove, "domislove", "- What else would Dom be if not love?");
             this.commandList[this.commandList.length] = sc;
             // music
-            sc = new TSOS.ShellCommand(this.shellMusic, "music", "- Music from the Donkey Kong Country Game... what a classic!");
+            sc = new TSOS.ShellCommand(this.shellMusic, "music", "- Music from https://www.youtube.com/watch?v=cA9g-YjfGxo");
             this.commandList[this.commandList.length] = sc;
             objSharedCommandList = this.commandList;
             // ps  - list the running processes and their IDs
@@ -343,25 +343,8 @@ var TSOS;
                         _StdOut.putText("Who knows what wacky things Dom is up to?... Maybe Love?");
                         break;
                     case "music":
-                        _StdOut.putText("Plays music from the Donkey Kong Country game in order:");
+                        _StdOut.putText("Plays music from https://www.youtube.com/watch?v=cA9g-YjfGxo");
                         _StdOut.advanceLine();
-                        _StdOut.putText("1-Opening Fanfare");
-                        _StdOut.advanceLine();
-                        _StdOut.putText("2-Theme");
-                        _StdOut.advanceLine();
-                        _StdOut.putText("3-Simian Segue");
-                        _StdOut.advanceLine();
-                        _StdOut.putText("4-DK Island Swing");
-                        _StdOut.advanceLine();
-                        _StdOut.putText("5-Cranky's Theme");
-                        _StdOut.advanceLine();
-                        _StdOut.putText("6-Cave Dweller Concert");
-                        _StdOut.advanceLine();
-                        _StdOut.putText("7-Bonus Room Blitz");
-                        _StdOut.advanceLine();
-                        _StdOut.putText("8-Aquatic Ambiance");
-                        _StdOut.advanceLine();
-                        _StdOut.putText("...");
                         break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
@@ -409,8 +392,8 @@ var TSOS;
             ctx.drawImage(BSOD_image, 0, 0);
         };
         Shell.prototype.shellMusic = function (args) {
-            var donkeyKongCountrymusic = document.getElementById("donkeyKongCountrymusic");
-            donkeyKongCountrymusic.play();
+            var music = document.getElementById("music");
+            music.play();
         };
         Shell.prototype.shellLoad = function (args) {
             var program = document.getElementById('taProgramInput').value; //bring in value from html5 input

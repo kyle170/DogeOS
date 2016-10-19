@@ -131,7 +131,7 @@ module TSOS {
 			// music
             sc = new ShellCommand(this.shellMusic,
                                   "music",
-                                  "- Music from the Donkey Kong Country Game... what a classic!");
+                                  "- Music from https://www.youtube.com/watch?v=cA9g-YjfGxo");
             this.commandList[this.commandList.length] = sc;
 			
 			
@@ -423,25 +423,8 @@ module TSOS {
 						_StdOut.putText("Who knows what wacky things Dom is up to?... Maybe Love?");
                         break;
 					case "music":
-						_StdOut.putText("Plays music from the Donkey Kong Country game in order:");
+						_StdOut.putText("Plays music from https://www.youtube.com/watch?v=cA9g-YjfGxo");
 						_StdOut.advanceLine();
-						_StdOut.putText("1-Opening Fanfare");
-						_StdOut.advanceLine();
-						_StdOut.putText("2-Theme");
-						_StdOut.advanceLine();
-						_StdOut.putText("3-Simian Segue");
-						_StdOut.advanceLine();
-						_StdOut.putText("4-DK Island Swing");
-						_StdOut.advanceLine();
-						_StdOut.putText("5-Cranky's Theme");
-						_StdOut.advanceLine();
-						_StdOut.putText("6-Cave Dweller Concert");
-						_StdOut.advanceLine();
-						_StdOut.putText("7-Bonus Room Blitz");
-						_StdOut.advanceLine();
-						_StdOut.putText("8-Aquatic Ambiance");
-						_StdOut.advanceLine();
-						_StdOut.putText("...");
                         break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
@@ -489,8 +472,8 @@ module TSOS {
         }
 		
 		public shellMusic(args){
-			var donkeyKongCountrymusic = document.getElementById("donkeyKongCountrymusic");
-			donkeyKongCountrymusic.play();
+			var music = document.getElementById("music");
+			music.play();
 		}
 		
 		public shellLoad(args){
