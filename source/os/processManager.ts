@@ -14,6 +14,10 @@ module TSOS {
 		
 		public load(programData: Array<string>): number {
 			//load the program into the memory and return a PID to work with
+			if((PCB.CPID*256) >= _Memory.memorySize){
+				_StdOut.putText("Not enough memory!");
+				return -1;
+			}
 			var ProcessControlBlock = new PCB();
 			this.processes[ProcessControlBlock.PID] = ProcessControlBlock;
 			_MemoryManager.alloicateMemoryForProgram(ProcessControlBlock, programData);
