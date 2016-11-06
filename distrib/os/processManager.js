@@ -2,6 +2,7 @@ var TSOS;
 (function (TSOS) {
     var ProcessManager = (function () {
         function ProcessManager() {
+            this.processesList = new Array();
             // nothing here yet
         }
         ProcessManager.prototype.init = function () {
@@ -17,6 +18,7 @@ var TSOS;
             var ProcessControlBlock = new TSOS.PCB();
             this.processes[ProcessControlBlock.PID] = ProcessControlBlock;
             _MemoryManager.alloicateMemoryForProgram(ProcessControlBlock, programData);
+            this.processesList[ProcessControlBlock.PID] = ProcessControlBlock.PID;
             return ProcessControlBlock.PID;
         };
         ProcessManager.prototype.getProcessControlBlock = function (ProcessID) {

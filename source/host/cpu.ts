@@ -41,6 +41,7 @@ module TSOS {
             this.XReg = this.currentPCB.XReg;
             this.YReg = this.currentPCB.YReg;
             this.ZFlag = this.currentPCB.ZFlag;
+            
         }
 
         public runProcess(PID: number):void {
