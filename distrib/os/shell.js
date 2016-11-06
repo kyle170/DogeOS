@@ -79,6 +79,9 @@ var TSOS;
             // runall
             sc = new TSOS.ShellCommand(this.shellRunAll, "runall", "- runs all loaded programs");
             this.commandList[this.commandList.length] = sc;
+            // clearmem
+            sc = new TSOS.ShellCommand(this.shellClearMemory, "clearmem", "- clears all memory");
+            this.commandList[this.commandList.length] = sc;
             objSharedCommandList = this.commandList;
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
@@ -353,6 +356,10 @@ var TSOS;
                         _StdOut.putText("Runs all loaded PID's");
                         _StdOut.advanceLine();
                         break;
+                    case "clearmem":
+                        _StdOut.putText("Clears all memory");
+                        _StdOut.advanceLine();
+                        break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
                 }
@@ -475,6 +482,10 @@ var TSOS;
             else {
                 _StdOut.putText("No Processes Loaded!");
             }
+        };
+        Shell.prototype.shellClearMemory = function (args) {
+            _MemoryManager.clearAllMemory();
+            _StdOut.putText("Memory has been cleared!");
         };
         Shell.prototype.shellDomIsLove = function (args) {
             //placeholder for what is to come

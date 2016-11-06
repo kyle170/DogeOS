@@ -141,7 +141,11 @@ module TSOS {
                                   "- runs all loaded programs");
             this.commandList[this.commandList.length] = sc;
 			
-			
+			// clearmem
+            sc = new ShellCommand(this.shellClearMemory,
+                                  "clearmem",
+                                  "- clears all memory");
+            this.commandList[this.commandList.length] = sc;
 			
 			objSharedCommandList = this.commandList;
 			
@@ -438,6 +442,10 @@ module TSOS {
 						_StdOut.putText("Runs all loaded PID's");
 						_StdOut.advanceLine();
 						break;
+					case "clearmem":
+						_StdOut.putText("Clears all memory");
+						_StdOut.advanceLine();
+						break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
                 }
@@ -556,7 +564,11 @@ module TSOS {
 			}else{
 				_StdOut.putText("No Processes Loaded!");
 			}	
-			
+		}
+		
+		public shellClearMemory(args){
+			_MemoryManager.clearAllMemory();
+			_StdOut.putText("Memory has been cleared!");
 		}
 		
 		public shellDomIsLove(args){
