@@ -98,6 +98,7 @@ var TSOS;
                         var temp = _MemoryManager.readFromMemory(this.currentPCB, this.PC); // get the current infoz from memory!
                         this.Acc = parseInt(temp, 16); //make sure we're good here (http://www.w3schools.com/jsref/jsref_parseint.asp)
                         this.PC++; // add a cycle!
+                        console.log("A9 Run! - " + this.Acc);
                     }
                     else if (_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'AD') {
                         this.PC++;
@@ -107,6 +108,7 @@ var TSOS;
                         temp = _MemoryManager.readFromMemory(this.currentPCB, temp2);
                         this.Acc = parseInt(temp, 16);
                         this.PC++;
+                        console.log("AD Run! - " + this.Acc);
                     }
                     else if (_MemoryManager.readFromMemory(this.currentPCB, this.PC) == '8D') {
                         this.PC++;
@@ -115,6 +117,7 @@ var TSOS;
                         this.PC++;
                         _MemoryManager.writeToMemory(this.currentPCB, temp2, this.Acc.toString(16)); // I think?... seems to output the right thing
                         this.PC++;
+                        console.log("8D Run!");
                     }
                     else if (_MemoryManager.readFromMemory(this.currentPCB, this.PC) == '6D') {
                         this.PC++;
@@ -124,6 +127,7 @@ var TSOS;
                         temp = _MemoryManager.readFromMemory(this.currentPCB, temp2);
                         this.Acc = (this.Acc + parseInt(temp, 16));
                         this.PC++;
+                        console.log("6D Run! - " + this.Acc);
                     }
                     else if (_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'A2') {
                         this.PC++;
@@ -131,6 +135,7 @@ var TSOS;
                         var temp2 = parseInt(temp, 16);
                         this.XReg = temp2;
                         this.PC++;
+                        console.log("A2 Run! - " + this.XReg);
                     }
                     else if (_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'AE') {
                         this.PC++;
@@ -141,6 +146,7 @@ var TSOS;
                         temp2 = parseInt(temp, 16);
                         this.XReg = temp2;
                         this.PC++;
+                        console.log("AE Run! - " + this.XReg);
                     }
                     else if (_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'A0') {
                         this.PC++;
@@ -148,6 +154,7 @@ var TSOS;
                         var temp2 = parseInt(temp, 16);
                         this.YReg = temp2;
                         this.PC++;
+                        console.log("A0 Run! - " + this.YReg);
                     }
                     else if (_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'AC') {
                         this.PC++;
@@ -158,6 +165,7 @@ var TSOS;
                         temp2 = parseInt(temp, 16);
                         this.YReg = temp2;
                         this.PC++;
+                        console.log("AC Run! - " + this.YReg);
                     }
                     else if (_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'EC') {
                         this.PC++;
@@ -173,6 +181,7 @@ var TSOS;
                             this.ZFlag = 1;
                         }
                         this.PC++;
+                        console.log("EC Run! - " + this.ZFlag);
                     }
                     else if (_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'D0') {
                         this.PC++;
@@ -185,6 +194,7 @@ var TSOS;
                         else {
                             this.PC++;
                         }
+                        console.log("D0 Run! - ZFlag:" + this.ZFlag + " - OP MOVE POS: " + this.PC);
                     }
                     else if (_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'EE') {
                         this.PC++;
@@ -195,6 +205,7 @@ var TSOS;
                         var temp3 = parseInt(temp, 16);
                         temp3++;
                         _MemoryManager.writeToMemory(this.currentPCB, temp2, temp3.toString(16));
+                        console.log("EE Run! - " + temp2 + " -> " + temp3);
                     }
                     else if (_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'FF') {
                         // soo.... accroding to this reasarch... if the X is true, I need to return the byte in the y register to the console???
@@ -219,14 +230,18 @@ var TSOS;
                             _StdOut.advanceLine();
                         }
                         this.PC++;
+                        console.log("FF Run!");
                     }
                     else if (_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'EA') {
                         this.PC++;
+                        console.log("EA Run (nothing to do)!");
                     }
                     else if (_MemoryManager.readFromMemory(this.currentPCB, this.PC) == '00') {
+                        console.log("00 Run!");
                         TSOS.Control.cpuUpdate();
                         this.isExecuting = false; // stop the damn thing!
                         this.currentPCB.PS = "TERMINATED";
+                        _ProcessManager.processesList[this.currentPCB.PID] = -1;
                         this.updatePCB();
                         // time to set everything back to normal
                         this.PC = 0;

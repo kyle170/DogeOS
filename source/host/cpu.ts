@@ -41,6 +41,7 @@ module TSOS {
             this.XReg = this.currentPCB.XReg;
             this.YReg = this.currentPCB.YReg;
             this.ZFlag = this.currentPCB.ZFlag;
+            
         }
 
         public runProcess(PID: number):void {
@@ -87,8 +88,7 @@ module TSOS {
 						var temp: string =  _MemoryManager.readFromMemory(this.currentPCB, this.PC); // get the current infoz from memory!
 						this.Acc = parseInt(temp, 16); //make sure we're good here (http://www.w3schools.com/jsref/jsref_parseint.asp)
 						this.PC++; // add a cycle!
-						//_StdOut.putText("A9 Run! - "+ this.Acc);
-						//_StdOut.advanceLine();
+						console.log("A9 Run! - "+ this.Acc);
 					}else if(_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'AD'){  // Load acculuminator from memory  (forgot how to spell)
 						this.PC++;
 						var temp: string = _MemoryManager.readFromMemory(this.currentPCB, this.PC);
@@ -97,8 +97,7 @@ module TSOS {
 						temp = _MemoryManager.readFromMemory(this.currentPCB, temp2);
 						this.Acc = parseInt(temp, 16);
 						this.PC++;
-						//_StdOut.putText("AD Run! - "+ this.Acc);
-						//_StdOut.advanceLine();
+						console.log("AD Run! - "+ this.Acc);
 					}else if(_MemoryManager.readFromMemory(this.currentPCB, this.PC) == '8D'){ // Store acculuminator in memory
 						this.PC++;
 						var temp: string = _MemoryManager.readFromMemory(this.currentPCB, this.PC);
@@ -106,8 +105,7 @@ module TSOS {
 						this.PC++;
 						_MemoryManager.writeToMemory(this.currentPCB, temp2, this.Acc.toString(16)); // I think?... seems to output the right thing
 						this.PC++;
-						//_StdOut.putText("8D Run!");
-						//_StdOut.advanceLine();
+						console.log("8D Run!");
 					}else if(_MemoryManager.readFromMemory(this.currentPCB, this.PC) == '6D'){ // Add with carry
 						this.PC++;
 						var temp: string = _MemoryManager.readFromMemory(this.currentPCB, this.PC);
@@ -116,16 +114,14 @@ module TSOS {
 						temp = _MemoryManager.readFromMemory(this.currentPCB, temp2);
 						this.Acc = (this.Acc + parseInt(temp, 16));
 						this.PC++;
-						//_StdOut.putText("6D Run! - " + this.Acc);
-						//_StdOut.advanceLine();
+						console.log("6D Run! - " + this.Acc);
 					}else if(_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'A2'){ // Load X Register with consr
 						this.PC++;
 						var temp: string = _MemoryManager.readFromMemory(this.currentPCB, this.PC);
 						var temp2: number = parseInt(temp, 16);
 						this.XReg = temp2;
 						this.PC++;
-						//_StdOut.putText("A2 Run! - "+ this.XReg);
-						//_StdOut.advanceLine();
+						console.log("A2 Run! - "+ this.XReg);
 					}else if(_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'AE'){ // Load X Register from mem 
 						this.PC++;
 						var temp: string = _MemoryManager.readFromMemory(this.currentPCB, this.PC);
@@ -135,16 +131,14 @@ module TSOS {
 						temp2 = parseInt(temp, 16);
 						this.XReg = temp2;
 						this.PC++;
-						//_StdOut.putText("AE Run! - "+ this.XReg);
-						//_StdOut.advanceLine();
+						console.log("AE Run! - "+ this.XReg);
 					}else if(_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'A0'){ // Load Y Register with consr
 						this.PC++;
 						var temp: string = _MemoryManager.readFromMemory(this.currentPCB, this.PC);
 						var temp2: number = parseInt(temp, 16);
 						this.YReg = temp2;
 						this.PC++;
-						//_StdOut.putText("A0 Run! - "+ this.YReg);
-						//_StdOut.advanceLine();
+						console.log("A0 Run! - "+ this.YReg);
 					}else if(_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'AC'){ // Load Y Register from mem
 						this.PC++;
 						var temp: string = _MemoryManager.readFromMemory(this.currentPCB, this.PC);
@@ -154,8 +148,7 @@ module TSOS {
 						temp2 = parseInt(temp, 16);
 						this.YReg = temp2;
 						this.PC++;
-						//_StdOut.putText("AC Run! - "+ this.YReg);
-						//_StdOut.advanceLine();
+						console.log("AC Run! - "+ this.YReg);
 					}else if(_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'EC'){ // Compare byte at addr to X register, set z flag if equal
 						this.PC++;
 						var temp: string = _MemoryManager.readFromMemory(this.currentPCB, this.PC);
@@ -169,8 +162,7 @@ module TSOS {
 							this.ZFlag = 1;
 						}
 						this.PC++;
-						//_StdOut.putText("EC Run! - "+ this.ZFlag);
-						//_StdOut.advanceLine();
+						console.log("EC Run! - "+ this.ZFlag);
 					}else if(_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'D0'){ // Branch N bytes if z flag = 0 (byte = N)
 						this.PC++;
 						if(this.ZFlag === 0){
@@ -181,8 +173,7 @@ module TSOS {
 						} else {
 							this.PC++;
 						}
-						//_StdOut.putText("D0 Run! - ZFlag:"+ this.ZFlag + " - OP MOVE POS: "+ this.PC);
-						//_StdOut.advanceLine();
+						console.log("D0 Run! - ZFlag:"+ this.ZFlag + " - OP MOVE POS: "+ this.PC);
 					}else if(_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'EE'){ // EE increment a byte at addr
 						this.PC++;
 						var temp: string = _MemoryManager.readFromMemory(this.currentPCB, this.PC);
@@ -192,8 +183,7 @@ module TSOS {
 						var temp3: number = parseInt(temp, 16);
 						temp3++;
 						_MemoryManager.writeToMemory(this.currentPCB, temp2, temp3.toString(16));
-						//_StdOut.putText("EE Run! - "+temp2+" -> "+temp3);
-						//_StdOut.advanceLine();
+						console.log("EE Run! - "+temp2+" -> "+temp3);
 					}else if(_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'FF'){ // System call: {{{{TBD}}}}
 						// soo.... accroding to this reasarch... if the X is true, I need to return the byte in the y register to the console???
 						// and if there is a 2? in the x register?... not there yet
@@ -217,16 +207,16 @@ module TSOS {
 							_StdOut.advanceLine();
 						}
 						this.PC++;
-						//_StdOut.putText("FF Run!");
-						//_StdOut.advanceLine();
+						console.log("FF Run!");
 					}else if(_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'EA'){ // No OP
 						this.PC++;
-						//_StdOut.putText("EA Run (nothing to do)!");
-						//_StdOut.advanceLine();
+						console.log("EA Run (nothing to do)!");
 					}else if(_MemoryManager.readFromMemory(this.currentPCB, this.PC) == '00'){ // BREAK PROGRAM (sys call) {{{{Something went terribly right!}}}}
+						console.log("00 Run!");
 						TSOS.Control.cpuUpdate();
 						this.isExecuting = false; // stop the damn thing!
 						this.currentPCB.PS = "TERMINATED";
+						_ProcessManager.processesList[this.currentPCB.PID] = -1;
 						this.updatePCB();
 						// time to set everything back to normal
 						this.PC = 0;

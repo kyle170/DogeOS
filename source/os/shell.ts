@@ -32,6 +32,7 @@ module TSOS {
             //
             // Load the command list. 
 
+			
             // ver
             sc = new ShellCommand(this.shellVer,
                                   "ver",
@@ -134,6 +135,17 @@ module TSOS {
                                   "- Music from https://www.youtube.com/watch?v=cA9g-YjfGxo");
             this.commandList[this.commandList.length] = sc;
 			
+			// runall
+            sc = new ShellCommand(this.shellRunAll,
+                                  "runall",
+                                  "- runs all loaded programs");
+            this.commandList[this.commandList.length] = sc;
+			
+			// clearmem
+            sc = new ShellCommand(this.shellClearMemory,
+                                  "clearmem",
+                                  "- clears all memory");
+            this.commandList[this.commandList.length] = sc;
 			
 			objSharedCommandList = this.commandList;
 			
@@ -426,6 +438,14 @@ module TSOS {
 						_StdOut.putText("Plays music from https://www.youtube.com/watch?v=cA9g-YjfGxo");
 						_StdOut.advanceLine();
                         break;
+					case "runall":
+						_StdOut.putText("Runs all loaded PID's");
+						_StdOut.advanceLine();
+						break;
+					case "clearmem":
+						_StdOut.putText("Clears all memory");
+						_StdOut.advanceLine();
+						break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
                 }
@@ -482,6 +502,7 @@ module TSOS {
 		
 		public shellLoad(args){
 			var program: string = document.getElementById('taProgramInput').value; //bring in value from html5 input
+			program = program.replace(/(\r\n|\n|\r)/gm,"");
 			program = Utils.trim(program); // remove white
 			var isStillValidHex: boolean=true; // set false if any aprt is not hex
 			var programArray: Array<string> = program.split(' ');
@@ -528,6 +549,28 @@ module TSOS {
 			}else{
 				_StdOut.putText("No arguements provided (do you actually want to run something or just waste my time?)");
 			}
+		}
+		
+		public shellRunAll(args){
+			if(_ProcessManager.processesList.length > -1){
+				for(var i=0; i<_ProcessManager.processesList.length; i++){
+					if(_ProcessManager.processesList[i] != -1){
+						_StdOut.putText("Attempting to run PID: "+  _ProcessManager.processesList[i]);
+						_StdOut.advanceLine();
+						_CPU.runProcess(_ProcessManager.processesList[i]);
+					}else{
+						_StdOut.putText("Skipping terminated PID: "+ i);
+						_StdOut.advanceLine();
+					}
+				}
+			}else{
+				_StdOut.putText("No Processes Loaded!");
+			}	
+		}
+		
+		public shellClearMemory(args){
+			_MemoryManager.clearAllMemory();
+			_StdOut.putText("Memory has been cleared!");
 		}
 		
 		public shellDomIsLove(args){

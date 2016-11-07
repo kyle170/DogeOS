@@ -1,6 +1,6 @@
 module TSOS {
     export class ProcessManager {
-		
+		public processesList = new Array();
 		private processes;
 		
 		constructor(){
@@ -21,6 +21,7 @@ module TSOS {
 			var ProcessControlBlock = new PCB();
 			this.processes[ProcessControlBlock.PID] = ProcessControlBlock;
 			_MemoryManager.alloicateMemoryForProgram(ProcessControlBlock, programData);
+			this.processesList[ProcessControlBlock.PID] = ProcessControlBlock.PID;
 			return ProcessControlBlock.PID;
 		}
 		

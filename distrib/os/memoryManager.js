@@ -52,6 +52,12 @@ var TSOS;
             }
             TSOS.Control.memoryUpdate();
         };
+        MemoryManager.prototype.clearAllMemory = function () {
+            for (var i = 0; i < this.memoryTotalSize; i++) {
+                _Memory.setByte(i, '00');
+            }
+            TSOS.Control.memoryUpdate();
+        };
         return MemoryManager;
     }());
     TSOS.MemoryManager = MemoryManager;

@@ -54,5 +54,12 @@ module TSOS {
 			TSOS.Control.memoryUpdate();
 		}
 		
+		public clearAllMemory(): void {
+			for(var i: number=0; i<this.memoryTotalSize; i++){
+				_Memory.setByte(i, '00');
+			}
+			TSOS.Control.memoryUpdate();
+		}
+		
     }
 }
