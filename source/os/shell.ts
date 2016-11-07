@@ -17,7 +17,7 @@
 
 module TSOS {
     export class Shell {
-        // Properties
+        // Properties 
         public promptStr = ">";
         public commandList = [];
         public curses = "[fuvg],[cvff],[shpx],[phag],[pbpxfhpxre],[zbgureshpxre],[gvgf]";

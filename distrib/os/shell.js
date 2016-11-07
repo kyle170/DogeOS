@@ -15,7 +15,7 @@ var TSOS;
 (function (TSOS) {
     var Shell = (function () {
         function Shell() {
-            // Properties
+            // Properties 
             this.promptStr = ">";
             this.commandList = [];
             this.curses = "[fuvg],[cvff],[shpx],[phag],[pbpxfhpxre],[zbgureshpxre],[gvgf]";

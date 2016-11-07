@@ -1,5 +1,5 @@
 module TSOS {
-    export class PCB {
+    export class PCB { 
 		// allow these to be accessed by other class methods
 		static CPID: number = 0;	// want this globally accessable... start with 0
         public PID: number;			// Int (PID, its how we identify them)

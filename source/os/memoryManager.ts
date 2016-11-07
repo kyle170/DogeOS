@@ -1,6 +1,6 @@
 module TSOS {
     export class MemoryManager {
-        private memoryTotalSize: number = _Memory.memorySize;
+        private memoryTotalSize: number = _Memory.memorySize; 
 		
 		constructor(){
 			// nothing needed...just a palceholder

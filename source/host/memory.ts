@@ -1,6 +1,6 @@
 module TSOS {
     export class Memory {
-		private memory;
+		private memory; 
 		public memorySize: number = 0;
 		
 		constructor(size: number){
