@@ -502,6 +502,7 @@ module TSOS {
 		
 		public shellLoad(args){
 			var program: string = document.getElementById('taProgramInput').value; //bring in value from html5 input
+			program = program.replace(/(\r\n|\n|\r)/gm,"");
 			program = Utils.trim(program); // remove white
 			var isStillValidHex: boolean=true; // set false if any aprt is not hex
 			var programArray: Array<string> = program.split(' ');
@@ -558,7 +559,8 @@ module TSOS {
 						_StdOut.advanceLine();
 						_CPU.runProcess(_ProcessManager.processesList[i]);
 					}else{
-						_StdOut.putText("Skipping terminated PID:"+ _ProcessManager.processesList[i]);
+						_StdOut.putText("Skipping terminated PID: "+ i);
+						_StdOut.advanceLine();
 					}
 				}
 			}else{

@@ -415,6 +415,7 @@ var TSOS;
         };
         Shell.prototype.shellLoad = function (args) {
             var program = document.getElementById('taProgramInput').value; //bring in value from html5 input
+            program = program.replace(/(\r\n|\n|\r)/gm, "");
             program = TSOS.Utils.trim(program); // remove white
             var isStillValidHex = true; // set false if any aprt is not hex
             var programArray = program.split(' ');
@@ -475,7 +476,8 @@ var TSOS;
                         _CPU.runProcess(_ProcessManager.processesList[i]);
                     }
                     else {
-                        _StdOut.putText("Skipping terminated PID:" + _ProcessManager.processesList[i]);
+                        _StdOut.putText("Skipping terminated PID: " + i);
+                        _StdOut.advanceLine();
                     }
                 }
             }
