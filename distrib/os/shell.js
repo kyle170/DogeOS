@@ -82,9 +82,19 @@ var TSOS;
             // clearmem
             sc = new TSOS.ShellCommand(this.shellClearMemory, "clearmem", "- clears all memory");
             this.commandList[this.commandList.length] = sc;
+            // killall
+            sc = new TSOS.ShellCommand(this.shellKillAll, "killall", "- DESTORY ALL THE PROCESSES");
+            this.commandList[this.commandList.length] = sc;
+            // kill
+            sc = new TSOS.ShellCommand(this.shellKill, "kill", "- kills a process");
+            this.commandList[this.commandList.length] = sc;
+            // ps
+            sc = new TSOS.ShellCommand(this.shellPS, "ps", "- lists running processes");
+            this.commandList[this.commandList.length] = sc;
+            // quantium
+            sc = new TSOS.ShellCommand(this.shellQuantium, "quantium", "- sets the quantium for RR scheduling (Ex: quantium 4 )");
+            this.commandList[this.commandList.length] = sc;
             objSharedCommandList = this.commandList;
-            // ps  - list the running processes and their IDs
-            // kill <id> - kills the specified process id.
             //
             // Display the initial prompt.
             this.putPrompt();
@@ -360,6 +370,22 @@ var TSOS;
                         _StdOut.putText("Clears all memory");
                         _StdOut.advanceLine();
                         break;
+                    case "killall":
+                        _StdOut.putText("Clears all processes");
+                        _StdOut.advanceLine();
+                        break;
+                    case "kill":
+                        _StdOut.putText("Kills a singular process with a given PiD, (Ex: kill 2)");
+                        _StdOut.advanceLine();
+                        break;
+                    case "ps":
+                        _StdOut.putText("Lists the processes that are currently running");
+                        _StdOut.advanceLine();
+                        break;
+                    case "quantium":
+                        _StdOut.putText("Sets the Round Robbin Quanitum scheduling interrupt algorithm for the CPU");
+                        _StdOut.advanceLine();
+                        break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
                 }
@@ -488,6 +514,18 @@ var TSOS;
         Shell.prototype.shellClearMemory = function (args) {
             _MemoryManager.clearAllMemory();
             _StdOut.putText("Memory has been cleared!");
+        };
+        Shell.prototype.shellKillAll = function (args) {
+            // nothing here yet
+        };
+        Shell.prototype.shellKill = function (args) {
+            // nothing here yet
+        };
+        Shell.prototype.shellPS = function (args) {
+            // nothing here yet
+        };
+        Shell.prototype.shellQuantium = function (args) {
+            // nothing here yet
         };
         Shell.prototype.shellDomIsLove = function (args) {
             //placeholder for what is to come
