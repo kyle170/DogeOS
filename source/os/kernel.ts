@@ -28,7 +28,7 @@ module TSOS {
             _KernelInputQueue = new Queue();      // Where device input lands before being processed out somewhere.
 			
 			
-			_ProcessManager = new ProcessManager();
+			_ProcessManager = new ProcessManager(3);
             _MemoryManager = new MemoryManager();
 			_CPUScheduler = new CPUScheduler();
             _ProcessManager.init();
