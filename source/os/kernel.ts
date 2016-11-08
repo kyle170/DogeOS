@@ -30,6 +30,7 @@ module TSOS {
 			
 			_ProcessManager = new ProcessManager();
             _MemoryManager = new MemoryManager();
+			_CPUScheduler = new CPUScheduler();
             _ProcessManager.init();
             _MemoryManager.init();
 

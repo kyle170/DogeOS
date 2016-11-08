@@ -1,10 +1,13 @@
 module TSOS {
     export class ProcessManager {
 		public processesList = new Array();
+		public ResidentList: TSOS.PCB[];
+		public readyQueue: TSOS.Queue;
 		private processes;
 		
-		constructor(){
-			// nothing here yet
+		constructor(private maxPIDs: number){
+			this.readyQueue = new Queue(); // bringith the queue :)	
+			this.ResidentList = []; // initialize the resident list array
 		}
 		
 		public init(){
@@ -23,6 +26,22 @@ module TSOS {
 			_MemoryManager.alloicateMemoryForProgram(ProcessControlBlock, programData);
 			this.processesList[ProcessControlBlock.PID] = ProcessControlBlock.PID;
 			return ProcessControlBlock.PID;
+		}
+		
+		public runall(){
+			// nothing here yet
+		}
+		
+		public kill(pid: number){
+			// nothing here yet
+		}
+		
+		public getRunning(){
+			// nothing here yet
+		}
+		
+		public checkIfExists(pid: number){
+			// nothing here yet
 		}
 		
 		public getProcessControlBlock(ProcessID: number){

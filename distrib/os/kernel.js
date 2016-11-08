@@ -27,6 +27,7 @@ var TSOS;
             _KernelInputQueue = new TSOS.Queue(); // Where device input lands before being processed out somewhere.
             _ProcessManager = new TSOS.ProcessManager();
             _MemoryManager = new TSOS.MemoryManager();
+            _CPUScheduler = new TSOS.CPUScheduler();
             _ProcessManager.init();
             _MemoryManager.init();
             // Initialize the console.
