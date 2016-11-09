@@ -24,8 +24,8 @@ var TSOS;
             isExecuting, // status.... do I have something to do or just sit here?	
             currentPCB, // yes... this contains the PCB.... questions?
             singleStepMode, // are we single stepping?
-            singleStepAuth // do we have the authority to step?
-            ) {
+            singleStepAuth, // do we have the authority to step?
+            pid) {
             if (PC === void 0) { PC = 0; }
             if (Acc === void 0) { Acc = 0; }
             if (XReg === void 0) { XReg = 0; }
@@ -35,6 +35,7 @@ var TSOS;
             if (currentPCB === void 0) { currentPCB = null; }
             if (singleStepMode === void 0) { singleStepMode = false; }
             if (singleStepAuth === void 0) { singleStepAuth = true; }
+            if (pid === void 0) { pid = 0; }
             this.PC = PC;
             this.Acc = Acc;
             this.XReg = XReg;
@@ -44,6 +45,7 @@ var TSOS;
             this.currentPCB = currentPCB;
             this.singleStepMode = singleStepMode;
             this.singleStepAuth = singleStepAuth;
+            this.pid = pid;
         }
         Cpu.prototype.init = function () {
             // nothing here so far...
@@ -60,6 +62,7 @@ var TSOS;
             //load the program and set the parameters for the PCB
             this.currentPCB = ProcessControlBlock;
             this.currentPCB.PS = "RUNNING";
+            this.pid = this.currentPCB.PID;
             this.loadFromPCB();
         };
         Cpu.prototype.updatePCB = function () {

@@ -26,7 +26,8 @@ module TSOS {
                 public isExecuting: boolean = false,	// status.... do I have something to do or just sit here?	
                 public currentPCB: TSOS.PCB = null,		// yes... this contains the PCB.... questions?
 				public singleStepMode: boolean = false, // are we single stepping?
-				public singleStepAuth: boolean = true   // do we have the authority to step?
+				public singleStepAuth: boolean = true,   // do we have the authority to step?
+				public pid: number = 0
                 ) {
         }
 
@@ -48,6 +49,7 @@ module TSOS {
 			//load the program and set the parameters for the PCB
             this.currentPCB = ProcessControlBlock;
 			this.currentPCB.PS = "RUNNING";
+			this.pid = this.currentPCB.PID;
             this.loadFromPCB();
         }
 		

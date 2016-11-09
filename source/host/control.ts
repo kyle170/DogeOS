@@ -76,15 +76,31 @@ module TSOS {
 		
 		
 		public static cpuUpdate(): void {
+				/*
 				document.getElementById("cpu.instr").textContent=_MemoryManager.readFromMemory(_CPU.currentPCB, _CPU.PC);
 				document.getElementById("cpu.pc").textContent= _CPU.PC.toString();
 				document.getElementById("cpu.acc").textContent= _CPU.Acc.toString();
 				document.getElementById("cpu.xreg").textContent= _CPU.XReg.toString();
 				document.getElementById("cpu.yreg").textContent= _CPU.YReg.toString();
 				document.getElementById("cpu.zflag").textContent= _CPU.ZFlag.toString();
-				document.getElementById("cpu.isexecuting").textContent= _CPU.isExecuting.toString();		
+				document.getElementById("cpu.isexecuting").textContent= _CPU.isExecuting.toString();
+				*/
+				this.readyQueueUpdate();
 			// udpate the html pcb
 		}
+		
+		public static readyQueueUpdate(): void {
+				var output: string = 'CPU Active PCB: \n{"PID":'+_CPU.pid.toString()+',"Inst": '+_MemoryManager.readFromMemory(_CPU.currentPCB, _CPU.PC)+',"Acc":'+_CPU.Acc.toString()+',"XReg":'+_CPU.XReg.toString()+',"YReg":'+_CPU.YReg.toString()+',"ZFlag":'+_CPU.ZFlag.toString()+',"PC":'+_CPU.PC.toString()+', "PS": "'+_CPU.currentPCB.PS+'"} \n\nWaiting:\n';
+				var ReadyQueue = _ProcessManager.readyQueue;
+				var output2 = JSON.stringify(ReadyQueue);
+				output2 = output2.substring(6, output2.length-2);
+				output = output + output2;
+				
+				
+				document.getElementById('taReadyQueue').innerHTML = output;
+			// udpate the html pcb
+		}
+		
 		
 		public static memoryUpdate(): void {
 				var output: string = "";
