@@ -56,26 +56,24 @@ var TSOS;
             this.YReg = this.currentPCB.YReg;
             this.ZFlag = this.currentPCB.ZFlag;
         };
-        Cpu.prototype.runProcess = function (PID) {
+        /*
+        public runProcess(PID: number):void {
             //set the PCB with the PID of the process
             this.currentPCB = _ProcessManager.getProcessControlBlock(PID);
-            if (this.currentPCB.PS === "TERMINATED") {
+            if(this.currentPCB.PS === "TERMINATED"){ // if its not terminated, run it and laod to PCB
                 _StdOut.putText('This process has already been terminated or doesnt exist');
-            }
-            else {
+            } else {
                 this.currentPCB.PS = "RUNNING";
                 this.loadFromPCB();
                 this.isExecuting = true;
             }
-        };
+        }
+        */
         Cpu.prototype.loadProgram = function (ProcessControlBlock) {
             //load the program and set the parameters for the PCB
             this.currentPCB = ProcessControlBlock;
-            this.Acc = ProcessControlBlock.Acc;
-            this.PC = ProcessControlBlock.PC;
-            this.XReg = ProcessControlBlock.XReg;
-            this.YReg = ProcessControlBlock.YReg;
-            this.ZFlag = ProcessControlBlock.ZFlag;
+            this.currentPCB.PS = "RUNNING";
+            this.loadFromPCB();
         };
         Cpu.prototype.updatePCB = function () {
             if (this.currentPCB !== null) {

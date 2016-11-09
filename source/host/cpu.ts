@@ -44,6 +44,7 @@ module TSOS {
             
         }
 
+		/*
         public runProcess(PID: number):void {
 			//set the PCB with the PID of the process
             this.currentPCB = _ProcessManager.getProcessControlBlock(PID);
@@ -55,15 +56,12 @@ module TSOS {
                 this.isExecuting = true;
 			}
         }
-
+		*/
         public loadProgram(ProcessControlBlock: TSOS.PCB): void {
 			//load the program and set the parameters for the PCB
             this.currentPCB = ProcessControlBlock;
-            this.Acc = ProcessControlBlock.Acc;
-            this.PC = ProcessControlBlock.PC;
-            this.XReg = ProcessControlBlock.XReg;
-            this.YReg = ProcessControlBlock.YReg;
-            this.ZFlag = ProcessControlBlock.ZFlag;
+			this.currentPCB.PS = "RUNNING";
+            this.loadFromPCB();
         }
 		
 		public updatePCB(){

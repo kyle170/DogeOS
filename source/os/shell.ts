@@ -580,7 +580,7 @@ module TSOS {
 				for(var i=0; i<args.length; i++){
 					_StdOut.putText("Attempting to run PID: "+  args[i]);
 					_StdOut.advanceLine();
-					_CPU.runProcess(args[i]);
+					_ProcessManager.runPiD(args[i]);
 				}
 			}else{
 				_StdOut.putText("No arguements provided (do you actually want to run something or just waste my time?)");
@@ -613,13 +613,29 @@ module TSOS {
 			// nothing here yet
 		}
 		public shellKill(args){
-			// nothing here yet
+			if (args.length > 0) {
+                // invoke the killbot!
+				var pidToKill = parseInt(args[0]);
+				if(_ProcessManager.checkIfExists(pidToKill)){
+					_StdOut.putText("Killing PiD"+ pidToKill);
+					_ProcessManager.kill(pidToKill);
+				}else{
+					_StdOut.putText("PiD "+ pidToKill +" Doesnt Exist");
+				}
+            } else {
+                _StdOut.putText("Usage: kill <pid> - You must tell me what to kill!");
+            }
 		}
 		public shellPS(args){
 			// nothing here yet
 		}
 		public shellQuantium(args){
-			// nothing here yet
+			if (args.length > 0) {
+                // invoke the quantium!
+				
+            } else {
+                _StdOut.putText("Usage: quantum <number> - You must tell me what you want to set the quantum to!");
+            }
 		}
 		
 		public shellDomIsLove(args){

@@ -22,10 +22,17 @@ module TSOS {
 				return -1;
 			}
 			var ProcessControlBlock = new PCB();
-			this.processes[ProcessControlBlock.PID] = ProcessControlBlock;
+			this.ResidentList[ProcessControlBlock.PID] = ProcessControlBlock;
 			_MemoryManager.alloicateMemoryForProgram(ProcessControlBlock, programData);
 			this.processesList[ProcessControlBlock.PID] = ProcessControlBlock.PID;
 			return ProcessControlBlock.PID;
+		}
+		
+		public runPiD(ProcessID: number): void {
+			var ProcessControlBlock = this.ResidentList[ProcessID];
+			ProcessControlBlock.PS = "WAITING";
+			this.readyQueue.enqueue(this.ResidentList[ProcessID]); // send her off
+			_CPU.isExecuting = true;
 		}
 		
 		public runall(){
@@ -34,19 +41,33 @@ module TSOS {
 		
 		public kill(pid: number){
 			// nothing here yet
+			// TODO: Stop execution, (KEEP IS_EXECUTING RUNNING), deallicate memory
 		}
 		
-		public getRunning(){
-			// nothing here yet
+		public getRunning(): TSOS.PCB[] {
+			var runningProcesses: TSOS.PCB[] = [];
+			for(var i: number = 0; this.ResidentList.length; i++){
+				var tempPCB = this.ResidentList[i];
+				if(tempPCB.PS === "Running" || tempPCB.PS === "Waiting"){
+					runningProcesses.push(tempPCB);
+				}
+			}
+			return runningProcesses;
 		}
 		
-		public checkIfExists(pid: number){
-			// nothing here yet
+		public checkIfExists(ProcessID: number): boolean{
+			if(this.ResidentList[ProcessID] !== null && this.ResidentList[ProcessID] !== undefined){
+				return true;
+			}else{
+				return false;
+			}
 		}
 		
 		public getProcessControlBlock(ProcessID: number){
 			//simply just grabs the process control block PID
-			return this.processes[ProcessID];
+			return this.ResidentList[ProcessID];
 		}
+		
+		
     }
 }
