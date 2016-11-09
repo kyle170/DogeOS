@@ -494,7 +494,8 @@ var TSOS;
             }
         };
         Shell.prototype.shellRunAll = function (args) {
-            if (!_ProcessManager.runall()) {
+            var allgood = _ProcessManager.runall();
+            if (!allgood) {
                 _StdOut.putText("No Processes Loaded!");
             }
         };

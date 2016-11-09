@@ -3,6 +3,7 @@ module TSOS {
 		public processesList = new Array();
 		public ResidentList: TSOS.PCB[];
 		public readyQueue: TSOS.Queue;
+		private PCBCONVERTER: TSOS.PCB;
 		private processes;
 		
 		constructor(private maxPIDs: number){
@@ -31,8 +32,8 @@ module TSOS {
 		public runPiD(ProcessID: number): void {
 			var ProcessControlBlock = this.ResidentList[ProcessID];
 			ProcessControlBlock.PS = "WAITING";
-			this.readyQueue.enqueue(this.ResidentList[ProcessID]); // send her off
-			_CPU.isExecuting = true;
+			this.PCBCONVERTER = this.ResidentList[ProcessID];
+			this.readyQueue.enqueue(this.PCBCONVERTER); // send her off
 		}
 		
 		public runall(): boolean{
@@ -40,10 +41,10 @@ module TSOS {
 			var counter:number = 0;
 			for(var i:number=0; i<this.ResidentList.length; i++){
 				if(this.ResidentList[i].PS === "NEW"){
-					_ProcessManager.runPiD(i);
 					_StdOut.putText("Attempting to run PID: "+ i);
 					_StdOut.advanceLine();
 					counter++;
+					this.runPiD(i);
 				}
 			}
 			if(counter != 0){

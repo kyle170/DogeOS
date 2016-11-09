@@ -2,7 +2,7 @@ module TSOS {
     export class CPUScheduler {
 		public schedulingType: string; // ROUND_ROBIN, FCFS
 		private quantum: number;
-		private pCounter: number;
+		public pCounter: number;
 		private CurrentPCBProgram: TSOS.PCB;
 		
 		
@@ -27,18 +27,17 @@ module TSOS {
 			if(this.schedulingType === "ROUND_ROBIN"){
 				// do round robbin
 				this.ScheduleRoundRobbin();
-			}else if(this.schedulingType === "FCFS"){
-				// do first come first serve
-				this.ScheduleFirstComeFirstServe();
 			}else{
 				//WTFIDKBBQ
+				this.ScheduleRoundRobbin();
 			}
 		}
 		
 		public contextSwitch(): void {
 			if(_CPU.currentPCB === null && _ProcessManager.readyQueue.getSize() > 0){ // nothing to start with and a program arrives
                 var ProgramToRun = _ProcessManager.readyQueue.dequeue();
-                ProgramToRun.PS = "RUNNING"; this.CurrentPCBProgram = ProgramToRun;
+                ProgramToRun.PS = "RUNNING"; 
+				this.CurrentPCBProgram = ProgramToRun;
                 _CPU.loadProgram(this.CurrentPCBProgram);
             }else if(_CPU.currentPCB !== null && _ProcessManager.readyQueue.getSize() > 0){ // something already is in tehre and another program arrives
 				_CPU.updatePCB();
@@ -52,10 +51,6 @@ module TSOS {
 			}
 		}
 		
-		private ScheduleFirstComeFirstServe(): void {
-			// nothing here yet
-		}
-		
 		private ScheduleRoundRobbin(): void {
 			if(_CPU.currentPCB === null && _ProcessManager.readyQueue.getSize() > 0){
                 var ProgramToRun = _ProcessManager.readyQueue.dequeue();
@@ -67,6 +62,8 @@ module TSOS {
 				if(this.pCounter >= this.quantum){
 					this.pCounter = 1;
 				}
+			}else{
+				//nothing?>
 			}
 		}
 		

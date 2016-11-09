@@ -588,7 +588,8 @@ module TSOS {
 		}
 		
 		public shellRunAll(args){
-			if(!_ProcessManager.runall()){
+			var allgood: boolean = _ProcessManager.runall();
+			if(!allgood){
 				_StdOut.putText("No Processes Loaded!");	
 			}
 		}

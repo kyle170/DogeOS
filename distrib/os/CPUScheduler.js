@@ -20,11 +20,9 @@ var TSOS;
                 // do round robbin
                 this.ScheduleRoundRobbin();
             }
-            else if (this.schedulingType === "FCFS") {
-                // do first come first serve
-                this.ScheduleFirstComeFirstServe();
-            }
             else {
+                //WTFIDKBBQ
+                this.ScheduleRoundRobbin();
             }
         };
         CPUScheduler.prototype.contextSwitch = function () {
@@ -45,9 +43,6 @@ var TSOS;
                 _CPU.loadProgram(this.CurrentPCBProgram);
             }
         };
-        CPUScheduler.prototype.ScheduleFirstComeFirstServe = function () {
-            // nothing here yet
-        };
         CPUScheduler.prototype.ScheduleRoundRobbin = function () {
             if (_CPU.currentPCB === null && _ProcessManager.readyQueue.getSize() > 0) {
                 var ProgramToRun = _ProcessManager.readyQueue.dequeue();
@@ -60,6 +55,8 @@ var TSOS;
                 if (this.pCounter >= this.quantum) {
                     this.pCounter = 1;
                 }
+            }
+            else {
             }
         };
         CPUScheduler.prototype.QuantumGet = function () {

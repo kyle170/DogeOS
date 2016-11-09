@@ -68,6 +68,7 @@ module TSOS {
 					//I had a thought... why not auto incriment the process counter here instead of have it incriment every time?
 					//_StdOut.putText("-- RUN: "+_MemoryManager.readFromMemory(this.currentPCB, this.PC)+ ", MEM: "+ _MemoryManager.readFromMemory(this.currentPCB, this.PC+1)+" --"); 
 					//_StdOut.advanceLine();
+					_CPUScheduler.pCounter++;
 					if(_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'A9'){ // Load accumulator with constant
 						this.PC++;
 						var temp: string =  _MemoryManager.readFromMemory(this.currentPCB, this.PC); // get the current infoz from memory!
@@ -198,14 +199,10 @@ module TSOS {
 						console.log("EA Run (nothing to do)!");
 					}else if(_MemoryManager.readFromMemory(this.currentPCB, this.PC) == '00'){ // BREAK PROGRAM (sys call) {{{{Something went terribly right!}}}}
 						console.log("00 Run!");
+						this.updatePCB();
 						this.currentPCB.PS = "TERMINATED";
-						if(_ProcessManager.readyQueue.getSize() === 0){
-							this.isExecuting = false;
-						}
 						TSOS.Control.cpuUpdate();
 						_CPUScheduler.clearPCB();
-						_ProcessManager.processesList[this.currentPCB.PID] = -1;
-						this.updatePCB();
 						// time to set everything back to normal
 						this.PC = 0;
 						this.ZFlag = 0;
@@ -215,6 +212,9 @@ module TSOS {
 						this.currentPCB = null;
 						_StdOut.putText(">");
 						//_StdOut.advanceLine();
+						if(_ProcessManager.readyQueue.getSize() === 0){
+							this.isExecuting = false;
+						}
 					}else{
 						//what do I do again?
 						_StdOut.putText("UNKNOWN INSTRUCTION: "+_MemoryManager.readFromMemory(this.currentPCB, this.PC));

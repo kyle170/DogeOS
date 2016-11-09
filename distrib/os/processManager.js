@@ -26,18 +26,18 @@ var TSOS;
         ProcessManager.prototype.runPiD = function (ProcessID) {
             var ProcessControlBlock = this.ResidentList[ProcessID];
             ProcessControlBlock.PS = "WAITING";
-            this.readyQueue.enqueue(this.ResidentList[ProcessID]); // send her off
-            _CPU.isExecuting = true;
+            this.PCBCONVERTER = this.ResidentList[ProcessID];
+            this.readyQueue.enqueue(this.PCBCONVERTER); // send her off
         };
         ProcessManager.prototype.runall = function () {
             // nothing here yet
             var counter = 0;
             for (var i = 0; i < this.ResidentList.length; i++) {
                 if (this.ResidentList[i].PS === "NEW") {
-                    _ProcessManager.runPiD(i);
                     _StdOut.putText("Attempting to run PID: " + i);
                     _StdOut.advanceLine();
                     counter++;
+                    this.runPiD(i);
                 }
             }
             if (counter != 0) {
