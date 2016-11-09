@@ -10,13 +10,20 @@ var TSOS;
             // nothing here yet
         };
         CPUScheduler.prototype.schedule = function () {
+            // nothing here yet
+        };
+        CPUScheduler.prototype.contextSwitch = function () {
             if (_CPU.currentPCB === null && _ProcessManager.readyQueue.getSize() > 0) {
                 var ProgramToRun = _ProcessManager.readyQueue.dequeue();
                 ProgramToRun.PS = "RUNNING";
                 this.CurrentPCBProgram = ProgramToRun;
                 _CPU.loadProgram(this.CurrentPCBProgram);
-                _CPU.isExecuting = true;
             }
+        };
+        CPUScheduler.prototype.ScheduleFirstComeFirstServe = function () {
+            // nothing here yet
+        };
+        CPUScheduler.prototype.ScheduleRoundRobbin = function () {
         };
         CPUScheduler.prototype.QuantumGet = function () {
             return this.quantum;

@@ -15,14 +15,25 @@ module TSOS {
 			// nothing here yet
 		}
 		
-		public schedule() {
+		public schedule(): void {
+			// nothing here yet
+		}
+		
+		public contextSwitch(): void {
 			if(_CPU.currentPCB === null && _ProcessManager.readyQueue.getSize() > 0){
                 var ProgramToRun = _ProcessManager.readyQueue.dequeue();
                 ProgramToRun.PS = "RUNNING";
 				this.CurrentPCBProgram = ProgramToRun;
                 _CPU.loadProgram(this.CurrentPCBProgram);
-                _CPU.isExecuting = true;
             }
+		}
+		
+		private ScheduleFirstComeFirstServe(): void {
+			// nothing here yet
+		}
+		
+		private ScheduleRoundRobbin(): void {
+			
 		}
 		
 		public QuantumGet(): number {
