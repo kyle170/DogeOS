@@ -51,9 +51,10 @@ var TSOS;
                 _CPU.loadProgram(this.CurrentPCBProgram);
                 _CPU.isExecuting = true;
             }
-            else if (_ProcessManager.readyQueue.getSize() > 0) {
+            else if (_CPU.currentPCB !== null && _ProcessManager.readyQueue.getSize() > 0) {
                 if (this.pCounter >= this.quantum) {
                     this.pCounter = 1;
+                    this.contextSwitch();
                 }
             }
             else {
