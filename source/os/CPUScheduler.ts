@@ -61,7 +61,7 @@ module TSOS {
             }else if(_CPU.currentPCB !== null && _ProcessManager.readyQueue.getSize() > 0){
 				if(this.pCounter >= this.quantum){
 					this.pCounter = 1;
-					this.contextSwitch();
+					 _Kernel.krnInterruptHandler("CONTEXT_SWITCH");
 				}
 			}else{
 				//nothing?>
