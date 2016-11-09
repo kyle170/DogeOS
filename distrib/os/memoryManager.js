@@ -18,7 +18,7 @@ var TSOS;
                 return _Memory.setByte((ProcessControlBlock.BaseReg + MemoryLocation), dataToWrite); // send command to setByte to write data at location with data within its bounds
             }
             else {
-                _StdOut.putText("Memory Bounds Violation Error! - Tying to read: " + (ProcessControlBlock.BaseReg + MemoryLocation)); // return fatal error if its outside (memory seeking missile program)
+                _StdOut.putText("Memory Bounds Violation Error! - Tying to write: " + (ProcessControlBlock.BaseReg + MemoryLocation)); // return fatal error if its outside (memory seeking missile program)
                 _StdOut.advanceLine();
             }
         };
@@ -57,6 +57,13 @@ var TSOS;
                 _Memory.setByte(i, '00');
             }
             TSOS.Control.memoryUpdate();
+        };
+        MemoryManager.prototype.removeProgramsMemory = function (ProcessControlBlock) {
+            var base = ProcessControlBlock.BaseReg;
+            var lim = ProcessControlBlock.LimReg;
+            for (var i = base; i < lim; i++) {
+                _Memory.setByte(i, '00');
+            }
         };
         return MemoryManager;
     }());

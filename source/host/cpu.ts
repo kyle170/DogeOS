@@ -44,19 +44,7 @@ module TSOS {
             
         }
 
-		/*
-        public runProcess(PID: number):void {
-			//set the PCB with the PID of the process
-            this.currentPCB = _ProcessManager.getProcessControlBlock(PID);
-            if(this.currentPCB.PS === "TERMINATED"){ // if its not terminated, run it and laod to PCB
-                _StdOut.putText('This process has already been terminated or doesnt exist');
-            } else {
-                this.currentPCB.PS = "RUNNING";
-                this.loadFromPCB();
-                this.isExecuting = true;
-			}
-        }
-		*/
+
         public loadProgram(ProcessControlBlock: TSOS.PCB): void {
 			//load the program and set the parameters for the PCB
             this.currentPCB = ProcessControlBlock;
@@ -211,9 +199,11 @@ module TSOS {
 						console.log("EA Run (nothing to do)!");
 					}else if(_MemoryManager.readFromMemory(this.currentPCB, this.PC) == '00'){ // BREAK PROGRAM (sys call) {{{{Something went terribly right!}}}}
 						console.log("00 Run!");
-						TSOS.Control.cpuUpdate();
-						this.isExecuting = false; // stop the damn thing!
 						this.currentPCB.PS = "TERMINATED";
+						if(_ProcessManager.readyQueue.getSize() === 0){
+							this.isExecuting = false;
+						}
+						TSOS.Control.cpuUpdate();
 						_ProcessManager.processesList[this.currentPCB.PID] = -1;
 						this.updatePCB();
 						// time to set everything back to normal

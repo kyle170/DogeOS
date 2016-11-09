@@ -39,9 +39,15 @@ module TSOS {
 			// nothing here yet
 		}
 		
-		public kill(pid: number){
+		public kill(ProcessID: number){
 			// nothing here yet
 			// TODO: Stop execution, (KEEP IS_EXECUTING RUNNING), deallicate memory
+			var ProcessControlBlock = this.ResidentList[ProcessID];
+			_MemoryManager.removeProgramsMemory(ProcessControlBlock);
+			ProcessControlBlock.PS = "TERMINATED";
+			if(this.readyQueue.getSize() === 0 && _CPU.currentPCB === null){
+                _CPU.isExecuting = false;
+            }
 		}
 		
 		public getRunning(): TSOS.PCB[] {

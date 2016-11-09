@@ -32,9 +32,15 @@ var TSOS;
         ProcessManager.prototype.runall = function () {
             // nothing here yet
         };
-        ProcessManager.prototype.kill = function (pid) {
+        ProcessManager.prototype.kill = function (ProcessID) {
             // nothing here yet
             // TODO: Stop execution, (KEEP IS_EXECUTING RUNNING), deallicate memory
+            var ProcessControlBlock = this.ResidentList[ProcessID];
+            _MemoryManager.removeProgramsMemory(ProcessControlBlock);
+            ProcessControlBlock.PS = "TERMINATED";
+            if (this.readyQueue.getSize() === 0 && _CPU.currentPCB === null) {
+                _CPU.isExecuting = false;
+            }
         };
         ProcessManager.prototype.getRunning = function () {
             var runningProcesses = [];

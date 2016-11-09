@@ -13,7 +13,8 @@ var TSOS;
             if (_CPU.currentPCB === null && _ProcessManager.readyQueue.getSize() > 0) {
                 var ProgramToRun = _ProcessManager.readyQueue.dequeue();
                 ProgramToRun.PS = "RUNNING";
-                _CPU.loadProgram(ProgramToRun);
+                this.CurrentPCBProgram = ProgramToRun;
+                _CPU.loadProgram(this.CurrentPCBProgram);
                 _CPU.isExecuting = true;
             }
         };

@@ -92,7 +92,7 @@ var TSOS;
             sc = new TSOS.ShellCommand(this.shellPS, "ps", "- lists running processes");
             this.commandList[this.commandList.length] = sc;
             // quantium
-            sc = new TSOS.ShellCommand(this.shellQuantium, "quantium", "- sets the quantium for RR scheduling (Ex: quantium 4 )");
+            sc = new TSOS.ShellCommand(this.shellQuantium, "quantum", "- sets the quantium for RR scheduling (Ex: quantium 4 )");
             this.commandList[this.commandList.length] = sc;
             objSharedCommandList = this.commandList;
             //
@@ -382,8 +382,8 @@ var TSOS;
                         _StdOut.putText("Lists the processes that are currently running");
                         _StdOut.advanceLine();
                         break;
-                    case "quantium":
-                        _StdOut.putText("Sets the Round Robbin Quanitum scheduling interrupt algorithm for the CPU");
+                    case "quantum":
+                        _StdOut.putText("Sets the Round Robbin Quantum scheduling interrupt algorithm for the CPU");
                         _StdOut.advanceLine();
                         break;
                     default:
@@ -499,7 +499,7 @@ var TSOS;
                     if (_ProcessManager.processesList[i] != -1) {
                         _StdOut.putText("Attempting to run PID: " + _ProcessManager.processesList[i]);
                         _StdOut.advanceLine();
-                        _CPU.runProcess(_ProcessManager.processesList[i]);
+                        _ProcessManager.runPiD(_ProcessManager.processesList[i]);
                     }
                     else {
                         _StdOut.putText("Skipping terminated PID: " + i);
@@ -539,6 +539,9 @@ var TSOS;
         };
         Shell.prototype.shellQuantium = function (args) {
             if (args.length > 0) {
+                // invoke the quantium!
+                _CPUScheduler.QuantiumSet(parseInt(args[0]));
+                _StdOut.putText("Quantum set to " + parseInt(args[0]));
             }
             else {
                 _StdOut.putText("Usage: quantum <number> - You must tell me what you want to set the quantum to!");
