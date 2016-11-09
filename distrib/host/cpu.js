@@ -228,6 +228,7 @@ var TSOS;
                             this.isExecuting = false;
                         }
                         TSOS.Control.cpuUpdate();
+                        _CPUScheduler.clearPCB();
                         _ProcessManager.processesList[this.currentPCB.PID] = -1;
                         this.updatePCB();
                         // time to set everything back to normal
