@@ -31,6 +31,21 @@ var TSOS;
         };
         ProcessManager.prototype.runall = function () {
             // nothing here yet
+            var counter = 0;
+            for (var i = 0; i < this.ResidentList.length; i++) {
+                if (this.ResidentList[i].PS === "NEW") {
+                    _ProcessManager.runPiD(i);
+                    _StdOut.putText("Attempting to run PID: " + i);
+                    _StdOut.advanceLine();
+                    counter++;
+                }
+            }
+            if (counter != 0) {
+                return true;
+            }
+            else {
+                return false;
+            }
         };
         ProcessManager.prototype.kill = function (ProcessID) {
             // nothing here yet
@@ -43,14 +58,13 @@ var TSOS;
             }
         };
         ProcessManager.prototype.getRunning = function () {
-            var runningProcesses = [];
-            for (var i = 0; this.ResidentList.length; i++) {
-                var tempPCB = this.ResidentList[i];
-                if (tempPCB.PS === "Running" || tempPCB.PS === "Waiting") {
-                    runningProcesses.push(tempPCB);
+            var output = "";
+            for (var i = 0; i < this.ResidentList.length; i++) {
+                if (this.ResidentList[i].PS == 'RUNNING' || this.ResidentList[i].PS == 'WAITING') {
+                    output = output + i + ", ";
                 }
             }
-            return runningProcesses;
+            return output.substring(0, output.length - 2);
         };
         ProcessManager.prototype.checkIfExists = function (ProcessID) {
             if (this.ResidentList[ProcessID] !== null && this.ResidentList[ProcessID] !== undefined) {

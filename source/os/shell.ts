@@ -588,20 +588,9 @@ module TSOS {
 		}
 		
 		public shellRunAll(args){
-			if(_ProcessManager.processesList.length > -1){
-				for(var i=0; i<_ProcessManager.processesList.length; i++){
-					if(_ProcessManager.processesList[i] != -1){
-						_StdOut.putText("Attempting to run PID: "+  _ProcessManager.processesList[i]);
-						_StdOut.advanceLine();
-						_ProcessManager.runPiD(_ProcessManager.processesList[i]);
-					}else{
-						_StdOut.putText("Skipping terminated PID: "+ i);
-						_StdOut.advanceLine();
-					}
-				}
-			}else{
-				_StdOut.putText("No Processes Loaded!");
-			}	
+			if(!_ProcessManager.runall()){
+				_StdOut.putText("No Processes Loaded!");	
+			}
 		}
 		
 		public shellClearMemory(args){
@@ -617,7 +606,7 @@ module TSOS {
                 // invoke the killbot!
 				var pidToKill = parseInt(args[0]);
 				if(_ProcessManager.checkIfExists(pidToKill)){
-					_StdOut.putText("Killing PiD"+ pidToKill);
+					_StdOut.putText("Killing PiD: "+ pidToKill);
 					_ProcessManager.kill(pidToKill);
 				}else{
 					_StdOut.putText("PiD "+ pidToKill +" Doesnt Exist");
@@ -628,6 +617,7 @@ module TSOS {
 		}
 		public shellPS(args){
 			// nothing here yet
+			_StdOut.putText("Active PiD's: "+ _ProcessManager.getRunning());
 		}
 		public shellQuantium(args){
 			if (args.length > 0) {

@@ -3,8 +3,8 @@ var TSOS;
     var CPUScheduler = (function () {
         function CPUScheduler() {
             // presets on boot
-            this.quantum = 4;
-            this.schedulingType = "Quantium";
+            this.quantum = 6; // default quantum
+            this.schedulingType = "ROUND_ROBIN";
         }
         CPUScheduler.prototype.init = function () {
             // nothing here yet

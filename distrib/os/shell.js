@@ -494,20 +494,7 @@ var TSOS;
             }
         };
         Shell.prototype.shellRunAll = function (args) {
-            if (_ProcessManager.processesList.length > -1) {
-                for (var i = 0; i < _ProcessManager.processesList.length; i++) {
-                    if (_ProcessManager.processesList[i] != -1) {
-                        _StdOut.putText("Attempting to run PID: " + _ProcessManager.processesList[i]);
-                        _StdOut.advanceLine();
-                        _ProcessManager.runPiD(_ProcessManager.processesList[i]);
-                    }
-                    else {
-                        _StdOut.putText("Skipping terminated PID: " + i);
-                        _StdOut.advanceLine();
-                    }
-                }
-            }
-            else {
+            if (!_ProcessManager.runall()) {
                 _StdOut.putText("No Processes Loaded!");
             }
         };
@@ -523,7 +510,7 @@ var TSOS;
                 // invoke the killbot!
                 var pidToKill = parseInt(args[0]);
                 if (_ProcessManager.checkIfExists(pidToKill)) {
-                    _StdOut.putText("Killing PiD" + pidToKill);
+                    _StdOut.putText("Killing PiD: " + pidToKill);
                     _ProcessManager.kill(pidToKill);
                 }
                 else {
@@ -536,6 +523,7 @@ var TSOS;
         };
         Shell.prototype.shellPS = function (args) {
             // nothing here yet
+            _StdOut.putText("Active PiD's: " + _ProcessManager.getRunning());
         };
         Shell.prototype.shellQuantium = function (args) {
             if (args.length > 0) {

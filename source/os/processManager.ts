@@ -35,8 +35,22 @@ module TSOS {
 			_CPU.isExecuting = true;
 		}
 		
-		public runall(){
+		public runall(): boolean{
 			// nothing here yet
+			var counter:number = 0;
+			for(var i:number=0; i<this.ResidentList.length; i++){
+				if(this.ResidentList[i].PS === "NEW"){
+					_ProcessManager.runPiD(i);
+					_StdOut.putText("Attempting to run PID: "+ i);
+					_StdOut.advanceLine();
+					counter++;
+				}
+			}
+			if(counter != 0){
+				return true;
+			}else{
+				return false;
+			}
 		}
 		
 		public kill(ProcessID: number){
@@ -50,15 +64,14 @@ module TSOS {
             }
 		}
 		
-		public getRunning(): TSOS.PCB[] {
-			var runningProcesses: TSOS.PCB[] = [];
-			for(var i: number = 0; this.ResidentList.length; i++){
-				var tempPCB = this.ResidentList[i];
-				if(tempPCB.PS === "Running" || tempPCB.PS === "Waiting"){
-					runningProcesses.push(tempPCB);
+		public getRunning(): String {
+			var output: string = "";
+			for(var i: number = 0; i<this.ResidentList.length; i++){
+				if(this.ResidentList[i].PS == 'RUNNING' || this.ResidentList[i].PS == 'WAITING'){
+					output = output + i + ", ";
 				}
 			}
-			return runningProcesses;
+			return output.substring(0, output.length-2);
 		}
 		
 		public checkIfExists(ProcessID: number): boolean{
