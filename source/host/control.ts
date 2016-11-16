@@ -76,15 +76,15 @@ module TSOS {
 		
 		
 		public static cpuUpdate(): void {
-				/*
+				
 				document.getElementById("cpu.instr").textContent=_MemoryManager.readFromMemory(_CPU.currentPCB, _CPU.PC);
 				document.getElementById("cpu.pc").textContent= _CPU.PC.toString();
 				document.getElementById("cpu.acc").textContent= _CPU.Acc.toString();
 				document.getElementById("cpu.xreg").textContent= _CPU.XReg.toString();
 				document.getElementById("cpu.yreg").textContent= _CPU.YReg.toString();
 				document.getElementById("cpu.zflag").textContent= _CPU.ZFlag.toString();
-				document.getElementById("cpu.isexecuting").textContent= _CPU.isExecuting.toString();
-				*/
+				//document.getElementById("cpu.isexecuting").textContent= _CPU.isExecuting.toString();
+				
 				this.readyQueueUpdate();
 			// udpate the html pcb
 		}

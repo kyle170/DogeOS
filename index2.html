@@ -47,7 +47,8 @@
 			border-right: 2px solid #b31b1b;
 			color: #fff;
 			width:750px;
-			height: 90%;
+			height: 750px;
+			position: absolute;
 			margin-left:10px;
 			margin-right:auto;
 			margin-top:20px;
@@ -71,11 +72,31 @@
 			top: 7px;
 			color: #C69539;
 		}
-		#status {
+		#Status {
 			font-family: DogeOS;
 			font-size:150%;
 			position: relative;
 			top: 3px;
+			color: #C69539;
+		}
+		#DogeOSLabel {
+			font-family: DogeOS;
+			font-size:150%;
+			color: #C69539;
+		}
+		#rightSide {
+			position: absolute;
+			left: 800px;
+			width:750px;
+			height: 750px;
+			margin-top:20px;
+		}
+		
+		#taProgramInput {
+			font-family: DogeOS;
+			display: block;
+			background: transparent;
+			width: 100%;
 			color: #C69539;
 		}
 
@@ -91,14 +112,61 @@
 		<input type="button" id = "btnReset" name="brnReset" class="btn btn-warning btn-lg" disabled="disabled" value="Reset" tabindex="2" onclick="TSOS.Control.hostBtnReset_click(this);"> &nbsp;
 		<input type="button" id = "btnCPUStepMode" name="btnCPUStepMode" class="btn btn-info btn-lg" style="width:225px" disabled="disabled" value="Single Step Mode [DISABLED]" tabindex="2" onclick="TSOS.Control.singleCPUStepMode(this);"> &nbsp;
 		<input type="button" id = "btnSingleStepCPU"name="brnSingleStepCPU" class="btn btn-success btn-lg" disabled="disabled" value="Step CPU" tabindex="2" onclick="TSOS.Control.allowCPUStep(this);">&nbsp;
-		<span id="status">Time: [<span id="timeArea">xx:xx:xx x/x/x</span>] || Status: <span id="statusArea">No Status....yet....</span></span>
+		<span id="Status">Time: [<span id="timeArea">xx:xx:xx x/x/x</span>] || Status: <span id="statusArea">No Status....yet....</span></span>
 	</div>
 	<div id="console">
 		<canvas id="display" width="0%" height="0%" tabindex="3"></canvas>
 	</div> 
-
-	
-	
+	<div id="rightSide">
+		<span id="DogeOSLabel"> CPU Status: </span>
+		<div class="panel panel-default" style="margin-bottom: 0px;">
+			<table id="processTable" class="table">
+				<tbody><tr>
+					<th>Instr</th>
+					<th>PC</th>
+					<th>Acc</th>
+					<th>X</th>
+					<th>Y</th>
+					<th>Z</th>
+				</tr>
+				<tr>
+					<td id="cpu.instr">N/A</td>
+					<td id="cpu.pc">0</td>
+					<td id="cpu.acc">0</td>
+					<td id="cpu.xreg">0</td>
+					<td id="cpu.yreg">0</td>
+					<td id="cpu.zflag">0</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+		<!----------------------------------------------------------------------------------->
+		<div id="inputArea">
+			<span id="DogeOSLabel"> User Input: </span>
+			<textarea name="taProgramInput" id="taProgramInput" rows="5">A9 00 8D EC 00 A9 00 8D EC 00 A9 00 8D ED 00 A9 00 8D ED 00 A9 00 8D EE 00 A9 00 8D EF 00 AD ED 00 8D FF 00 AE FF 00 A9 00 8D FF 00 EC FF 00 D0 BA AD EC 00 8D FF 00 A9 01 6D FF 00 8D EC 00 AD EC 00 8D FF 00 AE FF 00 A9 03 8D FF 00 EC FF 00 D0 05 A9 01 8D ED 00 A9 00 8D EE 00 A9 00 8D EF 00 AD EF 00 8D FF 00 AE FF 00 A9 00 8D FF 00 EC FF 00 D0 49 AD EE 00 8D FF 00 A9 01 6D FF 00 8D EE 00 AD EE 00 8D FF 00 AE FF 00 A9 02 8D FF 00 EC FF 00 D0 05 A9 01 8D EF 00 A9 F8 8D FF 00 A2 02 AC FF 00 FF AD EE 00 A2 01 8D FF 00 AC FF 00 FF A9 00 8D FF 00 A2 01 EC FF 00 D0 A4 A9 F1 8D FF 00 A2 02 AC FF 00 FF AD EC 00 A2 01 8D FF 00 AC FF 00 FF A9 EE 8D FF 00 A2 02 AC FF 00 FF A9 00 8D FF 00 A2 01 EC FF 00 D0 33 00 00 00 20 20 00 20 6F 75 74 65 72 00 20 69 6E 6E 65 72 00 00</textarea>
+		</div>
+		<!----------------------------------------------------------------------------------->
+		<span id="DogeOSLabel"> Memory: </span>
+			<ul class="nav nav-tabs" style="" >
+				<li class="active"><a data-toggle="tab" class="btn btn-info" href="#MainMemory">Main Memory</a></li>
+				<li><a data-toggle="tab" class="btn btn-info" href="#Swap">HDD (Swap)</a></li>
+			</ul>
+			<div class="tab-content">
+				<div id="MainMemory" class="tab-pane fade in active">
+				  <h3>HOME</h3>
+				  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+				</div>
+				<div id="Swap" class="tab-pane fade">
+				  <h3>Menu 1</h3>
+				  <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+				</div>
+			</div>
+		<!----------------------------------------------------------------------------------->
+		<span id="DogeOSLabel"> Process Manager: </span>
+		<!----------------------------------------------------------------------------------->
+		<span id="DogeOSLabel"> Host Log: </span>
+	</div>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 	<div id="divLog" style="margin-left:520px; width: 359px;">
       <label>
          Host Log
@@ -111,17 +179,6 @@
       </label>
    </div>
 
-   <div id="divUserProgramInput" style="margin-left:520px; width: 359px;">
-      <label>
-         User Program Input
-         <br>
-         <textarea name="taProgramInput"
-                   id  ="taProgramInput"
-                   rows="8"
-                   cols="48"
-         >A9 00 8D EC 00 A9 00 8D EC 00 A9 00 8D ED 00 A9 00 8D ED 00 A9 00 8D EE 00 A9 00 8D EF 00 AD ED 00 8D FF 00 AE FF 00 A9 00 8D FF 00 EC FF 00 D0 BA AD EC 00 8D FF 00 A9 01 6D FF 00 8D EC 00 AD EC 00 8D FF 00 AE FF 00 A9 03 8D FF 00 EC FF 00 D0 05 A9 01 8D ED 00 A9 00 8D EE 00 A9 00 8D EF 00 AD EF 00 8D FF 00 AE FF 00 A9 00 8D FF 00 EC FF 00 D0 49 AD EE 00 8D FF 00 A9 01 6D FF 00 8D EE 00 AD EE 00 8D FF 00 AE FF 00 A9 02 8D FF 00 EC FF 00 D0 05 A9 01 8D EF 00 A9 F8 8D FF 00 A2 02 AC FF 00 FF AD EE 00 A2 01 8D FF 00 AC FF 00 FF A9 00 8D FF 00 A2 01 EC FF 00 D0 A4 A9 F1 8D FF 00 A2 02 AC FF 00 FF AD EC 00 A2 01 8D FF 00 AC FF 00 FF A9 EE 8D FF 00 A2 02 AC FF 00 FF A9 00 8D FF 00 A2 01 EC FF 00 D0 33 00 00 00 20 20 00 20 6F 75 74 65 72 00 20 69 6E 6E 65 72 00 00</textarea>
-      </label>
-   </div>
    
    <div id="divReadyQueueStatus" style="margin-left:900px; margin-top: -565px;">
          <label>
@@ -147,7 +204,7 @@
          >N/A</textarea>
       </label>
    </div>
-  
+
 <script>
 	document.getElementById('display').setAttribute("height",document.getElementById('console').offsetHeight-4);
 	document.getElementById('display').setAttribute("width",document.getElementById('console').offsetWidth-4);
