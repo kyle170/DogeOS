@@ -1,0 +1,178 @@
+<html> 
+<head> 
+	<title>DogeOS - A 6502 Production via the Web</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> 
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+	<!-- Globals CONSTANTS and _Variables. Must included be first. -->
+	<script type="text/javascript" src="distrib/globals.js"></script>
+	<!-- Host (Virtual Machine / Hardware Simulation) Routines -->
+	<script type="text/javascript" src="distrib/host/control.js"></script>
+	<script type="text/javascript" src="distrib/host/devices.js"></script>
+	<script type="text/javascript" src="distrib/host/memory.js"></script>
+	<script type="text/javascript" src="distrib/host/cpu.js"></script>
+	<!-- Virtual OS Routines: Make sure Kernel code is last, since it needs those above it. -->
+   <script type="text/javascript" src="distrib/os/interrupt.js"></script>
+   <script type="text/javascript" src="distrib/os/canvastext.js"></script>
+   <script type="text/javascript" src="distrib/os/console.js"></script>
+   <script type="text/javascript" src="distrib/os/deviceDriver.js"></script>
+   <script type="text/javascript" src="distrib/os/deviceDriverKeyboard.js"></script>
+   <script type="text/javascript" src="distrib/os/queue.js"></script>
+   <script type="text/javascript" src="distrib/os/memoryManager.js"></script>
+   <script type="text/javascript" src="distrib/os/processManager.js"></script>
+   <script type="text/javascript" src="distrib/os/pcb.js"></script>
+   <script type="text/javascript" src="distrib/os/CPUScheduler.js"></script>
+   <script type="text/javascript" src="distrib/os/shell.js"></script>
+   <script type="text/javascript" src="distrib/os/shellCommand.js"></script>
+   <script type="text/javascript" src="distrib/os/userCommand.js"></script>
+   <script type="text/javascript" src="distrib/os/kernel.js"></script>
+   <!-- Other Routines -->
+   <script type="text/javascript" src="distrib/utils.js"></script>
+   <!-- Uncomment this line below to enable GLaDOS testing -->
+   <script type="text/javascript" src="glados-ip3.js"></script>
+	<style type="text/css"> 
+		body { 
+			background: url('1RJQsV.png') no-repeat center center fixed; 
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+			}
+		#console {
+			font-family: courier, monospace;
+			border-bottom: 2px solid #b31b1b;
+			border-top: 2px solid #b31b1b;
+			border-left: 2px solid #b31b1b;
+			border-right: 2px solid #b31b1b;
+			color: #fff;
+			width:750px;
+			height: 90%;
+			margin-left:10px;
+			margin-right:auto;
+			margin-top:20px;
+			font-size:14px;
+		}
+		#top-buttons {
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+			background-color: #241E22;
+			height: 50px;
+		}
+		@font-face {
+			font-family: DogeOS;
+			src: url(DogeSans-Regular.otf);
+		}
+		#DogeOS {
+			font-family: DogeOS;
+			font-size:250%;
+			position: relative;
+			top: 7px;
+			color: #C69539;
+		}
+		#status {
+			font-family: DogeOS;
+			font-size:150%;
+			position: relative;
+			top: 3px;
+			color: #C69539;
+		}
+
+
+	</style> 
+</head> 
+<body onload="onDocumentLoad()"> 
+	<div id='top-buttons'>
+		<img src="R5r163F.gif" style="" width="145px" height="145px">
+		<span id="DogeOS"> DogeOS </span>&nbsp;
+		<input type="button" id = "btnStartOS" name="brnStartOS" class="btn btn-success btn-lg" style="" value="Start" tabindex="0" onclick="TSOS.Control.hostBtnStartOS_click(this);"> &nbsp;
+		<input type="button" id = "btnHaltOS" name="brnHaltOS" class="btn btn-danger btn-lg" disabled="disabled" value="Halt" tabindex="1" onclick="TSOS.Control.hostBtnHaltOS_click(this);"> &nbsp;
+		<input type="button" id = "btnReset" name="brnReset" class="btn btn-warning btn-lg" disabled="disabled" value="Reset" tabindex="2" onclick="TSOS.Control.hostBtnReset_click(this);"> &nbsp;
+		<input type="button" id = "btnCPUStepMode" name="btnCPUStepMode" class="btn btn-info btn-lg" style="width:225px" disabled="disabled" value="Single Step Mode [DISABLED]" tabindex="2" onclick="TSOS.Control.singleCPUStepMode(this);"> &nbsp;
+		<input type="button" id = "btnSingleStepCPU"name="brnSingleStepCPU" class="btn btn-success btn-lg" disabled="disabled" value="Step CPU" tabindex="2" onclick="TSOS.Control.allowCPUStep(this);">&nbsp;
+		<span id="status">Time: [<span id="timeArea">xx:xx:xx x/x/x</span>] || Status: <span id="statusArea">No Status....yet....</span></span>
+	</div>
+	<div id="console">
+		<canvas id="display" width="0%" height="0%" tabindex="3"></canvas>
+	</div> 
+
+	
+	
+	<div id="divLog" style="margin-left:520px; width: 359px;">
+      <label>
+         Host Log
+         <br>
+         <textarea name="taHostLog"
+                   id  ="taHostLog"
+                   rows="26"
+                   cols="48"
+         ></textarea>
+      </label>
+   </div>
+
+   <div id="divUserProgramInput" style="margin-left:520px; width: 359px;">
+      <label>
+         User Program Input
+         <br>
+         <textarea name="taProgramInput"
+                   id  ="taProgramInput"
+                   rows="8"
+                   cols="48"
+         >A9 00 8D EC 00 A9 00 8D EC 00 A9 00 8D ED 00 A9 00 8D ED 00 A9 00 8D EE 00 A9 00 8D EF 00 AD ED 00 8D FF 00 AE FF 00 A9 00 8D FF 00 EC FF 00 D0 BA AD EC 00 8D FF 00 A9 01 6D FF 00 8D EC 00 AD EC 00 8D FF 00 AE FF 00 A9 03 8D FF 00 EC FF 00 D0 05 A9 01 8D ED 00 A9 00 8D EE 00 A9 00 8D EF 00 AD EF 00 8D FF 00 AE FF 00 A9 00 8D FF 00 EC FF 00 D0 49 AD EE 00 8D FF 00 A9 01 6D FF 00 8D EE 00 AD EE 00 8D FF 00 AE FF 00 A9 02 8D FF 00 EC FF 00 D0 05 A9 01 8D EF 00 A9 F8 8D FF 00 A2 02 AC FF 00 FF AD EE 00 A2 01 8D FF 00 AC FF 00 FF A9 00 8D FF 00 A2 01 EC FF 00 D0 A4 A9 F1 8D FF 00 A2 02 AC FF 00 FF AD EC 00 A2 01 8D FF 00 AC FF 00 FF A9 EE 8D FF 00 A2 02 AC FF 00 FF A9 00 8D FF 00 A2 01 EC FF 00 D0 33 00 00 00 20 20 00 20 6F 75 74 65 72 00 20 69 6E 6E 65 72 00 00</textarea>
+      </label>
+   </div>
+   
+   <div id="divReadyQueueStatus" style="margin-left:900px; margin-top: -565px;">
+         <label>
+         <b>Ready Queue Status</b>
+		 <br>
+		 <textarea name="taReadyQueueStatus"
+                   id  ="taReadyQueue"
+                   rows="4"
+                   cols="48"
+				   style="margin-top: 0px; margin-bottom: 0px; height: 100px; width: 791px;"
+         >No Programs Loaded</textarea>
+		 </label>
+   </div>
+	<div id="divMemoryStatus" style="margin-left:900px;">
+         <label>
+         <b>Memory Status</b>
+         <br>
+         <textarea name="taMemoryStatus"
+                   id  ="taMemoryStatus"
+                   rows="8"
+                   cols="48"
+				   style="margin-top: 0px; margin-bottom: 0px; height: 478px;"
+         >N/A</textarea>
+      </label>
+   </div>
+  
+<script>
+	document.getElementById('display').setAttribute("height",document.getElementById('console').offsetHeight-4);
+	document.getElementById('display').setAttribute("width",document.getElementById('console').offsetWidth-4);
+	
+
+	function startTime() {
+		var today = new Date(); // grab the latest timestamp from the browser!
+		var year = today.getFullYear();
+		var month = today.getMonth();
+		var day = today.getDay();
+		var h = today.getHours();
+		var m = today.getMinutes();
+		var s = today.getSeconds();
+		m = checkTime(m); // make sure to check for leading zeros...wouldnt want to be incorrect!
+		s = checkTime(s);
+		document.getElementById('timeArea').innerHTML =
+		month + "/" + day + "/" + year + " " + h + ":" + m + ":" + s;
+		var t = setTimeout(startTime, 500);
+	}
+	function checkTime(i) {
+		//should we have a zero infront of things?
+		if (i < 10) {i = "0" + i}; 
+		return i;
+	}
+	startTime();
+</script>
+</body> 
+</html> 

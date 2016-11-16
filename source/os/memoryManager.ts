@@ -22,7 +22,7 @@ module TSOS {
 				_StdOut.putText("Memory Bounds Violation Error! - Tying to write: "+(ProcessControlBlock.BaseReg+MemoryLocation)); // return fatal error if its outside (memory seeking missile program)
 				_StdOut.advanceLine();
 			}
-		}
+		} 
 		
 		public readFromMemory(ProcessControlBlock: TSOS.PCB, MemoryLocation: number): string { 
 			// read the data from memory, again, checking if there is a bounds error!

@@ -90,7 +90,7 @@ module TSOS {
             //
             // UPDATE: Even though we are now working in TypeScript, char and string remain undistinguished.
             //         Consider fixing that.
-			var wordWrapLength = 56;
+			var wordWrapLength = 80; 
 			var newSubstringDisplay = text.substring(0, wordWrapLength);
             if (text !== "") {
 				// Draw the text at the current X and Y coordinates.
