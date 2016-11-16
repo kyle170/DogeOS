@@ -104,11 +104,11 @@ var TSOS;
             if (_CPU.singleStepMode) {
                 _CPU.singleStepMode = false;
                 _CPU.singleStepAuth = true;
-                document.getElementById('btnCPUStepMode').value = "Single Step Mode [DISABLED]";
+                document.getElementById('btnCPUStepMode').value = "Single Step Mode [OFF]";
             }
             else {
                 _CPU.singleStepMode = true;
-                document.getElementById('btnCPUStepMode').value = "Single Step Mode [ENABLED]";
+                document.getElementById('btnCPUStepMode').value = "Single Step Mode [ON]";
             }
         };
         Control.allowCPUStep = function () {
