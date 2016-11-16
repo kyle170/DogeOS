@@ -105,11 +105,8 @@
 			width: 100%;
 			color: #C69539;
 		}
-		#taMemoryStatus {
+		#memoryInfoTable {
 			font-family: DogeOS;
-			display: block;
-			background: transparent;
-			width: 100%;
 			color: #C69539;
 		}
 		#taHostLog {
@@ -145,7 +142,7 @@
 	<div id="rightSide">
 		<!----------------------------------------------------------------------------------->
 		<span id="DogeOSLabel"> CPU Status: </span>
-		<div class="panel panel-default" style="margin-bottom: 0px; background: url('http://www.imgbase.info/images/safe-wallpapers/miscellaneous/funny/39082_funny_doge.jpg') no-repeat center center fixed;">
+		<div class="panel panel-default" style="margin-bottom: 0px;">
 			<table id="processTable" class="table">
 				<tbody><tr>
 					<th>Instr</th>
@@ -189,8 +186,22 @@
 			<li style="width:50%"><a data-toggle="tab" class="btn btn-info" href="#Swap">HDD (Swap)</a></li>
 		</ul>
 		<div class="tab-content">
-			<div id="MainMemory" class="tab-pane fade in active">
-			  <textarea name="taMemoryStatus" id="taMemoryStatus" rows="5">N/A</textarea>
+			<div id="MainMemory" class="tab-pane fade in active" style="max-height: 150px;overflow-y: scroll;">
+				<table class="table tableText" id="memoryInfoTable" >
+					<thead>
+						<th>POS</th>
+						<th>0</th>
+						<th>1</th>
+						<th>2</th>
+						<th>3</th>
+						<th>4</th>
+						<th>5</th>
+						<th>6</th>
+						<th>7</th>
+					</thead>                
+					 <tbody id="MemoryBody">                
+					</tbody>
+				</table>
 			</div>
 			<div id="Swap" class="tab-pane fade">
 			  <h3>Menu 1</h3>
@@ -199,7 +210,7 @@
 		</div>
 		<!----------------------------------------------------------------------------------->
 		<span id="DogeOSLabel"> Host Log: </span>
-		<textarea name="taHostLog" id="taHostLog" rows="8"></textarea>
+		<textarea name="taHostLog" id="taHostLog" rows="5"></textarea>
 	</div>
 
 

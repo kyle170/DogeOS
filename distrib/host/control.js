@@ -87,17 +87,17 @@ var TSOS;
             var memoryTables = _Memory.toString().split(" ");
             var positionInRow = 0;
             for (var i = 0; i < 768; i += 8) {
-                output += "0x" + i + "	" + memoryTables[positionInRow++] + "  "
-                    + memoryTables[positionInRow++] + "  "
-                    + memoryTables[positionInRow++] + "  "
-                    + memoryTables[positionInRow++] + "  "
-                    + memoryTables[positionInRow++] + "  "
-                    + memoryTables[positionInRow++] + "  "
-                    + memoryTables[positionInRow++] + "  "
-                    + memoryTables[positionInRow++] + "  "
-                    + "&#13;&#10;"; // new line
+                output += "<tr><td style='padding: 0px;'><b>0x" + i + "</b></td><td style='padding: 0px;'>" + memoryTables[positionInRow++] + "</td><td style='padding: 0px;'>"
+                    + memoryTables[positionInRow++] + "</td><td style='padding: 0px;'>"
+                    + memoryTables[positionInRow++] + "</td><td style='padding: 0px;'>"
+                    + memoryTables[positionInRow++] + "</td><td style='padding: 0px;'>"
+                    + memoryTables[positionInRow++] + "</td><td style='padding: 0px;'>"
+                    + memoryTables[positionInRow++] + "</td><td style='padding: 0px;'>"
+                    + memoryTables[positionInRow++] + "</td><td style='padding: 0px;'>"
+                    + memoryTables[positionInRow++] + "</td><td style='padding: 0px;'>";
             }
-            document.getElementById('taMemoryStatus').innerHTML = output;
+            output += "</tr>";
+            document.getElementById('MemoryBody').innerHTML = output;
             // udpate the html pcb
         };
         Control.singleCPUStepMode = function () {
