@@ -141,7 +141,7 @@
 	
 	<div id="rightSide">
 		<!----------------------------------------------------------------------------------->
-		<span id="DogeOSLabel"> CPU Status: </span>
+		<span id="DogeOSLabel"> CPU Status: <span id="SchedulingMode">TBD</span></span>
 		<div class="panel panel-default" style="margin-bottom: 0px;">
 			<table id="processTable" class="table">
 				<tbody><tr>
@@ -171,10 +171,10 @@
 				<li style="width:50%"><a data-toggle="tab" class="btn btn-info" href="#TerminatedSlashCompleted">Terminated / Completed</a></li>
 			</ul>
 		<div class="tab-content">
-				<div id="ReadyQueue" class="tab-pane fade in active">
+				<div id="ReadyQueue" class="tab-pane fade in active" style="max-height: 150px;overflow-y: scroll;">
 				  <textarea name="taReadyQueueStatus" id="taReadyQueue" rows="5">No Programs Loaded</textarea>
 				</div>
-				<div id="TerminatedSlashCompleted" class="tab-pane fade">
+				<div id="TerminatedSlashCompleted" class="tab-pane fade" style="max-height: 150px;overflow-y: scroll;">
 				  <h3>Menu 1</h3>
 				  <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 				</div>
@@ -199,11 +199,10 @@
 						<th>6</th>
 						<th>7</th>
 					</thead>                
-					 <tbody id="MemoryBody">                
-					</tbody>
+					<tbody id="MemoryBody"></tbody>
 				</table>
 			</div>
-			<div id="Swap" class="tab-pane fade">
+			<div id="Swap" class="tab-pane fade" style="max-height: 150px;overflow-y: scroll;">
 			  <h3>Menu 1</h3>
 			  <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 			</div>
