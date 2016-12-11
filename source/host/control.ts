@@ -123,6 +123,24 @@ module TSOS {
 			// udpate the html pcb
 		}
 		
+		public static fileSystemUpdate(): void {
+			var output: string = "";
+			for(var i = 0; i < _FileSystem.tracks; i++){
+                    for(var j = 0; j < _FileSystem.sectors; j++){
+                        for(var k = 0; k < _FileSystem.blocks; k++){
+							output += "<tr><td style='padding: 0px;'>["+i+","+j+","+k+"]</td>"; // tsb
+                            var file = _FileSystem.read(i, j, k);
+                            output += '<td style="padding: 0px;">'+file.substr(0,1)+' - '+file.substr(1,3)+'</td>'; // bit + location
+							output += '<td style="padding: 0px;">'+file.substr(4,file.length)+'</td>'; // data
+                        }
+                    }
+                }
+			output+="</tr>";
+			document.getElementById('HDDBody').innerHTML = output;
+			
+			
+		}
+		
 		public static singleCPUStepMode(){
 			if(_CPU.singleStepMode){
 				_CPU.singleStepMode = false;

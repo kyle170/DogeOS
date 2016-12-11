@@ -28,6 +28,7 @@ module TSOS {
                     }
                 }
             }
+			TSOS.Control.fileSystemUpdate();
         }
 
         public createFile(fileName): string {
