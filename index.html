@@ -30,7 +30,7 @@
    <!-- Other Routines -->
    <script type="text/javascript" src="distrib/utils.js"></script>
    <!-- Uncomment this line below to enable GLaDOS testing -->
-   <script type="text/javascript" src="glados-ip3.js"></script>
+   <!-- <script type="text/javascript" src="glados-ip4.js"></script> -->
 	<style type="text/css"> 
 		body { 
 			background: url('1RJQsV.png') no-repeat center center fixed; 
@@ -239,5 +239,9 @@
 	}
 	startTime();
 </script>
+<!-- load these last as they break everything! -->
+   <audio id="BSOD_jingle" preload="auto" style="width:0px;"><source src="BSOD.m4a" type="audio/mp4" /></audio>
+   <audio id="music" preload="auto" style="width:0px;"><source src="music.m4a" type="audio/mp4" /></audio>
+   <img id="BSOD_image" src="BSOD.jpg" style="visibility: hidden;position: absolute;">
 </body> 
 </html> 
