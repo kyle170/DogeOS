@@ -95,6 +95,10 @@ var TSOS;
             sc = new TSOS.ShellCommand(this.shellQuantium, "quantum", "- sets the quantium for RR scheduling (Ex: quantium 4 )");
             this.commandList[this.commandList.length] = sc;
             objSharedCommandList = this.commandList;
+            // quantium
+            sc = new TSOS.ShellCommand(this.shellFormat, "format", "- formats the system drive");
+            this.commandList[this.commandList.length] = sc;
+            objSharedCommandList = this.commandList;
             //
             // Display the initial prompt.
             this.putPrompt();
@@ -386,6 +390,10 @@ var TSOS;
                         _StdOut.putText("Sets the Round Robbin Quantum scheduling interrupt algorithm for the CPU");
                         _StdOut.advanceLine();
                         break;
+                    case "format":
+                        _StdOut.putText("Format's the drive to prepare for its use.");
+                        _StdOut.advanceLine();
+                        break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
                 }
@@ -521,6 +529,10 @@ var TSOS;
             else {
                 _StdOut.putText("Usage: kill <pid> - You must tell me what to kill!");
             }
+        };
+        Shell.prototype.shellFormat = function (args) {
+            var params = { operationType: 'format' };
+            _FileSystemManager.format();
         };
         Shell.prototype.shellPS = function (args) {
             // nothing here yet

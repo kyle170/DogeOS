@@ -5,7 +5,7 @@ var TSOS;
             sectors, // cant have sectors without tracks
             blocks, // blocks are on sectors
             blockSize, // soo, how big do we want it?
-            headerSize // should be something like 3 right?
+            headerSize // should be something like 3 righjt
             ) {
             this.tracks = tracks;
             this.sectors = sectors;
@@ -14,10 +14,10 @@ var TSOS;
             this.headerSize = headerSize;
         }
         FileSystem.prototype.read = function (track, sector, block) {
-            //TODO
+            return localStorage.getItem(track + '-' + sector + '-' + block);
         };
         FileSystem.prototype.write = function (track, sector, block, data) {
-            //TODO
+            localStorage.setItem(track + '-' + sector + '-' + block, data);
         };
         return FileSystem;
     }());

@@ -17,7 +17,17 @@ module TSOS {
         }
 
         public format(){
-            //TODO
+            var blankBlock = '0';
+            for(var i = 0; i < this.blockSize-1; i++){
+                blankBlock += '-';
+            }
+            for(var i = 0; i < this.tracks; i++){
+                for(var j = 0; j < this.sectors; j++){
+                    for(var k = 0; k < this.blocks; k++){
+                        _FileSystem.write(i, j, k, blankBlock);
+                    }
+                }
+            }
         }
 
         public createFile(fileName): string {
@@ -40,7 +50,7 @@ module TSOS {
             //TODO
         }
 
-        private deconstructFile(t, s, b){
+        private takeApartFile(t, s, b){
             //TODO
         }
     }

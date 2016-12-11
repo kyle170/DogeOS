@@ -173,6 +173,14 @@ module TSOS {
 			
 			objSharedCommandList = this.commandList;
 			
+			// quantium
+            sc = new ShellCommand(this.shellFormat,
+                                  "format",
+                                  "- formats the system drive");
+            this.commandList[this.commandList.length] = sc;
+			
+			objSharedCommandList = this.commandList;
+			
 			
             //
             // Display the initial prompt.
@@ -482,6 +490,10 @@ module TSOS {
 						_StdOut.putText("Sets the Round Robbin Quantum scheduling interrupt algorithm for the CPU");
 						_StdOut.advanceLine();
 						break;
+					case "format":
+						_StdOut.putText("Format's the drive to prepare for its use.");
+						_StdOut.advanceLine();
+						break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
                 }
@@ -616,6 +628,13 @@ module TSOS {
                 _StdOut.putText("Usage: kill <pid> - You must tell me what to kill!");
             }
 		}
+		
+		public shellFormat(args){
+			var params = {operationType: 'format'};
+			 _FileSystemManager.format();
+		}
+		
+		
 		public shellPS(args){
 			// nothing here yet
 			_StdOut.putText("Active PiD's: "+ _ProcessManager.getRunning());

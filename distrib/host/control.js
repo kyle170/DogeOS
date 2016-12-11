@@ -132,6 +132,7 @@ var TSOS;
             _CPU.init(); //       There's more to do, like dealing with scheduling and such, but this would be a start. Pretty cool.
             _Memory = new TSOS.Memory(768); // start out with 768 bits!
             _Memory.init(); // initialize time!
+            _FileSystem = new TSOS.FileSystem(4, 8, 8, 64, 4);
             // ... then set the host clock pulse ...
             _hardwareClockID = setInterval(TSOS.Devices.hostClockPulse, CPU_CLOCK_INTERVAL);
             // .. and call the OS Kernel Bootstrap routine.
