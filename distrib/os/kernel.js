@@ -28,6 +28,7 @@ var TSOS;
             _ProcessManager = new TSOS.ProcessManager(3);
             _MemoryManager = new TSOS.MemoryManager();
             _CPUScheduler = new TSOS.CPUScheduler();
+            _FileSystemManager = new TSOS.FileSystemManager(); // bring in the filesystem manager
             _ProcessManager.init();
             _MemoryManager.init();
             // Initialize the console.

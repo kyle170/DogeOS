@@ -187,6 +187,5 @@ module TSOS {
 				this.putText(this.buffer); // print out first match
 			}
 		}
-		
     }
  }
