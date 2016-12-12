@@ -38,11 +38,12 @@ module TSOS {
 			}
 		}
 		
-		public alloicateMemoryForProgram(ProcessControlBlock: TSOS.PCB, ProgramData: Array<string>): void {
+		public alloicateMemoryForProgram(ProcessControlBlock: TSOS.PCB, ProgramData: Array<string>, prio: number): void {
 			// program comes in as a string of doubles... we must write it in the memory!
 			//_Memory.clearMem(); // clear anything that was previously in there
 			ProcessControlBlock.BaseReg = (ProcessControlBlock.PID*256);	//set base limit
 			ProcessControlBlock.LimReg = ProcessControlBlock.BaseReg+255;	// set max limit
+			ProcessControlBlock.Priority = prio; // sets priority
 			for(var i:number=0; i<(ProcessControlBlock.LimReg-ProcessControlBlock.BaseReg); i++){
 				var data: string = ProgramData[i]; 
 				if(data !== undefined){ // if its not nothing

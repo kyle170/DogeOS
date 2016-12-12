@@ -213,7 +213,11 @@ module TSOS {
                                   "- Sets the schedule of the CPU");
             this.commandList[this.commandList.length] = sc;
 			
-			
+			// get schedule
+            sc = new ShellCommand(this.shellGetSchedule,
+                                  "getschedule",
+                                  "- Displays current CPU scheduling mode");
+            this.commandList[this.commandList.length] = sc;
 			
 			
 			objSharedCommandList = this.commandList;
@@ -555,6 +559,10 @@ module TSOS {
 						_StdOut.putText("Sets the schedule of the CPU algorithm");
 						_StdOut.advanceLine();
 						break;
+					case "getschedule":
+						_StdOut.putText("Returns the algorithm that the CPU is using.");
+						_StdOut.advanceLine();
+						break;
 						
 						
                     default:
@@ -637,7 +645,11 @@ module TSOS {
                 for(var i = 0; i < chars.length; i += 2){ // ensure they're going in togeather (AC)
                     doubles.push(chars[i] + chars[i+1]);
                 }
-				var num = _ProcessManager.load(doubles); 	//push em in and hope for the best
+				var prio = 5;
+				if (args.length > 0) {
+					prio = args[0];
+				}
+				var num = _ProcessManager.load(doubles, prio); 	//push em in and hope for the best
 				if(num != -1){
 					_StdOut.putText("We got a PID for ya: "+ num );
 				}else{
@@ -719,18 +731,30 @@ module TSOS {
 		
 		public shellSetSchedule(args){
 			 if (args.length > 0) {
-                if(args[0] = "fcfs"){
-					_CPUScheduler.QuantiumSet(9999999); // basically fcfs
+                if(args[0] == "fcfs"){
+					_CPUScheduler.QuantiumSet(9999999999); // basically fcfs
+					_CPUScheduler.schedulingModeSet("FCFS");
 					_StdOut.putText("Scheduling Mode Set to: First Come First Serve");
-				}else if(args[0] = "npp"){
-					//_CPUScheduler.PriorityMode(); // calling all prio
+					TSOS.Control.CPUModeSet("FCFS");
+				} else if (args[0] == "priority"){
+					_CPUScheduler.schedulingModeSet("priority");
 					_StdOut.putText("Scheduling Mode Set to: Non-Preemptive	Priority");
+					TSOS.Control.CPUModeSet("Non-Preemptive	Priority");
+				}else if (args[0] == "rr"){
+					_CPUScheduler.QuantiumSet(6); 
+					_CPUScheduler.schedulingModeSet("ROUND_ROBIN");
+					_StdOut.putText("Scheduling Mode Set to: Round Robin");
+					TSOS.Control.CPUModeSet("Round Robin");
 				}else{
 					_StdOut.putText("Waa?... I didnt understand what you want");
 				}
             } else {
                 _StdOut.putText("Usage: setschedule <fcfs|npp>");
             }
+		}
+		
+		public shellGetSchedule(args){
+			_StdOut.putText("The Current Scheduling Algorithm is: "+ _CPUScheduler.schedulingType);
 		}
 		
 		

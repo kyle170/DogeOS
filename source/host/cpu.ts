@@ -27,6 +27,7 @@ module TSOS {
                 public currentPCB: TSOS.PCB = null,		// yes... this contains the PCB.... questions?
 				public singleStepMode: boolean = false, // are we single stepping?
 				public singleStepAuth: boolean = true,   // do we have the authority to step?
+				public Priority = 0,
 				public pid: number = 0
                 ) {
         }
@@ -42,6 +43,7 @@ module TSOS {
             this.XReg = this.currentPCB.XReg;
             this.YReg = this.currentPCB.YReg;
             this.ZFlag = this.currentPCB.ZFlag;
+			this.Priority = this.currentPCB.Priority;
         }
 
 

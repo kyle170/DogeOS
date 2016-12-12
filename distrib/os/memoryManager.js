@@ -36,11 +36,12 @@ var TSOS;
                 _StdOut.advanceLine();
             }
         };
-        MemoryManager.prototype.alloicateMemoryForProgram = function (ProcessControlBlock, ProgramData) {
+        MemoryManager.prototype.alloicateMemoryForProgram = function (ProcessControlBlock, ProgramData, prio) {
             // program comes in as a string of doubles... we must write it in the memory!
             //_Memory.clearMem(); // clear anything that was previously in there
             ProcessControlBlock.BaseReg = (ProcessControlBlock.PID * 256); //set base limit
             ProcessControlBlock.LimReg = ProcessControlBlock.BaseReg + 255; // set max limit
+            ProcessControlBlock.Priority = prio; // sets priority
             for (var i = 0; i < (ProcessControlBlock.LimReg - ProcessControlBlock.BaseReg); i++) {
                 var data = ProgramData[i];
                 if (data !== undefined) {

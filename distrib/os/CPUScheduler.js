@@ -16,13 +16,13 @@ var TSOS;
         };
         CPUScheduler.prototype.schedule = function () {
             // nothing here yet
-            if (this.schedulingType === "ROUND_ROBIN") {
+            if (this.schedulingType === "ROUND_ROBIN" || this.schedulingType === "FCFS") {
                 // do round robbin
                 this.ScheduleRoundRobbin();
             }
             else {
                 //WTFIDKBBQ
-                this.ScheduleRoundRobbin();
+                this.SchedulePrio();
             }
         };
         CPUScheduler.prototype.contextSwitch = function () {
@@ -44,6 +44,25 @@ var TSOS;
             }
         };
         CPUScheduler.prototype.ScheduleRoundRobbin = function () {
+            if (_CPU.currentPCB === null && _ProcessManager.readyQueue.getSize() > 0) {
+                var ProgramToRun = _ProcessManager.readyQueue.dequeue();
+                ProgramToRun.PS = "RUNNING";
+                this.CurrentPCBProgram = ProgramToRun;
+                _CPU.loadProgram(this.CurrentPCBProgram);
+                _CPU.isExecuting = true;
+            }
+            else if (_CPU.currentPCB !== null && _ProcessManager.readyQueue.getSize() > 0) {
+                if (this.pCounter >= this.quantum) {
+                    this.pCounter = 1;
+                    _Kernel.krnInterruptHandler("CONTEXT_SWITCH");
+                }
+            }
+            else {
+            }
+        };
+        CPUScheduler.prototype.SchedulePrio = function () {
+            if (_CPU.currentPCB === null) {
+            }
             if (_CPU.currentPCB === null && _ProcessManager.readyQueue.getSize() > 0) {
                 var ProgramToRun = _ProcessManager.readyQueue.dequeue();
                 ProgramToRun.PS = "RUNNING";

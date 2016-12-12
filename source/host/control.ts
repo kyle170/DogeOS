@@ -131,7 +131,7 @@ module TSOS {
 							output += "<tr><td style='padding: 0px;'>["+i+","+j+","+k+"]</td>"; // tsb
                             var file = _FileSystem.read(i, j, k);
                             output += '<td style="padding: 0px;">'+file.substr(0,1)+' - '+file.substr(1,3)+'</td>'; // bit + location
-							output += '<td style="padding: 0px;">'+file.substr(4,file.length)+'</td>'; // data
+							output += '<td style="padding: 0px; font-size: 0.875em;">'+file.substr(4,file.length)+'</td>'; // data
                         }
                     }
                 }
@@ -139,6 +139,10 @@ module TSOS {
 			document.getElementById('HDDBody').innerHTML = output;
 			
 			
+		}
+		
+		public static CPUModeSet(mode: string): void {
+			document.getElementById('SchedulingMode').innerHTML = mode;
 		}
 		
 		public static singleCPUStepMode(){

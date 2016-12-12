@@ -17,21 +17,25 @@ var TSOS;
             this.status = "loaded";
             // More?
         };
-        DeviceDriverFileSys.prototype.consoleISR = function (parameter, data) {
+        DeviceDriverFileSys.prototype.consoleISR = function (parameter, data, data1) {
             if (parameter = "format") {
                 _FileSystemManager.format();
                 TSOS.Control.fileSystemUpdate();
             }
             else if (parameter = "ls") {
-                _FileSystemManager.listDirectory();
+                _FileSystemManager.ls(data);
             }
             else if (parameter = "create") {
+                _FileSystemManager.create(data);
             }
             else if (parameter = "read") {
+                _FileSystemManager.read(data);
             }
             else if (parameter = "write") {
+                _FileSystemManager.write(data, data1);
             }
             else if (parameter = "delete") {
+                _FileSystemManager.deleteFile(data);
             }
             else {
             }

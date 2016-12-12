@@ -21,19 +21,19 @@ var TSOS;
                 }
             }
         };
-        FileSystemManager.prototype.createFile = function (fileName) {
+        FileSystemManager.prototype.ls = function (fileName) {
             //TODO
         };
-        FileSystemManager.prototype.readFile = function (fileName) {
+        FileSystemManager.prototype.create = function (fileName) {
             //TODO
         };
-        FileSystemManager.prototype.writeFile = function (fileName, data) {
+        FileSystemManager.prototype.read = function (fileName, data) {
+            //TODO
+        };
+        FileSystemManager.prototype.write = function (fileName) {
             //TODO
         };
         FileSystemManager.prototype.deleteFile = function (fileName) {
-            //TODO
-        };
-        FileSystemManager.prototype.doesFileExist = function (fileName) {
             //TODO
         };
         FileSystemManager.prototype.takeApartFile = function (t, s, b) {

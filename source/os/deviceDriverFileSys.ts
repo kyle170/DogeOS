@@ -15,20 +15,20 @@ module TSOS {
             // More?
         }
         
-		public consoleISR(parameter: string, data: string) {
+		public consoleISR(parameter: string, data: string, data1: string) {
 			if(parameter = "format"){ // User asked for format the driver
 				_FileSystemManager.format();
 				TSOS.Control.fileSystemUpdate();
 			}else if(parameter = "ls"){
-				_FileSystemManager.listDirectory();
+				_FileSystemManager.ls(data);
 			}else if(parameter = "create"){
-				//TODO
+				_FileSystemManager.create(data);
 			}else if(parameter = "read"){
-				//TODO
+				_FileSystemManager.read(data);
 			}else if(parameter = "write"){
-				//TODO
+				_FileSystemManager.write(data, data1);
 			}else if(parameter = "delete"){
-				//TODO
+				_FileSystemManager.deleteFile(data);
 			}else{
 				//idk what to do
 			}

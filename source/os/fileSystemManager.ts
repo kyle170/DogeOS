@@ -30,23 +30,23 @@ module TSOS {
             }
         }
 
-        public createFile(fileName): string {
+        public ls(fileName): string {
             //TODO
         }
 
-        public readFile(fileName): string {
+        public create(fileName): string {
             //TODO
         }
 
-        public writeFile(fileName, data): string {
+        public read(fileName, data): string {
             //TODO
         }
 
-        public deleteFile(fileName): string {
+        public write(fileName): string {
             //TODO
         }
 
-        private doesFileExist(fileName): boolean {
+        private deleteFile(fileName): boolean {
             //TODO
         }
 

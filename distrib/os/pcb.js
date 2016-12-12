@@ -11,6 +11,7 @@ var TSOS;
             this.PS = "NEW";
             this.BaseReg = -1;
             this.LimReg = -1;
+            this.Priority = 0;
         }
         PCB.prototype.update_PCB = function (PC, Acc, XReg, YReg, ZFlag) {
             this.PC = PC;

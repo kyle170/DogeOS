@@ -11,6 +11,7 @@ module TSOS {
         public PS: string;			//'NEW', 'READY', 'WAITING', 'HALTED', 'RUNNING', 'TERMINATED'
         public BaseReg: number;		// Where memory access starts
         public LimReg: number;		// Where memory access ends
+		public Priority: number;
         		
         constructor(){	// things we need to start with Invoke on initial load
 			this.PID = PCB.CPID++; 
@@ -22,6 +23,7 @@ module TSOS {
 			this.PS = "NEW";
 			this.BaseReg = -1;
 			this.LimReg = -1;
+			this.Priority = 0;
         } 
 		
         public update_PCB( PC: number, Acc: number, XReg: number, YReg: number, ZFlag: number ): void { // give us the old update... err new one!

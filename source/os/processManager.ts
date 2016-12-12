@@ -16,7 +16,7 @@ module TSOS {
 			this.processes = [null];
 		}
 		
-		public load(programData: Array<string>): number {
+		public load(programData: Array<string>, prio: number): number {
 			//load the program into the memory and return a PID to work with
 			if((PCB.CPID*256) >= _Memory.memorySize){
 				_StdOut.putText("Not enough memory!");
@@ -24,7 +24,7 @@ module TSOS {
 			}
 			var ProcessControlBlock = new PCB();
 			this.ResidentList[ProcessControlBlock.PID] = ProcessControlBlock;
-			_MemoryManager.alloicateMemoryForProgram(ProcessControlBlock, programData);
+			_MemoryManager.alloicateMemoryForProgram(ProcessControlBlock, programData, prio);
 			this.processesList[ProcessControlBlock.PID] = ProcessControlBlock.PID;
 			return ProcessControlBlock.PID;
 		}
