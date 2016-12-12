@@ -104,7 +104,7 @@ var TSOS;
                         var temp = _MemoryManager.readFromMemory(this.currentPCB, this.PC);
                         var temp2 = parseInt(temp, 16);
                         this.PC++;
-                        _MemoryManager.writeToMemory(this.currentPCB, temp2, this.Acc.toString(16)); // I think?... seems to output the right thing
+                        _MemoryManager.writeToMemory(this.currentPCB, temp2, this.Acc.toString(16).toUpperCase()); // I think?... seems to output the right thing
                         this.PC++;
                         console.log("8D Run!");
                     }
@@ -178,7 +178,7 @@ var TSOS;
                             var temp = _MemoryManager.readFromMemory(this.currentPCB, this.PC);
                             this.PC++; // one byte jump
                             var temp2 = parseInt(temp, 16);
-                            this.PC = this.PC + temp2;
+                            this.PC += temp2;
                         }
                         else {
                             this.PC++;
@@ -190,11 +190,12 @@ var TSOS;
                         var temp = _MemoryManager.readFromMemory(this.currentPCB, this.PC);
                         var temp2 = parseInt(temp, 16);
                         this.PC++;
-                        temp = _MemoryManager.readFromMemory(this.currentPCB, this.PC);
-                        var temp3 = parseInt(temp, 16);
-                        temp3++;
-                        _MemoryManager.writeToMemory(this.currentPCB, temp2, temp3.toString(16));
-                        console.log("EE Run! - " + temp2 + " -> " + temp3);
+                        var temp3 = _MemoryManager.readFromMemory(this.currentPCB, temp2);
+                        var temp4 = parseInt(temp3, 16);
+                        temp4++;
+                        _MemoryManager.writeToMemory(this.currentPCB, temp2, temp4.toString(16));
+                        this.PC++;
+                        console.log("EE Run! - " + temp2 + " -> " + temp4);
                     }
                     else if (_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'FF') {
                         // soo.... accroding to this reasarch... if the X is true, I need to return the byte in the y register to the console???

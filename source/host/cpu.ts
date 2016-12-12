@@ -91,7 +91,7 @@ module TSOS {
 						var temp: string = _MemoryManager.readFromMemory(this.currentPCB, this.PC);
 						var temp2: number = parseInt(temp, 16);
 						this.PC++;
-						_MemoryManager.writeToMemory(this.currentPCB, temp2, this.Acc.toString(16)); // I think?... seems to output the right thing
+						_MemoryManager.writeToMemory(this.currentPCB, temp2, this.Acc.toString(16).toUpperCase()); // I think?... seems to output the right thing
 						this.PC++;
 						console.log("8D Run!");
 					}else if(_MemoryManager.readFromMemory(this.currentPCB, this.PC) == '6D'){ // Add with carry
@@ -156,22 +156,23 @@ module TSOS {
 						if(this.ZFlag === 0){
 							var temp =  _MemoryManager.readFromMemory(this.currentPCB, this.PC);
 							this.PC++; // one byte jump
-							var temp2: number = parseInt(temp, 16);
-							this.PC = this.PC + temp2;
+							var temp2 = parseInt(temp, 16);
+							this.PC +=  temp2;
 						} else {
 							this.PC++;
 						}
 						console.log("D0 Run! - ZFlag:"+ this.ZFlag + " - OP MOVE POS: "+ this.PC);
 					}else if(_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'EE'){ // EE increment a byte at addr
 						this.PC++;
-						var temp: string = _MemoryManager.readFromMemory(this.currentPCB, this.PC);
-						var temp2: number = parseInt(temp, 16);
+						var temp = _MemoryManager.readFromMemory(this.currentPCB, this.PC);
+						var temp2 = parseInt(temp, 16);
 						this.PC++;
-						temp = _MemoryManager.readFromMemory(this.currentPCB, this.PC); 
-						var temp3: number = parseInt(temp, 16);
-						temp3++;
-						_MemoryManager.writeToMemory(this.currentPCB, temp2, temp3.toString(16));
-						console.log("EE Run! - "+temp2+" -> "+temp3);
+						var temp3 = _MemoryManager.readFromMemory(this.currentPCB, temp2); 
+						var temp4 = parseInt(temp3, 16);
+						temp4++;
+						_MemoryManager.writeToMemory(this.currentPCB, temp2, temp4.toString(16));
+						this.PC++;
+						console.log("EE Run! - "+temp2+" -> "+temp4);
 					}else if(_MemoryManager.readFromMemory(this.currentPCB, this.PC) == 'FF'){ // System call: {{{{TBD}}}}
 						// soo.... accroding to this reasarch... if the X is true, I need to return the byte in the y register to the console???
 						// and if there is a 2? in the x register?... not there yet
