@@ -20,7 +20,6 @@ var TSOS;
                     }
                 }
             }
-            TSOS.Control.fileSystemUpdate();
         };
         FileSystemManager.prototype.createFile = function (fileName) {
             //TODO

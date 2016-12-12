@@ -94,12 +94,26 @@ var TSOS;
             // quantium
             sc = new TSOS.ShellCommand(this.shellQuantium, "quantum", "- sets the quantium for RR scheduling (Ex: quantium 4 )");
             this.commandList[this.commandList.length] = sc;
-            objSharedCommandList = this.commandList;
-            // quantium
+            // format
             sc = new TSOS.ShellCommand(this.shellFormat, "format", "- formats the system drive");
             this.commandList[this.commandList.length] = sc;
-            // doge
-            sc = new TSOS.ShellCommand(this.shellDoge, "doge", "- to the moon!");
+            // create
+            sc = new TSOS.ShellCommand(this.shellCreate, "create", "- creates the file with the inputted file <filename>");
+            this.commandList[this.commandList.length] = sc;
+            // read
+            sc = new TSOS.ShellCommand(this.shellRead, "read", "- reads the specified file from the HDD");
+            this.commandList[this.commandList.length] = sc;
+            // write
+            sc = new TSOS.ShellCommand(this.shellWrite, "write", "- writes a file to memory");
+            this.commandList[this.commandList.length] = sc;
+            // delete
+            sc = new TSOS.ShellCommand(this.shellDelete, "delete", "- deletes a file from memory");
+            this.commandList[this.commandList.length] = sc;
+            // ls
+            sc = new TSOS.ShellCommand(this.shellls, "ls", "- returns a list of files in the current directory");
+            this.commandList[this.commandList.length] = sc;
+            // set schedule
+            sc = new TSOS.ShellCommand(this.shellSetSchedule, "setschedule", "- Sets the schedule of the CPU");
             this.commandList[this.commandList.length] = sc;
             objSharedCommandList = this.commandList;
             //
@@ -397,6 +411,30 @@ var TSOS;
                         _StdOut.putText("Format's the drive to prepare for its use.");
                         _StdOut.advanceLine();
                         break;
+                    case "create":
+                        _StdOut.putText("Creates a file with the parameter of <filename>");
+                        _StdOut.advanceLine();
+                        break;
+                    case "read":
+                        _StdOut.putText("Reads a file from memory; ex: read doge");
+                        _StdOut.advanceLine();
+                        break;
+                    case "write":
+                        _StdOut.putText('Writes an existing file to memory.. PLEASE USE QUOTES AROUND YOUR DATA, ex; write doge "woof" ');
+                        _StdOut.advanceLine();
+                        break;
+                    case "delete":
+                        _StdOut.putText("Deletes a file from memory... ex; delete doge");
+                        _StdOut.advanceLine();
+                        break;
+                    case "ls":
+                        _StdOut.putText("lists the files in the directory");
+                        _StdOut.advanceLine();
+                        break;
+                    case "setschedule":
+                        _StdOut.putText("Sets the schedule of the CPU algorithm");
+                        _StdOut.advanceLine();
+                        break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
                 }
@@ -534,8 +572,8 @@ var TSOS;
             }
         };
         Shell.prototype.shellFormat = function (args) {
-            //_FileSystemDriver.consoleISR("format", "");
-            _FileSystemManager.format();
+            _krnFileSystemDriver.consoleISR("format", "");
+            _StdOut.putText("Formatt HDD Sucessful");
         };
         Shell.prototype.shellCreate = function (args) {
             //TODO

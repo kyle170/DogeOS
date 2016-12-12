@@ -1,6 +1,6 @@
 module TSOS {
 
-    export class FileSystemManager{
+    export class FileSystemManager {
 
         private tracks:     number; // a required entity
         private sectors:    number; // a required entity
@@ -28,7 +28,6 @@ module TSOS {
                     }
                 }
             }
-			TSOS.Control.fileSystemUpdate();
         }
 
         public createFile(fileName): string {
@@ -54,6 +53,8 @@ module TSOS {
         private takeApartFile(t, s, b){
             //TODO
         }
+		
+
     }
 
 }

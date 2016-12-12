@@ -13,11 +13,14 @@ var TSOS;
             _super.call(this, this.krnFSDriverEntry, this.consoleISR);
         }
         DeviceDriverFileSys.prototype.krnFSDriverEntry = function () {
-            //this is what loads the driver
+            // Initialization routine for this, the kernel-mode File System Device Driver.
+            this.status = "loaded";
+            // More?
         };
         DeviceDriverFileSys.prototype.consoleISR = function (parameter, data) {
             if (parameter = "format") {
-                _FileSystemManager.formatFileSystem();
+                _FileSystemManager.format();
+                TSOS.Control.fileSystemUpdate();
             }
             else if (parameter = "ls") {
                 _FileSystemManager.listDirectory();
