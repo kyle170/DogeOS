@@ -98,6 +98,9 @@ var TSOS;
             // quantium
             sc = new TSOS.ShellCommand(this.shellFormat, "format", "- formats the system drive");
             this.commandList[this.commandList.length] = sc;
+            // doge
+            sc = new TSOS.ShellCommand(this.shellDoge, "doge", "- to the moon!");
+            this.commandList[this.commandList.length] = sc;
             objSharedCommandList = this.commandList;
             //
             // Display the initial prompt.
@@ -531,8 +534,26 @@ var TSOS;
             }
         };
         Shell.prototype.shellFormat = function (args) {
-            var params = { operationType: 'format' };
+            //_FileSystemDriver.consoleISR("format", "");
             _FileSystemManager.format();
+        };
+        Shell.prototype.shellCreate = function (args) {
+            //TODO
+        };
+        Shell.prototype.shellRead = function (args) {
+            //TODO
+        };
+        Shell.prototype.shellWrite = function (args) {
+            //TODO
+        };
+        Shell.prototype.shellDelete = function (args) {
+            //TODO
+        };
+        Shell.prototype.shellls = function (args) {
+            //TODO
+        };
+        Shell.prototype.shellSetSchedule = function (args) {
+            //TODO
         };
         Shell.prototype.shellPS = function (args) {
             // nothing here yet

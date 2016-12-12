@@ -15,20 +15,20 @@ var TSOS;
         DeviceDriverFileSys.prototype.krnFSDriverEntry = function () {
             //this is what loads the driver
         };
-        DeviceDriverFileSys.prototype.consoleISR = function () {
-            if (something = "format") {
+        DeviceDriverFileSys.prototype.consoleISR = function (parameter, data) {
+            if (parameter = "format") {
                 _FileSystemManager.formatFileSystem();
             }
-            else if (params.operationType = "ls") {
+            else if (parameter = "ls") {
                 _FileSystemManager.listDirectory();
             }
-            else if (params.operationType = "create") {
+            else if (parameter = "create") {
             }
-            else if (params.operationType = "read") {
+            else if (parameter = "read") {
             }
-            else if (params.operationType = "write") {
+            else if (parameter = "write") {
             }
-            else if (params.operationType = "delete") {
+            else if (parameter = "delete") {
             }
             else {
             }

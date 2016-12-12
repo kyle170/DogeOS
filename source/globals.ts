@@ -30,7 +30,8 @@ var _Memory: TSOS.Memory; // bring in the Memory Class
 var _FileSystem: TSOS.FileSystem; // filesystem
 var _ProcessManager: TSOS.ProcessManager; // bring in the Process Manager Class
 var _MemoryManager: TSOS.MemoryManager; // bring in the Memory Manager Class
-var _FileSystemManager: TSOS.FileSystemManager;
+var _FileSystemManager: TSOS.FileSystemManager; // manages the file system
+var _FileSystemDriver: TSOS.DeviceDriverFileSys; // the driver for the filesystem (handles the commands too!)
 var _CPUScheduler: TSOS.CPUScheduler; // CPU scheduler
 var _OSclock: number = 0;  // Page 23.
 

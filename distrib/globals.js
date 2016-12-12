@@ -25,7 +25,8 @@ var _Memory; // bring in the Memory Class
 var _FileSystem; // filesystem
 var _ProcessManager; // bring in the Process Manager Class
 var _MemoryManager; // bring in the Memory Manager Class
-var _FileSystemManager;
+var _FileSystemManager; // manages the file system
+var _FileSystemDriver; // the driver for the filesystem (handles the commands too!)
 var _CPUScheduler; // CPU scheduler
 var _OSclock = 0; // Page 23.
 var _Mode = 0; // (currently unused)  0 = Kernel Mode, 1 = User Mode.  See page 21.

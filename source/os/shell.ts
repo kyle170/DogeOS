@@ -179,6 +179,12 @@ module TSOS {
                                   "- formats the system drive");
             this.commandList[this.commandList.length] = sc;
 			
+			// doge
+            sc = new ShellCommand(this.shellDoge,
+                                  "doge",
+                                  "- to the moon!");
+            this.commandList[this.commandList.length] = sc;
+			
 			objSharedCommandList = this.commandList;
 			
 			
@@ -630,8 +636,32 @@ module TSOS {
 		}
 		
 		public shellFormat(args){
-			var params = {operationType: 'format'};
-			 _FileSystemManager.format();
+			//_FileSystemDriver.consoleISR("format", "");
+			_FileSystemManager.format();
+		}
+		 
+		public shellCreate(args){
+			 //TODO
+		}
+		
+		public shellRead(args){
+			 //TODO
+		}
+		
+		public shellWrite(args){
+			 //TODO
+		}
+		
+		public shellDelete(args){
+			 //TODO
+		}
+		
+		public shellls(args){
+			 //TODO
+		}
+		
+		public shellSetSchedule(args){
+			 //TODO
 		}
 		
 		

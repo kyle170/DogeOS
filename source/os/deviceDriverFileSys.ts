@@ -13,18 +13,18 @@ module TSOS {
             //this is what loads the driver
         }
         
-		public consoleISR() {
-			if(something = "format"){ // User asked for format the driver
+		public consoleISR(parameter: string, data: string) {
+			if(parameter = "format"){ // User asked for format the driver
 				_FileSystemManager.formatFileSystem();
-			}else if(params.operationType = "ls"){
+			}else if(parameter = "ls"){
 				_FileSystemManager.listDirectory();
-			}else if(params.operationType = "create"){
+			}else if(parameter = "create"){
 				//TODO
-			}else if(params.operationType = "read"){
+			}else if(parameter = "read"){
 				//TODO
-			}else if(params.operationType = "write"){
+			}else if(parameter = "write"){
 				//TODO
-			}else if(params.operationType = "delete"){
+			}else if(parameter = "delete"){
 				//TODO
 			}else{
 				//idk what to do
