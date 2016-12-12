@@ -573,7 +573,7 @@ var TSOS;
         };
         Shell.prototype.shellFormat = function (args) {
             _krnFileSystemDriver.consoleISR("format", "");
-            _StdOut.putText("Formatt HDD Sucessful");
+            _StdOut.putText("Format Memory Sucessful");
         };
         Shell.prototype.shellCreate = function (args) {
             //TODO
@@ -591,7 +591,22 @@ var TSOS;
             //TODO
         };
         Shell.prototype.shellSetSchedule = function (args) {
-            //TODO
+            if (args.length > 0) {
+                if (args[0] = "fcfs") {
+                    _CPUScheduler.QuantiumSet(9999999); // basically fcfs
+                    _StdOut.putText("Scheduling Mode Set to: First Come First Serve");
+                }
+                else if (args[0] = "npp") {
+                    //_CPUScheduler.PriorityMode(); // calling all prio
+                    _StdOut.putText("Scheduling Mode Set to: Non-Preemptive	Priority");
+                }
+                else {
+                    _StdOut.putText("Waa?... I didnt understand what you want");
+                }
+            }
+            else {
+                _StdOut.putText("Usage: setschedule <fcfs|npp>");
+            }
         };
         Shell.prototype.shellPS = function (args) {
             // nothing here yet
