@@ -80,12 +80,39 @@ module TSOS {
 			}
         }
 		
-        private deleteFile(fileName): boolean {
-            //TODO
+        public deleteFile(fileName): boolean {
+            if(this.checkIfFileExists(fileName)){ // good, it exists... lets continue
+				for(var i=0; i<this.tracks; i++){
+					for(var j=0; j<this.sectors; j++){ // loop through each sector
+						for(var k=0; k<this.blocks; k++){ // loop through each block
+							var whatIfound = _FileSystem.read(i,j,k);
+							if("1"+fileName === whatIfound.substring(4)){
+								if(this.recursiveFileDelete(i, j, k)){
+									return true;
+								}
+							}
+						}
+					}
+				}
+			}else{
+				return false;
+			}
         }
 		
 		private reserveTSBSpace(i, j, k){
 			_FileSystem.write(i, j, k, "1---------------------------------------------------------------");
+		}
+		
+		
+		private recursiveFileDelete(i, j, k): boolean {
+			var whatIfound = _FileSystem.read(i,j,k); // read the current block
+			_FileSystem.write(i, j, k, "0---------------------------------------------------------------"); // write a blank block
+			if(whatIfound.substring(0,4) === "0---"){
+				return true;
+			}else{
+				this.recursiveFileDelete(whatIfound.substring(1,2), whatIfound.substring(2,3), whatIfound.substring(3,4));
+			}
+			return true;
 		}
 		
 		private findFreeSpaceOnTheTSB(reserve: boolean): string{

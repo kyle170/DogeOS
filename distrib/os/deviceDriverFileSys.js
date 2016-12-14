@@ -22,7 +22,7 @@ var TSOS;
                 return _FileSystemManager.format();
             }
             else if (parameter === "ls") {
-                return _StdOut.putText(_FileSystemManager.ls());
+                return _FileSystemManager.ls();
             }
             else if (parameter === "create") {
                 return _FileSystemManager.create(data);

@@ -16,7 +16,7 @@ module TSOS {
 			if(parameter === "format"){ // User asked for format the driver
 				return _FileSystemManager.format();
 			}else if(parameter === "ls"){
-				return _StdOut.putText(_FileSystemManager.ls());
+				return _FileSystemManager.ls();
 			}else if(parameter === "create"){
 				return _FileSystemManager.create(data);
 			}else if(parameter === "read"){

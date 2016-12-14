@@ -71,10 +71,37 @@ var TSOS;
             }
         };
         FileSystemManager.prototype.deleteFile = function (fileName) {
-            //TODO
+            if (this.checkIfFileExists(fileName)) {
+                for (var i = 0; i < this.tracks; i++) {
+                    for (var j = 0; j < this.sectors; j++) {
+                        for (var k = 0; k < this.blocks; k++) {
+                            var whatIfound = _FileSystem.read(i, j, k);
+                            if ("1" + fileName === whatIfound.substring(4)) {
+                                if (this.recursiveFileDelete(i, j, k)) {
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else {
+                return false;
+            }
         };
         FileSystemManager.prototype.reserveTSBSpace = function (i, j, k) {
             _FileSystem.write(i, j, k, "1---------------------------------------------------------------");
+        };
+        FileSystemManager.prototype.recursiveFileDelete = function (i, j, k) {
+            var whatIfound = _FileSystem.read(i, j, k); // read the current block
+            _FileSystem.write(i, j, k, "0---------------------------------------------------------------"); // write a blank block
+            if (whatIfound.substring(0, 4) === "0---") {
+                return true;
+            }
+            else {
+                this.recursiveFileDelete(whatIfound.substring(1, 2), whatIfound.substring(2, 3), whatIfound.substring(3, 4));
+            }
+            return true;
         };
         FileSystemManager.prototype.findFreeSpaceOnTheTSB = function (reserve) {
             for (var i = 0; i < this.tracks; i++) {

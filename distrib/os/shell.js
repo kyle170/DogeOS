@@ -640,10 +640,21 @@ var TSOS;
             }
         };
         Shell.prototype.shellDelete = function (args) {
-            //TODO
+            if (args.length > 0) {
+                if (_krnFileSystemDriver.consoleISR("delete", args[0])) {
+                    _StdOut.putText("Sucessfully deleted: " + args[0]);
+                    TSOS.Control.fileSystemUpdate();
+                }
+                else {
+                    _StdOut.putText("We had a problem deleting the file: " + args[0]);
+                }
+            }
+            else {
+                _StdOut.putText("Usage: delete <filename>");
+            }
         };
         Shell.prototype.shellls = function (args) {
-            _krnFileSystemDriver.consoleISR("ls");
+            _StdOut.putText(_krnFileSystemDriver.consoleISR("ls"));
         };
         Shell.prototype.shellSetSchedule = function (args) {
             if (args.length > 0) {
