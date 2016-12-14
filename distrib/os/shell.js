@@ -625,7 +625,7 @@ var TSOS;
                 }
             }
             else {
-                _StdOut.putText("Usage: setschedule <fcfs|npp>");
+                _StdOut.putText("Usage: setschedule <fcfs/rr/priority>");
             }
         };
         Shell.prototype.shellGetSchedule = function (args) {

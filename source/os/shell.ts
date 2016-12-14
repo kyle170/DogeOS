@@ -749,7 +749,7 @@ module TSOS {
 					_StdOut.putText("Waa?... I didnt understand what you want");
 				}
             } else {
-                _StdOut.putText("Usage: setschedule <fcfs|npp>");
+                _StdOut.putText("Usage: setschedule <fcfs/rr/priority>");
             }
 		}
 		

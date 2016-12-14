@@ -1,3 +1,4 @@
+///<reference path="../globals.ts" />
 module TSOS {
     export class CPUScheduler {
 		public schedulingType: string; // ROUND_ROBIN, FCFS, priority
@@ -71,46 +72,54 @@ module TSOS {
 		
 		private SchedulePrio(): void {
 
-			if(_ProcessManager.readyQueue.getSize() === 1 && _CPU.currentPCB === null){
-				console.log("Context Switch Requested");
-				_Kernel.krnInterruptHandler("CONTEXT_SWITCH");
+			if(_CPU.currentPCB === null && _ProcessManager.readyQueue.getSize() === 1){
+				//empty CPU and only one other program... switch to that when done!
+				var ProgramToRun = _ProcessManager.readyQueue.dequeue();
+                ProgramToRun.PS = "RUNNING";
+				this.CurrentPCBProgram = ProgramToRun;
+                _CPU.loadProgram(this.CurrentPCBProgram);
+				_CPU.isExecuting = true;
 				return;
 			}
 			if(_CPU.currentPCB === null){ // theres nothing on the CPU
 				// nothing is running
-				console.log("first loop in");
 				var arrayThatHoldsThePrograms = [];
 				var sizeOfReadyQueue = _ProcessManager.readyQueue.getSize();
-				for(var i:number = 0; i<sizeOfReadyQueue; i++){
+				for(var i = 0; i < sizeOfReadyQueue; i++){
 					arrayThatHoldsThePrograms.push(_ProcessManager.readyQueue.dequeue());
 				}
 				// now that we have all the programs OFF The PCB, lets reorganize and readd
-				for (var i:number =0; i < arrayThatHoldsThePrograms.length; i++){
-					var bestpriofound = 9999999999999999;
-					for(var j:number=0; j < arrayThatHoldsThePrograms.length; j++){
-						var currentPCB = arrayThatHoldsThePrograms[i];
+				for (var i=0; i < arrayThatHoldsThePrograms.length; i++){
+					var bestpriofound: number = 999999999999; 
+					for(var j=0; j < arrayThatHoldsThePrograms.length; j++){
+						var currentPCB = arrayThatHoldsThePrograms[j];
+						if(currentPCB === undefined || currentPCB === null){ continue; }
 						if(currentPCB.Priority < bestpriofound){
 							bestpriofound = currentPCB.Priority;
+							//JSON.stringify(currentPCB.Priority);
 						}
 					}
+					console.log( bestpriofound );
 					//found the lowest priority
-					for(var j:number=0; j < arrayThatHoldsThePrograms.length; j++){
-						var currentPCB = arrayThatHoldsThePrograms[i];
+					for(var j=0; j < arrayThatHoldsThePrograms.length; j++){
+						var currentPCB = arrayThatHoldsThePrograms[j];
+						if(currentPCB === undefined || currentPCB === null){ continue; }
 						if(currentPCB.Priority === bestpriofound){
 							_ProcessManager.readyQueue.enqueue(currentPCB);
-							delete arrayThatHoldsThePrograms[i];
-							console.log(bestpriofound);
+							delete arrayThatHoldsThePrograms[j];
+							//console.log(bestpriofound);
 							break; // thats it...we're done here!
 						}
 					}
 				}
-			}else{
-				console.log("Some other situation");
-				
 			}
 			// If current program is done, do next one
-            if (this.executingPCB === null && _ProcessManager.readyQueue.getSize() > 0){
-                _Kernel.krnInterruptHandler("CONTEXT_SWITCH");
+            if (_CPU.currentPCB === null && _ProcessManager.readyQueue.getSize() > 0){
+                var ProgramToRun = _ProcessManager.readyQueue.dequeue();
+                ProgramToRun.PS = "RUNNING";
+				this.CurrentPCBProgram = ProgramToRun;
+                _CPU.loadProgram(this.CurrentPCBProgram);
+				_CPU.isExecuting = true;
             }
 		}
 		

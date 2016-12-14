@@ -27,7 +27,7 @@ module TSOS {
                 public currentPCB: TSOS.PCB = null,		// yes... this contains the PCB.... questions?
 				public singleStepMode: boolean = false, // are we single stepping?
 				public singleStepAuth: boolean = true,   // do we have the authority to step?
-				public Priority = 0,
+				public Priority: number = 0,
 				public pid: number = 0
                 ) {
         }
