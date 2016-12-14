@@ -705,13 +705,22 @@ module TSOS {
 		}
 		
 		public shellFormat(args){
-			_krnFileSystemDriver.consoleISR("format", "");
-			_StdOut.putText("Format Memory Sucessful");
+			if(_krnFileSystemDriver.consoleISR("format", "")){
+				_StdOut.putText("Format Memory Sucessful");
+				TSOS.Control.fileSystemUpdate();
+			}else{
+				_StdOut.putText("Format Unsucessful");
+			}
 		}
 		 
 		public shellCreate(args){
 			if (args.length > 0) {
-				_krnFileSystemDriver.consoleISR("create", args[0]);
+				if(_krnFileSystemDriver.consoleISR("create", args[0])){
+					_StdOut.putText("Sucessfully created: "+args[0]);
+					TSOS.Control.fileSystemUpdate();
+				}else{
+					_StdOut.putText("We had a problem creating the file: "+args[0]);
+				}
 			}else{
 				_StdOut.putText("Usage: create <filename>");
 			}
@@ -735,7 +744,12 @@ module TSOS {
 					 }
 				 }
 				 if(parcount === 2){
-					 _krnFileSystemDriver.consoleISR("write", args[0], data);
+					 if(_krnFileSystemDriver.consoleISR("write", args[0], data)){
+						 _StdOut.putText("Wrote data to: "+args[0]);
+						 TSOS.Control.fileSystemUpdate();
+					 }else{
+						 _StdOut.putText("We had a problem writing data to: "+args[0]);
+					 }
 				 }else{
 					 _StdOut.putText('PLEASE REMEMBER QUOTATIONS AROUND YOUR DATA!!! Usage: write <filename> "<data>"');
 				 }

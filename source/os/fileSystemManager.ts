@@ -17,18 +17,24 @@ module TSOS {
             this.headerSize = _FileSystem.headerSize;
         }
 
-        public format(){
-            var blankBlock = '0';
-            for(var i = 0; i < this.blockSize-1; i++){
-                blankBlock += '-';
-            }
-            for(var i = 0; i < this.tracks; i++){
-                for(var j = 0; j < this.sectors; j++){
-                    for(var k = 0; k < this.blocks; k++){
-                        _FileSystem.write(i, j, k, blankBlock);
-                    }
-                }
-            }
+        public format(): boolean{
+			if(!_Formatted){
+				var blankBlock = '0';
+				for(var i = 0; i < this.blockSize-1; i++){
+					blankBlock += '-';
+				}
+				for(var i = 0; i < this.tracks; i++){
+					for(var j = 0; j < this.sectors; j++){
+						for(var k = 0; k < this.blocks; k++){
+							_FileSystem.write(i, j, k, blankBlock);
+						}
+					}
+				}
+				_Formatted = true;
+				return true;
+			}else{
+				return false;
+			}
         }
 
         public ls(): string {
@@ -46,29 +52,31 @@ module TSOS {
 			return items.substring(0, (items.length)-2);
         }
 
-        public create(fileName): string {
+        public create(fileName): boolean {
 			//the way the system tells if its a pointer and not a file is if it starts with `
 			if(this.checkIfFileExists(fileName)){
 				_StdOut.putText("File Already Exists!");
+				return false;
 			}else{
 				var freeLocationForPointer = this.findFreeSpaceOnTheTSB(true);
 				var freeLocationForData = this.findFreeSpaceOnTheTSB(true);
 				_FileSystem.write(freeLocationForPointer.substring(0,1), freeLocationForPointer.substring(1,2), freeLocationForPointer.substring(2,3), "1"+freeLocationForData+"1"+fileName);
-				
+				return true;
 			}
         }
 
-        public read(fileName, data): string {
+        public read(fileName, data): boolean {
             //TODO
         }
 
-        public write(fileName, data): string {
+        public write(fileName, data): boolean {
             if(this.checkIfFileExists(fileName)){ // good, it exists... lets continue
 				var fileDataLocation = this.fileDataLocationFinder(fileName);
-				alert(fileDataLocation);
 				_FileSystem.write(fileDataLocation.substring(0,1), fileDataLocation.substring(1,2), fileDataLocation.substring(2,3), "1---"+"2"+data);
+				return true;
 			}else{
 				_StdOut.putText("Cannot Write!... File Doesnt Exist!");
+				return false;
 			}
         }
 		

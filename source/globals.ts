@@ -68,6 +68,7 @@ var _OsShell: TSOS.Shell;
 
 // At least this OS is not trying to kill you. (Yet.)
 var _SarcasticMode: boolean = false;
+var _Formatted: boolean = false;
 var _DogeData: any = null;
 var _IsDogeRunning: boolean = false;
 

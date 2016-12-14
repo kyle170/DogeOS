@@ -10,16 +10,23 @@ var TSOS;
             this.headerSize = _FileSystem.headerSize;
         }
         FileSystemManager.prototype.format = function () {
-            var blankBlock = '0';
-            for (var i = 0; i < this.blockSize - 1; i++) {
-                blankBlock += '-';
-            }
-            for (var i = 0; i < this.tracks; i++) {
-                for (var j = 0; j < this.sectors; j++) {
-                    for (var k = 0; k < this.blocks; k++) {
-                        _FileSystem.write(i, j, k, blankBlock);
+            if (!_Formatted) {
+                var blankBlock = '0';
+                for (var i = 0; i < this.blockSize - 1; i++) {
+                    blankBlock += '-';
+                }
+                for (var i = 0; i < this.tracks; i++) {
+                    for (var j = 0; j < this.sectors; j++) {
+                        for (var k = 0; k < this.blocks; k++) {
+                            _FileSystem.write(i, j, k, blankBlock);
+                        }
                     }
                 }
+                _Formatted = true;
+                return true;
+            }
+            else {
+                return false;
             }
         };
         FileSystemManager.prototype.ls = function () {
@@ -40,11 +47,13 @@ var TSOS;
             //the way the system tells if its a pointer and not a file is if it starts with `
             if (this.checkIfFileExists(fileName)) {
                 _StdOut.putText("File Already Exists!");
+                return false;
             }
             else {
                 var freeLocationForPointer = this.findFreeSpaceOnTheTSB(true);
                 var freeLocationForData = this.findFreeSpaceOnTheTSB(true);
                 _FileSystem.write(freeLocationForPointer.substring(0, 1), freeLocationForPointer.substring(1, 2), freeLocationForPointer.substring(2, 3), "1" + freeLocationForData + "1" + fileName);
+                return true;
             }
         };
         FileSystemManager.prototype.read = function (fileName, data) {
@@ -53,11 +62,12 @@ var TSOS;
         FileSystemManager.prototype.write = function (fileName, data) {
             if (this.checkIfFileExists(fileName)) {
                 var fileDataLocation = this.fileDataLocationFinder(fileName);
-                alert(fileDataLocation);
                 _FileSystem.write(fileDataLocation.substring(0, 1), fileDataLocation.substring(1, 2), fileDataLocation.substring(2, 3), "1---" + "2" + data);
+                return true;
             }
             else {
                 _StdOut.putText("Cannot Write!... File Doesnt Exist!");
+                return false;
             }
         };
         FileSystemManager.prototype.deleteFile = function (fileName) {

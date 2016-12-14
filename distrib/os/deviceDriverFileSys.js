@@ -19,25 +19,22 @@ var TSOS;
         };
         DeviceDriverFileSys.prototype.consoleISR = function (parameter, data, data1) {
             if (parameter === "format") {
-                _FileSystemManager.format();
-                TSOS.Control.fileSystemUpdate();
+                return _FileSystemManager.format();
             }
             else if (parameter === "ls") {
-                _StdOut.putText(_FileSystemManager.ls());
+                return _StdOut.putText(_FileSystemManager.ls());
             }
             else if (parameter === "create") {
-                _FileSystemManager.create(data);
-                TSOS.Control.fileSystemUpdate();
+                return _FileSystemManager.create(data);
             }
             else if (parameter === "read") {
-                _FileSystemManager.read(data);
+                return _FileSystemManager.read(data);
             }
             else if (parameter === "write") {
-                _FileSystemManager.write(data, data1);
-                TSOS.Control.fileSystemUpdate();
+                return _FileSystemManager.write(data, data1);
             }
             else if (parameter === "delete") {
-                _FileSystemManager.deleteFile(data);
+                return _FileSystemManager.deleteFile(data);
             }
             else {
                 //idk what else to do
