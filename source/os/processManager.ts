@@ -87,7 +87,5 @@ module TSOS {
 			//simply just grabs the process control block PID
 			return this.ResidentList[ProcessID];
 		}
-		
-		
     }
 }
