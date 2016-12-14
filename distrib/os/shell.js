@@ -70,8 +70,8 @@ var TSOS;
             // run a program
             sc = new TSOS.ShellCommand(this.shellRun, "run", "- runs a loaded program given a PID value");
             this.commandList[this.commandList.length] = sc;
-            // DOMISLOVE
-            sc = new TSOS.ShellCommand(this.shellDomIsLove, "domislove", "- What else would Dom be if not love?");
+            // doge
+            sc = new TSOS.ShellCommand(this.shellDoge, "doge", "- Lets WOW things up a little!");
             this.commandList[this.commandList.length] = sc;
             // music
             sc = new TSOS.ShellCommand(this.shellMusic, "music", "- Music from https://www.youtube.com/watch?v=cA9g-YjfGxo");
@@ -379,8 +379,8 @@ var TSOS;
                     case "run":
                         _StdOut.putText("run will execute the program with the PID that is specified... Ex: run 0");
                         break;
-                    case "domislove":
-                        _StdOut.putText("Who knows what wacky things Dom is up to?... Maybe Love?");
+                    case "doge":
+                        _StdOut.putText("Get comments from the doge... Who knows what hes going to say?");
                         break;
                     case "music":
                         _StdOut.putText("Plays music from https://www.youtube.com/watch?v=cA9g-YjfGxo");
@@ -645,11 +645,27 @@ var TSOS;
                 _StdOut.putText("Usage: quantum <number> - You must tell me what you want to set the quantum to!");
             }
         };
-        Shell.prototype.shellDomIsLove = function (args) {
-            //placeholder for what is to come
-            _StdOut.putText("You will be find Dom's love overwhelming soon.");
-            _StdOut.advanceLine();
-            _StdOut.putText("This is just a placeholder for what is to come!");
+        Shell.prototype.shellDoge = function (args) {
+            if (_IsDogeRunning === false) {
+                _DogeData = new Doge([
+                    'wow',
+                    'much commands',
+                    'such os',
+                    'very pretty',
+                    'much retro',
+                    'many speed',
+                    'such cli',
+                    'typescript skillz',
+                    'only 1 semester OS course'
+                ]);
+                _IsDogeRunning = true;
+                _StdOut.putText("Doge has been activated!");
+            }
+            else {
+                _DogeData.stop();
+                _IsDogeRunning = false;
+                _StdOut.putText("Doge has been stopped!");
+            }
         };
         Shell.prototype.shellRot13 = function (args) {
             if (args.length > 0) {

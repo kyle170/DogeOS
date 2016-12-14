@@ -52,6 +52,8 @@ var _Console;
 var _OsShell;
 // At least this OS is not trying to kill you. (Yet.)
 var _SarcasticMode = false;
+var _DogeData = null;
+var _IsDogeRunning = false;
 // Global Device Driver Objects - page 12
 var _krnKeyboardDriver; //  = null;
 var _krnFileSystemDriver; //  = null;
