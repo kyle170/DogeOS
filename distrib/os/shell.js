@@ -598,13 +598,35 @@ var TSOS;
             //TODO
         };
         Shell.prototype.shellWrite = function (args) {
-            //TODO
+            if (args.length > 1) {
+                var parcount = 0;
+                var data = "";
+                for (var i = 1; i < args.length; i++) {
+                    for (var j = 0; j < args[i].length; j++) {
+                        if (args[i].charAt(j) === '"') {
+                            parcount++;
+                        }
+                        else {
+                            data += args[i].charAt(j);
+                        }
+                    }
+                }
+                if (parcount === 2) {
+                    _krnFileSystemDriver.consoleISR("write", args[0], data);
+                }
+                else {
+                    _StdOut.putText('PLEASE REMEMBER QUOTATIONS AROUND YOUR DATA!!! Usage: write <filename> "<data>"');
+                }
+            }
+            else {
+                _StdOut.putText("Usage: write <filename> <data>");
+            }
         };
         Shell.prototype.shellDelete = function (args) {
             //TODO
         };
         Shell.prototype.shellls = function (args) {
-            //TODO
+            _krnFileSystemDriver.consoleISR("ls");
         };
         Shell.prototype.shellSetSchedule = function (args) {
             if (args.length > 0) {

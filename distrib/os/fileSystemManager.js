@@ -22,19 +22,43 @@ var TSOS;
                 }
             }
         };
-        FileSystemManager.prototype.ls = function (fileName) {
-            //TODO
+        FileSystemManager.prototype.ls = function () {
+            var items = "Files Found: ";
+            for (var i = 0; i < this.tracks; i++) {
+                for (var j = 0; j < this.sectors; j++) {
+                    for (var k = 0; k < this.blocks; k++) {
+                        var whatIfound = _FileSystem.read(i, j, k);
+                        if ("1" === whatIfound.substring(4, 5)) {
+                            items += whatIfound.substring(5) + ", ";
+                        }
+                    }
+                }
+            }
+            return items.substring(0, (items.length) - 2);
         };
         FileSystemManager.prototype.create = function (fileName) {
-            var freeLocationForPointer = this.findFreeSpaceOnTheTSB(true);
-            var freeLocationForData = this.findFreeSpaceOnTheTSB(true);
-            _FileSystem.write(freeLocationForPointer.substring(0, 1), freeLocationForPointer.substring(1, 2), freeLocationForPointer.substring(2, 3), "1" + freeLocationForData + TSOS.Utils.hexEncode(fileName));
+            //the way the system tells if its a pointer and not a file is if it starts with `
+            if (this.checkIfFileExists(fileName)) {
+                _StdOut.putText("File Already Exists!");
+            }
+            else {
+                var freeLocationForPointer = this.findFreeSpaceOnTheTSB(true);
+                var freeLocationForData = this.findFreeSpaceOnTheTSB(true);
+                _FileSystem.write(freeLocationForPointer.substring(0, 1), freeLocationForPointer.substring(1, 2), freeLocationForPointer.substring(2, 3), "1" + freeLocationForData + "1" + fileName);
+            }
         };
         FileSystemManager.prototype.read = function (fileName, data) {
             //TODO
         };
-        FileSystemManager.prototype.write = function (fileName) {
-            //TODO
+        FileSystemManager.prototype.write = function (fileName, data) {
+            if (this.checkIfFileExists(fileName)) {
+                var fileDataLocation = this.fileDataLocationFinder(fileName);
+                alert(fileDataLocation);
+                _FileSystem.write(fileDataLocation.substring(0, 1), fileDataLocation.substring(1, 2), fileDataLocation.substring(2, 3), "1---" + "2" + data);
+            }
+            else {
+                _StdOut.putText("Cannot Write!... File Doesnt Exist!");
+            }
         };
         FileSystemManager.prototype.deleteFile = function (fileName) {
             //TODO
@@ -43,7 +67,6 @@ var TSOS;
             _FileSystem.write(i, j, k, "1---------------------------------------------------------------");
         };
         FileSystemManager.prototype.findFreeSpaceOnTheTSB = function (reserve) {
-            //type: 0 = pointer, 1= data, 2=swap?
             for (var i = 0; i < this.tracks; i++) {
                 for (var j = 0; j < this.sectors; j++) {
                     for (var k = 0; k < this.blocks; k++) {
@@ -63,6 +86,19 @@ var TSOS;
             //umm.... no free space left?
             return "No free space left";
         };
+        FileSystemManager.prototype.fileDataLocationFinder = function (filename) {
+            for (var i = 0; i < this.tracks; i++) {
+                for (var j = 0; j < this.sectors; j++) {
+                    for (var k = 0; k < this.blocks; k++) {
+                        var whatIfound = _FileSystem.read(i, j, k);
+                        if ("1" + filename === whatIfound.substring(4)) {
+                            return "" + whatIfound.substring(1, 4);
+                        }
+                    }
+                }
+            }
+            return "NOT FOUND ON SYSTEM";
+        };
         FileSystemManager.prototype.checkIfLocationUsed = function (i, j, k) {
             //CHECK IF THE BIT IS 1
             var content = _FileSystem.read(i, j, k);
@@ -79,7 +115,7 @@ var TSOS;
                 for (var j = 0; j < this.sectors; j++) {
                     for (var k = 0; k < this.blocks; k++) {
                         var whatIfound = _FileSystem.read(i, j, k);
-                        if (TSOS.Utils.hexEncode(filename) === whatIfound.substring(4)) {
+                        if ("1" + filename === whatIfound.substring(4)) {
                             return true;
                         }
                     }

@@ -17,15 +17,15 @@ module TSOS {
 				_FileSystemManager.format();
 				TSOS.Control.fileSystemUpdate();
 			}else if(parameter === "ls"){
-				_FileSystemManager.ls(data);
+				_StdOut.putText(_FileSystemManager.ls());
 			}else if(parameter === "create"){
-				alert("yo");
 				_FileSystemManager.create(data);
 				TSOS.Control.fileSystemUpdate();
 			}else if(parameter === "read"){
 				_FileSystemManager.read(data);
 			}else if(parameter === "write"){
 				_FileSystemManager.write(data, data1);
+				TSOS.Control.fileSystemUpdate();
 			}else if(parameter === "delete"){
 				_FileSystemManager.deleteFile(data);
 			}else{

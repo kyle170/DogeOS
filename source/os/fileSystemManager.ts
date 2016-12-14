@@ -31,22 +31,45 @@ module TSOS {
             }
         }
 
-        public ls(fileName): string {
-            //TODO
+        public ls(): string {
+			var items = "Files Found: ";
+            for(var i=0; i<this.tracks; i++){
+				for(var j=0; j<this.sectors; j++){ // loop through each sector
+					for(var k=0; k<this.blocks; k++){ // loop through each block
+						var whatIfound = _FileSystem.read(i,j,k);
+						if("1" === whatIfound.substring(4,5)){
+							items += whatIfound.substring(5)+", ";
+						}
+					}
+				}
+			}
+			return items.substring(0, (items.length)-2);
         }
 
         public create(fileName): string {
-			var freeLocationForPointer = this.findFreeSpaceOnTheTSB(true);
-			var freeLocationForData = this.findFreeSpaceOnTheTSB(true);
-			_FileSystem.write(freeLocationForPointer.substring(0,1), freeLocationForPointer.substring(1,2), freeLocationForPointer.substring(2,3), "1"+freeLocationForData+Utils.hexEncode(fileName));
+			//the way the system tells if its a pointer and not a file is if it starts with `
+			if(this.checkIfFileExists(fileName)){
+				_StdOut.putText("File Already Exists!");
+			}else{
+				var freeLocationForPointer = this.findFreeSpaceOnTheTSB(true);
+				var freeLocationForData = this.findFreeSpaceOnTheTSB(true);
+				_FileSystem.write(freeLocationForPointer.substring(0,1), freeLocationForPointer.substring(1,2), freeLocationForPointer.substring(2,3), "1"+freeLocationForData+"1"+fileName);
+				
+			}
         }
 
         public read(fileName, data): string {
             //TODO
         }
 
-        public write(fileName): string {
-            //TODO
+        public write(fileName, data): string {
+            if(this.checkIfFileExists(fileName)){ // good, it exists... lets continue
+				var fileDataLocation = this.fileDataLocationFinder(fileName);
+				alert(fileDataLocation);
+				_FileSystem.write(fileDataLocation.substring(0,1), fileDataLocation.substring(1,2), fileDataLocation.substring(2,3), "1---"+"2"+data);
+			}else{
+				_StdOut.putText("Cannot Write!... File Doesnt Exist!");
+			}
         }
 		
         private deleteFile(fileName): boolean {
@@ -58,7 +81,6 @@ module TSOS {
 		}
 		
 		private findFreeSpaceOnTheTSB(reserve: boolean): string{
-			//type: 0 = pointer, 1= data, 2=swap?
 			for(var i=0; i< this.tracks; i++){
 				for(var j=0; j<this.sectors; j++){
 					for(var k=0; k<this.blocks; k++){
@@ -78,6 +100,20 @@ module TSOS {
 			return "No free space left";
 		}
 		
+		private fileDataLocationFinder(filename: string): string{
+			for(var i=0; i<this.tracks; i++){
+				for(var j=0; j<this.sectors; j++){ // loop through each sector
+					for(var k=0; k<this.blocks; k++){ // loop through each block
+						var whatIfound = _FileSystem.read(i,j,k);
+						if("1"+filename === whatIfound.substring(4)){
+							return ""+whatIfound.substring(1,4);
+						}
+					}
+				}
+			}
+			return "NOT FOUND ON SYSTEM";
+		}
+		
 		private checkIfLocationUsed(i, j, k): boolean {
 			//CHECK IF THE BIT IS 1
 			var content = _FileSystem.read(i, j, k);
@@ -88,13 +124,13 @@ module TSOS {
 			}
 		}
 		
-		private checkIfFileExists(filename):boolean{
+		private checkIfFileExists(filename): boolean{
 			//lets loop to find if each row is used or not and if it is, go deeper
 			for(var i=0; i<this.tracks; i++){
 				for(var j=0; j<this.sectors; j++){ // loop through each sector
 					for(var k=0; k<this.blocks; k++){ // loop through each block
 						var whatIfound = _FileSystem.read(i,j,k);
-						if(Utils.hexEncode(filename) === whatIfound.substring(4)){
+						if("1"+filename === whatIfound.substring(4)){
 							return true;
 						}
 					}
