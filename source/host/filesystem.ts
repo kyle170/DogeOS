@@ -1,7 +1,5 @@
 module TSOS {
-
     export class FileSystem {
-
         constructor(
                 public tracks:     number, // the first one
                 public sectors:    number, // cant have sectors without tracks
@@ -12,12 +10,12 @@ module TSOS {
 
         public read(track, sector, block){
             return localStorage.getItem(track + '-' + sector + '-' + block);
+			//I think I did htm5 correctly OwO
         }
 
         public write(track, sector, block, data){
             localStorage.setItem(track + '-' + sector + '-' + block, data);
+			//I think I did htm5 correctly OwO
         }
-
     }
-
 }

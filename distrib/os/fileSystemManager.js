@@ -25,7 +25,10 @@ var TSOS;
             //TODO
         };
         FileSystemManager.prototype.create = function (fileName) {
-            //TODO
+            var track = 0;
+            var sector = 0;
+            var block = 0;
+            _FileSystem.write(track, sector, block, fileName);
         };
         FileSystemManager.prototype.read = function (fileName, data) {
             //TODO
@@ -37,7 +40,12 @@ var TSOS;
             //TODO
         };
         FileSystemManager.prototype.takeApartFile = function (t, s, b) {
-            //TODO
+            //read the TSB block!
+            var fileData = _FileSystem.read(t, s, b);
+            var usageFlag = fileData.substring(0, 1);
+            var tsbAddress = fileData.substring(1, 4);
+            var fileContents = fileData.substring(4);
+            return [usageFlag, tsbAddress, fileContents];
         };
         return FileSystemManager;
     }());

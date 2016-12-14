@@ -25,7 +25,7 @@ var TSOS;
             _KernelInterruptQueue = new TSOS.Queue(); // A (currently) non-priority queue for interrupt requests (IRQs).
             _KernelBuffers = new Array(); // Buffers... for the kernel.
             _KernelInputQueue = new TSOS.Queue(); // Where device input lands before being processed out somewhere.
-            _ProcessManager = new TSOS.ProcessManager(3);
+            _ProcessManager = new TSOS.ProcessManager(4);
             _MemoryManager = new TSOS.MemoryManager();
             _CPUScheduler = new TSOS.CPUScheduler();
             _FileSystemManager = new TSOS.FileSystemManager(); // bring in the filesystem manager

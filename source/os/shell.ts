@@ -710,7 +710,11 @@ module TSOS {
 		}
 		 
 		public shellCreate(args){
-			 //TODO
+			if (args.length > 0) {
+				_krnFileSystemDriver.consoleISR("create", args[0]);
+			}else{
+				_StdOut.putText("Usage: create <filename>");
+			}
 		}
 		
 		public shellRead(args){

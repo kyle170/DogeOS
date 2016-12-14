@@ -587,7 +587,12 @@ var TSOS;
             _StdOut.putText("Format Memory Sucessful");
         };
         Shell.prototype.shellCreate = function (args) {
-            //TODO
+            if (args.length > 0) {
+                _krnFileSystemDriver.consoleISR("create", args[0]);
+            }
+            else {
+                _StdOut.putText("Usage: create <filename>");
+            }
         };
         Shell.prototype.shellRead = function (args) {
             //TODO

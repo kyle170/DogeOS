@@ -15,9 +15,11 @@ var TSOS;
         }
         FileSystem.prototype.read = function (track, sector, block) {
             return localStorage.getItem(track + '-' + sector + '-' + block);
+            //I think I did htm5 correctly OwO
         };
         FileSystem.prototype.write = function (track, sector, block, data) {
             localStorage.setItem(track + '-' + sector + '-' + block, data);
+            //I think I did htm5 correctly OwO
         };
         return FileSystem;
     }());
