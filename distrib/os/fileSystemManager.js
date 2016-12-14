@@ -1,3 +1,4 @@
+///<reference path="../utils.ts" />
 var TSOS;
 (function (TSOS) {
     var FileSystemManager = (function () {
@@ -25,10 +26,10 @@ var TSOS;
             //TODO
         };
         FileSystemManager.prototype.create = function (fileName) {
-            var track = 1;
-            var sector = 2;
-            var block = 3;
-            _FileSystem.write(track, sector, block, fileName);
+            var track = 0;
+            var sector = 0;
+            var block = 2;
+            _FileSystem.write(track, sector, block, "1101" + TSOS.Utils.hexEncode(fileName));
         };
         FileSystemManager.prototype.read = function (fileName, data) {
             //TODO

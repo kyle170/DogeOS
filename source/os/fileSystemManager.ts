@@ -1,3 +1,4 @@
+///<reference path="../utils.ts" />
 module TSOS {
 
     export class FileSystemManager {
@@ -35,10 +36,10 @@ module TSOS {
         }
 
         public create(fileName): string {
-            var track = 1;
-			var sector = 2;
-			var block = 3;
-			_FileSystem.write(track, sector, block, fileName);
+            var track = 0;
+			var sector = 0;
+			var block = 2;
+			_FileSystem.write(track, sector, block, "1101"+Utils.hexEncode(fileName));
         }
 
         public read(fileName, data): string {

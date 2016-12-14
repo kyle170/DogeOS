@@ -52,7 +52,26 @@ module TSOS {
                 return false; // this is not hex
             }
         }
-		
+		// takes a string and encodes it in hex characters
+		public static hexEncode(input: string): string{
+			var hex, i;
+			var result = "";
+			for (i=0; i<input.length; i++) {
+				hex = input.charCodeAt(i).toString(16);
+				result += ("000"+hex).slice(-4);
+			}
+			return result;
+		}
+		// takes a hex string and decodes it from hex to ENGLISH
+		public static hexDecode(input: string): string{
+			var j;
+			var hexes = input.match(/.{1,4}/g) || [];
+			var back = "";
+			for(j = 0; j<hexes.length; j++) {
+				back += String.fromCharCode(parseInt(hexes[j], 16));
+			}
+			return back;
+		}
 
     }
 }
