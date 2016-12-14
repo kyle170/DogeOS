@@ -36,10 +36,9 @@ module TSOS {
         }
 
         public create(fileName): string {
-            var track = 0;
-			var sector = 0;
-			var block = 2;
-			_FileSystem.write(track, sector, block, "1101"+Utils.hexEncode(fileName));
+			var freeLocationForPointer = this.findFreeSpaceOnTheTSB(true);
+			var freeLocationForData = this.findFreeSpaceOnTheTSB(true);
+			_FileSystem.write(freeLocationForPointer.substring(0,1), freeLocationForPointer.substring(1,2), freeLocationForPointer.substring(2,3), "1"+freeLocationForData+Utils.hexEncode(fileName));
         }
 
         public read(fileName, data): string {
@@ -54,13 +53,50 @@ module TSOS {
             //TODO
         }
 		
+		private reserveTSBSpace(i, j, k){
+			_FileSystem.write(i, j, k, "1---------------------------------------------------------------");
+		}
+		
+		private findFreeSpaceOnTheTSB(reserve: boolean): string{
+			//type: 0 = pointer, 1= data, 2=swap?
+			for(var i=0; i< this.tracks; i++){
+				for(var j=0; j<this.sectors; j++){
+					for(var k=0; k<this.blocks; k++){
+						var contents = this.checkIfLocationUsed(i, j, k);
+						if(!contents){ // Not Used...lets take it
+							if(reserve){ // lets reserve it before we write
+								this.reserveTSBSpace(i, j, k);
+								return ""+i+j+k; // give back first found free space ;)
+							}else{
+								return ""+i+j+k; // give back first found free space ;)
+							}
+						}
+					}
+				}
+			}
+			//umm.... no free space left?
+			return "No free space left";
+		}
+		
+		private checkIfLocationUsed(i, j, k): boolean {
+			//CHECK IF THE BIT IS 1
+			var content = _FileSystem.read(i, j, k);
+			if(content !== null && content.substring(0,1) === "1"){
+				return true;
+			}else{
+				return false;
+			}
+		}
+		
 		private checkIfFileExists(filename):boolean{
 			//lets loop to find if each row is used or not and if it is, go deeper
-			for(var i=0; i<this.sectors; i++){ // loop through each sector
-				for(var j=0; j<this.blocks; j++){ // loop through each block
-					var whatIfound = _FileSystem.read(0,i,j);
-					if(filename === whatIfound.substring(4)){
-						return true;
+			for(var i=0; i<this.tracks; i++){
+				for(var j=0; j<this.sectors; j++){ // loop through each sector
+					for(var k=0; k<this.blocks; k++){ // loop through each block
+						var whatIfound = _FileSystem.read(i,j,k);
+						if(Utils.hexEncode(filename) === whatIfound.substring(4)){
+							return true;
+						}
 					}
 				}
 			}
