@@ -25,9 +25,9 @@ var TSOS;
             //TODO
         };
         FileSystemManager.prototype.create = function (fileName) {
-            var track = 0;
-            var sector = 0;
-            var block = 0;
+            var track = 1;
+            var sector = 2;
+            var block = 3;
             _FileSystem.write(track, sector, block, fileName);
         };
         FileSystemManager.prototype.read = function (fileName, data) {
@@ -38,6 +38,18 @@ var TSOS;
         };
         FileSystemManager.prototype.deleteFile = function (fileName) {
             //TODO
+        };
+        FileSystemManager.prototype.checkIfFileExists = function (filename) {
+            //lets loop to find if each row is used or not and if it is, go deeper
+            for (var i = 0; i < this.sectors; i++) {
+                for (var j = 0; j < this.blocks; j++) {
+                    var whatIfound = _FileSystem.read(0, i, j);
+                    if (filename === whatIfound.substring(4)) {
+                        return true;
+                    }
+                }
+            }
+            return false;
         };
         FileSystemManager.prototype.takeApartFile = function (t, s, b) {
             //read the TSB block!

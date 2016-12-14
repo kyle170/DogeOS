@@ -35,9 +35,9 @@ module TSOS {
         }
 
         public create(fileName): string {
-            var track = 0;
-			var sector = 0;
-			var block = 0;
+            var track = 1;
+			var sector = 2;
+			var block = 3;
 			_FileSystem.write(track, sector, block, fileName);
         }
 
@@ -52,6 +52,19 @@ module TSOS {
         private deleteFile(fileName): boolean {
             //TODO
         }
+		
+		private checkIfFileExists(filename):boolean{
+			//lets loop to find if each row is used or not and if it is, go deeper
+			for(var i=0; i<this.sectors; i++){ // loop through each sector
+				for(var j=0; j<this.blocks; j++){ // loop through each block
+					var whatIfound = _FileSystem.read(0,i,j);
+					if(filename === whatIfound.substring(4)){
+						return true;
+					}
+				}
+			}
+			return false;
+		}
 
         private takeApartFile(t, s, b){
 			//read the TSB block!
