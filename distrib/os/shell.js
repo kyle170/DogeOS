@@ -435,7 +435,7 @@ var TSOS;
                         _StdOut.advanceLine();
                         break;
                     case "setschedule":
-                        _StdOut.putText("Sets the schedule of the CPU algorithm");
+                        _StdOut.putText("Sets the schedule of the CPU algorithm; ex setschedule <fcfs/rr/priority>");
                         _StdOut.advanceLine();
                         break;
                     case "getschedule":
@@ -605,7 +605,7 @@ var TSOS;
             if (args.length > 0) {
                 if (args[0] == "fcfs") {
                     _CPUScheduler.QuantiumSet(9999999999); // basically fcfs
-                    _CPUScheduler.schedulingModeSet("FCFS");
+                    _CPUScheduler.schedulingModeSet("fcfs");
                     _StdOut.putText("Scheduling Mode Set to: First Come First Serve");
                     TSOS.Control.CPUModeSet("FCFS");
                 }
