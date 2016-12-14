@@ -65,8 +65,13 @@ module TSOS {
 			}
         }
 
-        public read(fileName, data): boolean {
-            //TODO
+        public read(fileName): string {
+             if(this.checkIfFileExists(fileName)){ // good, it exists... lets continue
+				var fileDataLocation = this.fileDataLocationFinder(fileName);
+				return ""+_FileSystem.read(fileDataLocation.substring(0,1), fileDataLocation.substring(1,2), fileDataLocation.substring(2,3)).substring(5);
+			 }else{
+				 return "Cant read"+fileName;
+			 }
         }
 
         public write(fileName, data): boolean {

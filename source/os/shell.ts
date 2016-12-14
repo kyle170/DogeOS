@@ -727,7 +727,16 @@ module TSOS {
 		}
 		
 		public shellRead(args){
-			 //TODO
+			 if(args.length > 0) {
+				var output = _krnFileSystemDriver.consoleISR("read", args[0]);
+				if(output !== ""){
+					 _StdOut.putText(""+output);
+				}else{
+					_StdOut.putText("We had a problem reading  the file: "+args[0]);
+				}
+			}else{
+				_StdOut.putText("Usage: create <filename>");
+			}
 		}
 		
 		public shellWrite(args){

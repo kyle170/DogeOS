@@ -56,8 +56,14 @@ var TSOS;
                 return true;
             }
         };
-        FileSystemManager.prototype.read = function (fileName, data) {
-            //TODO
+        FileSystemManager.prototype.read = function (fileName) {
+            if (this.checkIfFileExists(fileName)) {
+                var fileDataLocation = this.fileDataLocationFinder(fileName);
+                return "" + _FileSystem.read(fileDataLocation.substring(0, 1), fileDataLocation.substring(1, 2), fileDataLocation.substring(2, 3)).substring(5);
+            }
+            else {
+                return "Cant read" + fileName;
+            }
         };
         FileSystemManager.prototype.write = function (fileName, data) {
             if (this.checkIfFileExists(fileName)) {
