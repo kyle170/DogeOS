@@ -66,6 +66,10 @@ var TSOS;
                 _Memory.setByte(i, '00');
             }
         };
+        MemoryManager.prototype.PageFault = function () {
+            //save the old pcb
+            // get the new pcb ready
+        };
         return MemoryManager;
     }());
     TSOS.MemoryManager = MemoryManager;

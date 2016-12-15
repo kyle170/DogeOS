@@ -11,6 +11,8 @@ var TSOS;
             this.PS = "NEW";
             this.BaseReg = -1;
             this.LimReg = -1;
+            this.IsInSwap = false;
+            this.SwapLocation = '';
             this.Priority = 0;
         }
         PCB.prototype.update_PCB = function (PC, Acc, XReg, YReg, ZFlag) {

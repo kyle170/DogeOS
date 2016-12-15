@@ -70,5 +70,15 @@ module TSOS {
 			}
 		}
 		
+		public PageFault(): void {
+			//save the old pcb
+			
+			
+			// get the new pcb ready
+			
+			
+			
+		}
+		
     }
 }

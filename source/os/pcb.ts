@@ -11,6 +11,8 @@ module TSOS {
         public PS: string;			//'NEW', 'READY', 'WAITING', 'HALTED', 'RUNNING', 'TERMINATED'
         public BaseReg: number;		// Where memory access starts
         public LimReg: number;		// Where memory access ends
+		public IsInSwap: boolean;	// is it in the formatted hdd?
+		public SwapLocation: string;	// where it at? (or rather where does it start?)
 		public Priority: number;
         		
         constructor(){	// things we need to start with Invoke on initial load
@@ -23,6 +25,8 @@ module TSOS {
 			this.PS = "NEW";
 			this.BaseReg = -1;
 			this.LimReg = -1;
+			this.IsInSwap = false;
+			this.SwapLocation = '';
 			this.Priority = 0;
         } 
 		
