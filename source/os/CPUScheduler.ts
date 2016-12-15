@@ -7,7 +7,6 @@ module TSOS {
 		private CurrentPCBProgram: TSOS.PCB;
 		
 		
-		
 		constructor(){
 			// presets on boot
 			this.quantum = 6; // default quantum

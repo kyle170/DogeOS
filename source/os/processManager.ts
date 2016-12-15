@@ -18,8 +18,12 @@ module TSOS {
 		
 		public load(programData: Array<string>, prio: number): number {
 			//load the program into the memory and return a PID to work with
-			if((PCB.CPID*256) >= _Memory.memorySize){
+			if((PCB.CPID*256) >= _Memory.memorySize+256){
 				_StdOut.putText("Not enough memory!");
+				return -1;
+			}
+			if(!_Formatted && (PCB.CPID*256) >= _Memory.memorySize){
+				_StdOut.putText("Dude, you gotta format the file system before I can take another application...");
 				return -1;
 			}
 			var ProcessControlBlock = new PCB();

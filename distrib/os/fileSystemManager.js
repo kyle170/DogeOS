@@ -62,7 +62,7 @@ var TSOS;
                 return "" + _FileSystem.read(fileDataLocation.substring(0, 1), fileDataLocation.substring(1, 2), fileDataLocation.substring(2, 3)).substring(5);
             }
             else {
-                return "Cant read" + fileName;
+                return "Cant read: " + fileName;
             }
         };
         FileSystemManager.prototype.write = function (fileName, data) {
@@ -165,14 +165,6 @@ var TSOS;
                 }
             }
             return false;
-        };
-        FileSystemManager.prototype.takeApartFile = function (t, s, b) {
-            //read the TSB block!
-            var fileData = _FileSystem.read(t, s, b);
-            var usageFlag = fileData.substring(0, 1);
-            var tsbAddress = fileData.substring(1, 4);
-            var fileContents = fileData.substring(4);
-            return [usageFlag, tsbAddress, fileContents];
         };
         return FileSystemManager;
     }());
