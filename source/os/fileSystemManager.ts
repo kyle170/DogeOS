@@ -65,25 +65,57 @@ module TSOS {
 			}
         }
 
-        public read(fileName): string {
+        public read(fileName, i, j, k): string {
              if(this.checkIfFileExists(fileName)){ // good, it exists... lets continue
 				var fileDataLocation = this.fileDataLocationFinder(fileName);
-				return ""+_FileSystem.read(fileDataLocation.substring(0,1), fileDataLocation.substring(1,2), fileDataLocation.substring(2,3)).substring(5);
+				var data = _FileSystem.read(fileDataLocation.substring(0,1), fileDataLocation.substring(1,2), fileDataLocation.substring(2,3));
+				if(data.substring(0,4) !== "1---"){
+					data += this.recursiveRead(data.substring(1,2), data.substring(2,3), data.substring(3,4), "");
+				}
+				return data.substring(5);
 			 }else{
 				 return "Cant read: "+fileName;
 			 }
         }
+		
+		
+		public recursiveRead(i, j, k, inputString: string): string {
+			var data = _FileSystem.read(i, j, k);
+			if(data.substring(0,4) === "1---"){
+				return ""+inputString+data.substring(5);
+			}else{
+				this.recursiveRead(data.substring(1,2), data.substring(2,3), data.substring(3,4), ""+data.substring(5));
+			}
+		}
 
-        public write(fileName, data): boolean {
+        public write(fileName, data, i, j, k): boolean {
             if(this.checkIfFileExists(fileName)){ // good, it exists... lets continue
 				var fileDataLocation = this.fileDataLocationFinder(fileName);
-				_FileSystem.write(fileDataLocation.substring(0,1), fileDataLocation.substring(1,2), fileDataLocation.substring(2,3), "1---"+"2"+data);
-				return true;
+				this.recursiveFileDelete(fileDataLocation.substring(0,1), fileDataLocation.substring(1,2), fileDataLocation.substring(2,3)); // get rid of any previous file data!
+				if(this.recursiveWrite(fileDataLocation.substring(0,1), fileDataLocation.substring(1,2), fileDataLocation.substring(2,3), data)){
+					return true;
+				}else{
+					return false;
+				}
 			}else{
 				_StdOut.putText("Cannot Write!... File Doesnt Exist!");
 				return false;
 			}
         }
+		
+		public recursiveWrite(i, j, k, data): boolean {
+			var padding = 7;
+			if(data.length < this.blockSize-padding){
+				_FileSystem.write(i, j, k, "1---"+"2"+data);
+			}else{
+				var newLocation = this.findFreeSpaceOnTheTSB(true);
+				var shortened = data.substring(0, this.blockSize-padding);
+				var whatsleft = data.substring(this.blockSize-padding);
+				_FileSystem.write(i, j, k, "1"+newLocation.substring(0,1)+newLocation.substring(1,2)+newLocation.substring(2,3)+"2"+shortened);
+				this.recursiveWrite(newLocation.substring(0,1), newLocation.substring(1,2), newLocation.substring(2,3), whatsleft);				
+			}
+			return true
+		}
 		
         public deleteFile(fileName): boolean {
             if(this.checkIfFileExists(fileName)){ // good, it exists... lets continue
