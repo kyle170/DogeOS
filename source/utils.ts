@@ -52,5 +52,6 @@ module TSOS {
                 return false; // this is not hex
             }
         }
+		
     }
 }

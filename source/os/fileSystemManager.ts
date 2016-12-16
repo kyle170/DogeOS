@@ -109,25 +109,38 @@ module TSOS {
 			}
         }
 		
-		public recursiveWrite(i, j, k, data,swapOverride: boolean): boolean {
+		public dump(v) {
+			switch (typeof v) {
+				case "object":
+					for (var i in v) {
+						console.log(i+":"+v[i]);
+					}
+					break;
+				default: //number, string, boolean, null, undefined 
+					console.log(typeof v+":"+v);
+					break;
+			}
+		}
+		
+		public recursiveWrite(i, j, k, data, swapOverride: boolean) {
 			//console.log(data);
 			var padding = 7;
-			var type = "2";
 			if(swapOverride !== null){
-				type = "0";
+				var type = "0";
 			}else{
-				type = "2";
+				var type = "2";
 			}
 			if(data.length < this.blockSize-padding){
 				_FileSystem.write(i, j, k, "1---"+type+data);
 			}else{
 				var newLocation = this.findFreeSpaceOnTheTSB(true);
-				var shortened = data.substring(0, this.blockSize-padding);
+				var trimmed = data.substring(0, (this.blockSize-padding));
+				this.dump(trimmed);
 				var whatsleft = data.substring(this.blockSize-padding);
-				_FileSystem.write(i, j, k, "1"+newLocation.substring(0,1)+newLocation.substring(1,2)+newLocation.substring(2,3)+type+shortened);
+				_FileSystem.write(i, j, k, "1"+newLocation.substring(0,1)+newLocation.substring(1,2)+newLocation.substring(2,3)+type+trimmed);
 				this.recursiveWrite(newLocation.substring(0,1), newLocation.substring(1,2), newLocation.substring(2,3), whatsleft);				
 			}
-			return true
+			//return true
 		}
 		
         public deleteFile(fileName): boolean {
