@@ -224,6 +224,9 @@ module TSOS {
 						//what do I do again?
 						_StdOut.putText("UNKNOWN INSTRUCTION: "+_MemoryManager.readFromMemory(this.currentPCB, this.PC));
 						_StdOut.advanceLine();
+						_StdOut.putText("PID: "+this.pid+" Terminated");
+						_StdOut.advanceLine();
+						_ProcessManager.kill(this.pid);
 						this.PC++; // count as instruction because yah...
 					}
 				}

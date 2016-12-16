@@ -13,6 +13,9 @@ module TSOS {
         public LimReg: number;		// Where memory access ends
 		public IsInSwap: boolean;	// is it in the formatted hdd?
 		public SwapLocation: string;	// where it at? (or rather where does it start?)
+		public inClock: number;
+		public Wait: number;
+		public Turn: number;
 		public Priority: number;
         		
         constructor(){	// things we need to start with Invoke on initial load
@@ -28,6 +31,9 @@ module TSOS {
 			this.IsInSwap = false;
 			this.SwapLocation = '';
 			this.Priority = 0;
+			this.inClock = 0;
+			this.Wait = 0;
+			this.Turn = 0;
         } 
 		
         public update_PCB( PC: number, Acc: number, XReg: number, YReg: number, ZFlag: number ): void { // give us the old update... err new one!
@@ -36,6 +42,8 @@ module TSOS {
 			this.XReg = XReg;
 			this.YReg = YReg;
 			this.ZFlag = ZFlag;
+			this.Turn++;
+			this.Wait = (_OSclock-this.inClock-this.Turn);
         }
     } 
 }

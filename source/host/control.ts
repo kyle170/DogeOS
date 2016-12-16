@@ -90,15 +90,29 @@ module TSOS {
 		}
 		
 		public static readyQueueUpdate(): void {
-				var output: string = 'CPU Active PCB: \n{"PID":'+_CPU.pid.toString()+',"Inst": '+_MemoryManager.readFromMemory(_CPU.currentPCB, _CPU.PC)+',"Acc":'+_CPU.Acc.toString()+',"XReg":'+_CPU.XReg.toString()+',"YReg":'+_CPU.YReg.toString()+',"ZFlag":'+_CPU.ZFlag.toString()+',"PC":'+_CPU.PC.toString()+', "PS": "'+_CPU.currentPCB.PS+'"} \n\nWaiting:\n';
-				var ReadyQueue = _ProcessManager.readyQueue;
-				var output2 = JSON.stringify(ReadyQueue);
-				output2 = output2.substring(6, output2.length-2);
-				output = output + output2;
+				var output: string = "<tr style='font-size: 0.775em;padding: 0px;'><th>PID</th><th>Swap</th><th>State</th><th>PC</th><th>Acc</th><th>X</th><th>Y</th><th>Z</th><th>Base</th><th>Turn</th><th>Wait</th></tr>";
+				 for(var i = 0; i < _ProcessManager.ResidentList.length; i++){
+					var processcontrolblock = _ProcessManager.ResidentList[i];
+					if(processcontrolblock.PS === "NEW" || processcontrolblock.PS === "READY" || processcontrolblock.PS === "WAITING" || processcontrolblock.PS === "RUNNING"){
+						var inSwap = "No";
+						if(processcontrolblock.IsInSwap){
+							inSwap = "Yes";
+						}
+						output += '<tr style="font-size: 0.775em;padding: 0px;"><td>'+processcontrolblock.PID+'</td><td>'+inSwap+'</td><td>'+processcontrolblock.PS+'</td><td>'+processcontrolblock.PC+'</td><td>'+processcontrolblock.Acc+'</td><td>'+processcontrolblock.XReg+'</td><td>'+processcontrolblock.YReg+'</td><td>'+processcontrolblock.ZFlag+'</td><td>'+processcontrolblock.BaseReg+'</td><td>'+processcontrolblock.Turn+'</td><td>'+processcontrolblock.Wait+'</td></tr>';
+					}
+				 }
+				document.getElementById('ReadyQueueTableData').innerHTML = output;
 				
-				
-				document.getElementById('taReadyQueue').innerHTML = output;
-			// udpate the html pcb
+				// onto the terminated tab
+				var output: string = '<tr style="font-size: 0.775em;padding: 0px;"><th>PID</th><th>State</th><th>PC</th><th>X</th><th>Y</th><th>Z</th><th>Base</th><th>Turn</th><th>Wait</th></tr>';
+				 for(var i = 0; i < _ProcessManager.ResidentList.length; i++){
+					var processcontrolblock = _ProcessManager.ResidentList[i];
+					if(processcontrolblock.PS === "TERMINATED" || processcontrolblock.PS === "HALTED"){
+						output += '<tr style="font-size: 0.775em;padding: 0px;"><td>'+processcontrolblock.PID+'</td><td>'+processcontrolblock.PS+'</td><td>'+processcontrolblock.PC+'</td><td>'+processcontrolblock.XReg+'</td><td>'+processcontrolblock.YReg+'</td><td>'+processcontrolblock.ZFlag+'</td><td>'+processcontrolblock.BaseReg+'</td><td>'+processcontrolblock.Turn+'</td><td>'+processcontrolblock.Wait+'</td></tr>';
+					}
+				 }
+				document.getElementById('TerminatedSlashCompletedTableData').innerHTML = output;
+		
 		}
 		
 		

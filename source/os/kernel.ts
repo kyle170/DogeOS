@@ -28,7 +28,7 @@ module TSOS {
             _KernelInputQueue = new Queue();      // Where device input lands before being processed out somewhere.
 			
 			
-			_ProcessManager = new ProcessManager(4);
+			_ProcessManager = new ProcessManager();
             _MemoryManager = new MemoryManager();
 			_CPUScheduler = new CPUScheduler();
 			_FileSystemManager = new FileSystemManager();  // bring in the filesystem manager
@@ -143,6 +143,9 @@ module TSOS {
                     break;
 				case "CONTEXT_SWITCH":
 					_CPUScheduler.contextSwitch(); // TRIGGERED
+					break;
+				case "PAGE_FAULT":
+					_MemoryManager.pageFault(params.next, params.previous); // TRIGGERED... LETS GET SWITCHING!
 					break;
                 default:
                     this.krnTrapError("Invalid Interrupt Request. irq=" + irq + " params=[" + params + "]");

@@ -157,8 +157,8 @@
 					<th>Z</th>
 				</tr>
 				<tr>
-					<td id="cpu.instr">N/A</td>
 					<td id="cpu.pc">0</td>
+					<td id="cpu.instr">N/A</td>
 					<td id="cpu.acc">0</td>
 					<td id="cpu.xreg">0</td>
 					<td id="cpu.yreg">0</td>
@@ -175,12 +175,43 @@
 				<li style="width:50%"><a data-toggle="tab" class="btn btn-info" href="#TerminatedSlashCompleted">Terminated / Completed</a></li>
 			</ul>
 		<div class="tab-content">
-				<div id="ReadyQueue" class="tab-pane fade in active" style="max-height: 150px;overflow-y: scroll;">
-				  <textarea name="taReadyQueueStatus" id="taReadyQueue" rows="5">No Programs Loaded</textarea>
+				<div id="ReadyQueue" class="tab-pane fade in active" style="max-height: 170px;overflow:hidden;">
+				  <div class="panel panel-default" style="margin-bottom: 0px;">
+						<table id="ReadyQueueTable" class="table">
+							<tbody id="ReadyQueueTableData"><tr style="font-size: 0.775em;padding: 0px;">
+								<th>PID</th>
+								<th>Loc</th>
+								<th>State</th>
+								<th>PC</th>
+								<th>Acc</th>
+								<th>X</th>
+								<th>Y</th>
+								<th>Z</th>
+								<th>Base</th>
+								<th>Turn</th>
+								<th>Wait</th>
+							</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
-				<div id="TerminatedSlashCompleted" class="tab-pane fade" style="max-height: 150px;overflow-y: scroll;">
-				  <h3>Menu 1</h3>
-				  <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+				<div id="TerminatedSlashCompleted" class="tab-pane fade" style="max-height: 170px;overflow:hidden;">
+					<div class="panel panel-default" style="margin-bottom: 0px;">
+						<table id="TerminatedSlashCompletedTable" class="table">
+							<tbody id="TerminatedSlashCompletedTableData"><tr style="font-size: 0.775em;padding: 0px;">
+								<th>PID</th>
+								<th>State</th>
+								<th>PC</th>
+								<th>X</th>
+								<th>Y</th>
+								<th>Z</th>
+								<th>Base</th>
+								<th>Turn</th>
+								<th>Wait</th>
+							</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		<!----------------------------------------------------------------------------------->

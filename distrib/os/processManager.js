@@ -30,6 +30,7 @@ var TSOS;
         ProcessManager.prototype.runPiD = function (ProcessID) {
             var ProcessControlBlock = this.ResidentList[ProcessID];
             ProcessControlBlock.PS = "WAITING";
+            ProcessControlBlock.inClock = Number(_OSclock);
             this.PCBCONVERTER = this.ResidentList[ProcessID];
             this.readyQueue.enqueue(this.PCBCONVERTER); // send her off
         };

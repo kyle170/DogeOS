@@ -71,8 +71,8 @@ module TSOS {
 			}
         }
 
-        public read(fileName, i, j, k): string {
-             if(this.checkIfFileExists(fileName)){ // good, it exists... lets continue
+        public read(fileName, swapOverride: boolean): string {
+             if(this.checkIfFileExists(fileName) || swapOverride !== null){ // good, it exists... lets continue
 				var fileDataLocation = this.fileDataLocationFinder(fileName);
 				var data = _FileSystem.read(fileDataLocation.substring(0,1), fileDataLocation.substring(1,2), fileDataLocation.substring(2,3));
 				if(data.substring(0,4) !== "1---"){
@@ -146,8 +146,7 @@ module TSOS {
 			_FileSystem.write(i, j, k, "1---------------------------------------------------------------");
 		}
 		
-		
-		private recursiveFileDelete(i, j, k): boolean {
+		public recursiveFileDelete(i, j, k): boolean {
 			var whatIfound = _FileSystem.read(i,j,k); // read the current block
 			_FileSystem.write(i, j, k, "0---------------------------------------------------------------"); // write a blank block
 			if(whatIfound.substring(0,4) === "0---"){

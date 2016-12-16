@@ -37,12 +37,20 @@ module TSOS {
 		public contextSwitch(): void {
 			if(_CPU.currentPCB === null && _ProcessManager.readyQueue.getSize() > 0){ // nothing to start with and a program arrives
                 var ProgramToRun = _ProcessManager.readyQueue.dequeue();
+				if(ProgramToRun.IsInSwap){  //OH NOES...SHES IN SWAP...LETS GET HER OUTTA THERE!
+					var params = {next: ProgramToRun.PID, previous: this.CurrentPCBProgram};
+					_Kernel.krnInterruptHandler("PAGE_FAULT", params);
+				}
                 ProgramToRun.PS = "RUNNING"; 
 				this.CurrentPCBProgram = ProgramToRun;
                 _CPU.loadProgram(this.CurrentPCBProgram);
             }else if(_CPU.currentPCB !== null && _ProcessManager.readyQueue.getSize() > 0){ // something already is in tehre and another program arrives
 				_CPU.updatePCB();
 				var ProgramToRun = _ProcessManager.readyQueue.dequeue();
+				if(ProgramToRun.IsInSwap){  //OH NOES...SHES IN SWAP...LETS GET HER OUTTA THERE!
+					var params = {next: ProgramToRun.PID, previous: this.CurrentPCBProgram};
+					_Kernel.krnInterruptHandler("PAGE_FAULT", params);
+				}
 				ProgramToRun.PS = "RUNNING";
 				// TAKE CURRENTLY RUNNING OFF AND PUSH BACK TO READY!
 				this.CurrentPCBProgram.PS = "WAITING";

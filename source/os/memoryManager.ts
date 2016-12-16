@@ -1,6 +1,7 @@
 module TSOS {
     export class MemoryManager {
-        private memoryTotalSize: number = _Memory.memorySize; 
+        private memoryTotalSize: number = _Memory.memorySize;
+		private 
 		
 		constructor(){
 			// nothing needed...just a palceholder
@@ -21,6 +22,9 @@ module TSOS {
 			}else{
 				_StdOut.putText("Memory Bounds Violation Error! - Tying to write: "+(ProcessControlBlock.BaseReg+MemoryLocation)); // return fatal error if its outside (memory seeking missile program)
 				_StdOut.advanceLine();
+				_StdOut.putText("PID: "+ProcessControlBlock.PID+" Terminated");
+				_StdOut.advanceLine();
+				_ProcessManager.kill(ProcessControlBlock.PID);
 			}
 		} 
 		
@@ -35,6 +39,9 @@ module TSOS {
 			}else{
 				_StdOut.putText("Memory Bounds Violation Error! - Tying to read: "+(ProcessControlBlock.BaseReg+MemoryLocation)); // return fatal error if its outside (memory seeking missile program)
 				_StdOut.advanceLine();
+				_StdOut.putText("PID: "+ProcessControlBlock.PID+" Terminated");
+				_StdOut.advanceLine();
+				_ProcessManager.kill(ProcessControlBlock.PID);
 			}
 		}
 		
@@ -47,7 +54,9 @@ module TSOS {
                     str += ProgramData[i];
                 }
 				console.log(str);
-				_krnFileSystemDriver.consoleISR("write", "swap1", str, true);
+				ProcessControlBlock.IsInSwap = true;
+				ProcessControlBlock.SwapLocation = "003";
+				_krnFileSystemDriver.consoleISR("write", "swap2", str, true);
 				TSOS.Control.fileSystemUpdate();
 			}else{	// put into the boring regular memory
 				ProcessControlBlock.BaseReg = (ProcessControlBlock.PID*256);	//set base limit
@@ -80,14 +89,30 @@ module TSOS {
 			}
 		}
 		
-		public pageFault(): void {
+		public pageFault(nextPID:number, oldPID: number): void {
+			console.log("hey...we had a page fault!");
+			var toLoad = _ProcessManager.ResidentList[nextPID];
+			var toStore = _ProcessManager.ResidentList[oldPID];
 			//save the old pcb
-			
+			var toStoreString = "";
+			for(var i=0; i<256; i++){
+				toStoreString += this.readFromMemory(toStore, i);
+			}
+			toStore.IsInSwap = true;
+			toStore.SwapLocation = "003";
+			_krnFileSystemDriver.consoleISR("write", "swap1", toStoreString, true);
 			
 			// get the new pcb ready
-			
-			
-			
+			var newProg = _krnFileSystemDriver.consoleISR("read", "swap2", true);
+			var progArray = [];
+			for(var i=0; i< 256; i+=2){
+				progArray.push(""+ newProg[i] + newProg[i+1]);
+			}
+			_FileSystemManager.recursiveFileDelete(0,0,3);
+			toStore.IsInSwap = false;
+			toStore.SwapLocation = "003";
+			this.alloicateMemoryForProgram(newProg, progArray);
+			TSOS.Control.fileSystemUpdate();
 		}
 		
     }

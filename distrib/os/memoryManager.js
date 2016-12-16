@@ -20,6 +20,9 @@ var TSOS;
             else {
                 _StdOut.putText("Memory Bounds Violation Error! - Tying to write: " + (ProcessControlBlock.BaseReg + MemoryLocation)); // return fatal error if its outside (memory seeking missile program)
                 _StdOut.advanceLine();
+                _StdOut.putText("PID: " + ProcessControlBlock.PID + " Terminated");
+                _StdOut.advanceLine();
+                _ProcessManager.kill(ProcessControlBlock.PID);
             }
         };
         MemoryManager.prototype.readFromMemory = function (ProcessControlBlock, MemoryLocation) {
@@ -34,6 +37,9 @@ var TSOS;
             else {
                 _StdOut.putText("Memory Bounds Violation Error! - Tying to read: " + (ProcessControlBlock.BaseReg + MemoryLocation)); // return fatal error if its outside (memory seeking missile program)
                 _StdOut.advanceLine();
+                _StdOut.putText("PID: " + ProcessControlBlock.PID + " Terminated");
+                _StdOut.advanceLine();
+                _ProcessManager.kill(ProcessControlBlock.PID);
             }
         };
         MemoryManager.prototype.alloicateMemoryForProgram = function (ProcessControlBlock, ProgramData, prio) {
@@ -45,7 +51,9 @@ var TSOS;
                     str += ProgramData[i];
                 }
                 console.log(str);
-                _krnFileSystemDriver.consoleISR("write", "swap1", str, true);
+                ProcessControlBlock.IsInSwap = true;
+                ProcessControlBlock.SwapLocation = "003";
+                _krnFileSystemDriver.consoleISR("write", "swap2", str, true);
                 TSOS.Control.fileSystemUpdate();
             }
             else {
@@ -77,9 +85,29 @@ var TSOS;
                 _Memory.setByte(i, '00');
             }
         };
-        MemoryManager.prototype.pageFault = function () {
+        MemoryManager.prototype.pageFault = function (nextPID, oldPID) {
+            console.log("hey...we had a page fault!");
+            var toLoad = _ProcessManager.ResidentList[nextPID];
+            var toStore = _ProcessManager.ResidentList[oldPID];
             //save the old pcb
+            var toStoreString = "";
+            for (var i = 0; i < 256; i++) {
+                toStoreString += this.readFromMemory(toStore, i);
+            }
+            toStore.IsInSwap = true;
+            toStore.SwapLocation = "003";
+            _krnFileSystemDriver.consoleISR("write", "swap1", toStoreString, true);
             // get the new pcb ready
+            var newProg = _krnFileSystemDriver.consoleISR("read", "swap2", true);
+            var progArray = [];
+            for (var i = 0; i < 256; i += 2) {
+                progArray.push("" + newProg[i] + newProg[i + 1]);
+            }
+            _FileSystemManager.recursiveFileDelete(0, 0, 3);
+            toStore.IsInSwap = false;
+            toStore.SwapLocation = "003";
+            this.alloicateMemoryForProgram(newProg, progArray);
+            TSOS.Control.fileSystemUpdate();
         };
         return MemoryManager;
     }());

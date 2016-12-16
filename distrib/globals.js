@@ -12,7 +12,7 @@
 //
 var APP_NAME = "KOS"; // 'Something Something Kyles's OS
 var APP_VERSION = "9000.15?"; // What did you expect?
-var CPU_CLOCK_INTERVAL = 100; // This is in ms (milliseconds) so 1000 = 1 second. (NOT WHEN I SHIFT INTO MAXIMUM OVERDRIVE!!!!!)
+var CPU_CLOCK_INTERVAL = 1; // This is in ms (milliseconds) so 1000 = 1 second. (NOT WHEN I SHIFT INTO MAXIMUM OVERDRIVE!!!!!)
 var TIMER_IRQ = 0; // Pages 23 (timer), 9 (interrupts), and 561 (interrupt priority).
 // NOTE: The timer is different from hardware/host clock pulses. Don't confuse these.
 var KEYBOARD_IRQ = 1;

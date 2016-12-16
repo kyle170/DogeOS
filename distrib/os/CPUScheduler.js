@@ -29,6 +29,10 @@ var TSOS;
         CPUScheduler.prototype.contextSwitch = function () {
             if (_CPU.currentPCB === null && _ProcessManager.readyQueue.getSize() > 0) {
                 var ProgramToRun = _ProcessManager.readyQueue.dequeue();
+                if (ProgramToRun.IsInSwap) {
+                    var params = { next: ProgramToRun.PID, previous: this.CurrentPCBProgram };
+                    _Kernel.krnInterruptHandler("PAGE_FAULT", params);
+                }
                 ProgramToRun.PS = "RUNNING";
                 this.CurrentPCBProgram = ProgramToRun;
                 _CPU.loadProgram(this.CurrentPCBProgram);
@@ -36,6 +40,10 @@ var TSOS;
             else if (_CPU.currentPCB !== null && _ProcessManager.readyQueue.getSize() > 0) {
                 _CPU.updatePCB();
                 var ProgramToRun = _ProcessManager.readyQueue.dequeue();
+                if (ProgramToRun.IsInSwap) {
+                    var params = { next: ProgramToRun.PID, previous: this.CurrentPCBProgram };
+                    _Kernel.krnInterruptHandler("PAGE_FAULT", params);
+                }
                 ProgramToRun.PS = "RUNNING";
                 // TAKE CURRENTLY RUNNING OFF AND PUSH BACK TO READY!
                 this.CurrentPCBProgram.PS = "WAITING";

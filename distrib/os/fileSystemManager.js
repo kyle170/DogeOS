@@ -62,8 +62,8 @@ var TSOS;
                 return true;
             }
         };
-        FileSystemManager.prototype.read = function (fileName, i, j, k) {
-            if (this.checkIfFileExists(fileName)) {
+        FileSystemManager.prototype.read = function (fileName, swapOverride) {
+            if (this.checkIfFileExists(fileName) || swapOverride !== null) {
                 var fileDataLocation = this.fileDataLocationFinder(fileName);
                 var data = _FileSystem.read(fileDataLocation.substring(0, 1), fileDataLocation.substring(1, 2), fileDataLocation.substring(2, 3));
                 if (data.substring(0, 4) !== "1---") {
