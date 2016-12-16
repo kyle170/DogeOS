@@ -23,6 +23,8 @@ var TSOS;
                     }
                 }
                 _Formatted = true;
+                this.create("swap1", true); // create the swap main
+                this.create("swap2", true); // create the swap alt
                 return true;
             }
             else {
@@ -43,16 +45,20 @@ var TSOS;
             }
             return items.substring(0, (items.length) - 2);
         };
-        FileSystemManager.prototype.create = function (fileName) {
+        FileSystemManager.prototype.create = function (fileName, swapOverride) {
             //the way the system tells if its a pointer and not a file is if it starts with `
-            if (this.checkIfFileExists(fileName)) {
+            if (this.checkIfFileExists(fileName) && swapOverride === null) {
                 _StdOut.putText("File Already Exists!");
                 return false;
             }
             else {
+                var type = "1";
                 var freeLocationForPointer = this.findFreeSpaceOnTheTSB(true);
                 var freeLocationForData = this.findFreeSpaceOnTheTSB(true);
-                _FileSystem.write(freeLocationForPointer.substring(0, 1), freeLocationForPointer.substring(1, 2), freeLocationForPointer.substring(2, 3), "1" + freeLocationForData + "1" + fileName);
+                if (fileName.substring(0, 4) === "swap") {
+                    type = "0";
+                }
+                _FileSystem.write(freeLocationForPointer.substring(0, 1), freeLocationForPointer.substring(1, 2), freeLocationForPointer.substring(2, 3), "1" + freeLocationForData + type + fileName);
                 return true;
             }
         };
@@ -78,8 +84,8 @@ var TSOS;
                 this.recursiveRead(data.substring(1, 2), data.substring(2, 3), data.substring(3, 4), "" + data.substring(5));
             }
         };
-        FileSystemManager.prototype.write = function (fileName, data, i, j, k) {
-            if (this.checkIfFileExists(fileName)) {
+        FileSystemManager.prototype.write = function (fileName, data, swapOverride) {
+            if (this.checkIfFileExists(fileName) || swapOverride !== null) {
                 var fileDataLocation = this.fileDataLocationFinder(fileName);
                 this.recursiveFileDelete(fileDataLocation.substring(0, 1), fileDataLocation.substring(1, 2), fileDataLocation.substring(2, 3)); // get rid of any previous file data!
                 if (this.recursiveWrite(fileDataLocation.substring(0, 1), fileDataLocation.substring(1, 2), fileDataLocation.substring(2, 3), data)) {
@@ -161,12 +167,19 @@ var TSOS;
             //umm.... no free space left?
             return "No free space left";
         };
-        FileSystemManager.prototype.fileDataLocationFinder = function (filename) {
+        FileSystemManager.prototype.fileDataLocationFinder = function (filename, swapOverride) {
+            var type = "-1";
+            if (swapOverride !== null) {
+                type = "0";
+            }
+            else {
+                type = "1";
+            }
             for (var i = 0; i < this.tracks; i++) {
                 for (var j = 0; j < this.sectors; j++) {
                     for (var k = 0; k < this.blocks; k++) {
                         var whatIfound = _FileSystem.read(i, j, k);
-                        if ("1" + filename === whatIfound.substring(4)) {
+                        if (type + filename === whatIfound.substring(4)) {
                             return "" + whatIfound.substring(1, 4);
                         }
                     }

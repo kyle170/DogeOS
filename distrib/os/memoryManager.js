@@ -39,16 +39,26 @@ var TSOS;
         MemoryManager.prototype.alloicateMemoryForProgram = function (ProcessControlBlock, ProgramData, prio) {
             // program comes in as a string of doubles... we must write it in the memory!
             //_Memory.clearMem(); // clear anything that was previously in there
-            ProcessControlBlock.BaseReg = (ProcessControlBlock.PID * 256); //set base limit
-            ProcessControlBlock.LimReg = ProcessControlBlock.BaseReg + 255; // set max limit
-            ProcessControlBlock.Priority = prio; // sets priority
-            for (var i = 0; i < (ProcessControlBlock.LimReg - ProcessControlBlock.BaseReg); i++) {
-                var data = ProgramData[i];
-                if (data !== undefined) {
-                    _Memory.setByte(ProcessControlBlock.BaseReg + i, data); // set the data
+            if (_Formatted && (TSOS.PCB.CPID * 256) >= _Memory.memorySize) {
+                var str = "";
+                for (var i = 0; i < ProgramData.length; i++) {
+                    str += ProgramData[i];
                 }
-                else {
-                    _Memory.setByte(ProcessControlBlock.BaseReg + i, '00'); // set a blank (nothing)
+                console.log(str);
+                _krnFileSystemDriver.consoleISR("write", "swap1", str, true);
+            }
+            else {
+                ProcessControlBlock.BaseReg = (ProcessControlBlock.PID * 256); //set base limit
+                ProcessControlBlock.LimReg = ProcessControlBlock.BaseReg + 255; // set max limit
+                ProcessControlBlock.Priority = prio; // sets priority
+                for (var i = 0; i < (ProcessControlBlock.LimReg - ProcessControlBlock.BaseReg); i++) {
+                    var data = ProgramData[i];
+                    if (data !== undefined) {
+                        _Memory.setByte(ProcessControlBlock.BaseReg + i, data); // set the data
+                    }
+                    else {
+                        _Memory.setByte(ProcessControlBlock.BaseReg + i, '00'); // set a blank (nothing)
+                    }
                 }
             }
             TSOS.Control.memoryUpdate();

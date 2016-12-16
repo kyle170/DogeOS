@@ -31,6 +31,8 @@ module TSOS {
 					}
 				}
 				_Formatted = true;
+				this.create("swap1", true); // create the swap main
+				this.create("swap2", true);  // create the swap alt
 				return true;
 			}else{
 				return false;
@@ -52,15 +54,19 @@ module TSOS {
 			return items.substring(0, (items.length)-2);
         }
 
-        public create(fileName): boolean {
+        public create(fileName, swapOverride: boolean): boolean {
 			//the way the system tells if its a pointer and not a file is if it starts with `
-			if(this.checkIfFileExists(fileName)){
+			if(this.checkIfFileExists(fileName) && swapOverride === null){
 				_StdOut.putText("File Already Exists!");
 				return false;
 			}else{
+				var type = "1";
 				var freeLocationForPointer = this.findFreeSpaceOnTheTSB(true);
 				var freeLocationForData = this.findFreeSpaceOnTheTSB(true);
-				_FileSystem.write(freeLocationForPointer.substring(0,1), freeLocationForPointer.substring(1,2), freeLocationForPointer.substring(2,3), "1"+freeLocationForData+"1"+fileName);
+				if(fileName.substring(0,4) === "swap"){
+					type = "0";
+				}
+				_FileSystem.write(freeLocationForPointer.substring(0,1), freeLocationForPointer.substring(1,2), freeLocationForPointer.substring(2,3), "1"+freeLocationForData+type+fileName);
 				return true;
 			}
         }
@@ -88,8 +94,8 @@ module TSOS {
 			}
 		}
 
-        public write(fileName, data, i, j, k): boolean {
-            if(this.checkIfFileExists(fileName)){ // good, it exists... lets continue
+        public write(fileName, data, swapOverride: boolean): boolean {
+            if(this.checkIfFileExists(fileName) || swapOverride !== null){ // good, it exists... lets continue
 				var fileDataLocation = this.fileDataLocationFinder(fileName);
 				this.recursiveFileDelete(fileDataLocation.substring(0,1), fileDataLocation.substring(1,2), fileDataLocation.substring(2,3)); // get rid of any previous file data!
 				if(this.recursiveWrite(fileDataLocation.substring(0,1), fileDataLocation.substring(1,2), fileDataLocation.substring(2,3), data)){
@@ -172,12 +178,18 @@ module TSOS {
 			return "No free space left";
 		}
 		
-		private fileDataLocationFinder(filename: string): string{
+		private fileDataLocationFinder(filename: string, swapOverride: boolean): string{
+			var type = "-1";
+			if(swapOverride !== null){
+				type = "0";
+			}else{
+				type = "1";
+			}
 			for(var i=0; i<this.tracks; i++){
 				for(var j=0; j<this.sectors; j++){ // loop through each sector
 					for(var k=0; k<this.blocks; k++){ // loop through each block
 						var whatIfound = _FileSystem.read(i,j,k);
-						if("1"+filename === whatIfound.substring(4)){
+						if(type+filename === whatIfound.substring(4)){
 							return ""+whatIfound.substring(1,4);
 						}
 					}

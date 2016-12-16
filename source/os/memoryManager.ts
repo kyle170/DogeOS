@@ -41,15 +41,24 @@ module TSOS {
 		public alloicateMemoryForProgram(ProcessControlBlock: TSOS.PCB, ProgramData: Array<string>, prio: number): void {
 			// program comes in as a string of doubles... we must write it in the memory!
 			//_Memory.clearMem(); // clear anything that was previously in there
-			ProcessControlBlock.BaseReg = (ProcessControlBlock.PID*256);	//set base limit
-			ProcessControlBlock.LimReg = ProcessControlBlock.BaseReg+255;	// set max limit
-			ProcessControlBlock.Priority = prio; // sets priority
-			for(var i:number=0; i<(ProcessControlBlock.LimReg-ProcessControlBlock.BaseReg); i++){
-				var data: string = ProgramData[i]; 
-				if(data !== undefined){ // if its not nothing
-					_Memory.setByte(ProcessControlBlock.BaseReg+i, data); 	// set the data
-				}else{
-					_Memory.setByte(ProcessControlBlock.BaseReg+i, '00');	// set a blank (nothing)
+			if(_Formatted && (PCB.CPID*256) >= _Memory.memorySize){ // disk loaded and lets put it on the disk!
+				var str = "";
+				for (var i = 0; i < ProgramData.length; i++){
+                    str += ProgramData[i];
+                }
+				console.log(str);
+				_krnFileSystemDriver.consoleISR("write", "swap1", str, true);
+			}else{	// put into the boring regular memory
+				ProcessControlBlock.BaseReg = (ProcessControlBlock.PID*256);	//set base limit
+				ProcessControlBlock.LimReg = ProcessControlBlock.BaseReg+255;	// set max limit
+				ProcessControlBlock.Priority = prio; // sets priority
+				for(var i:number=0; i<(ProcessControlBlock.LimReg-ProcessControlBlock.BaseReg); i++){
+					var data: string = ProgramData[i]; 
+					if(data !== undefined){ // if its not nothing
+						_Memory.setByte(ProcessControlBlock.BaseReg+i, data); 	// set the data
+					}else{
+						_Memory.setByte(ProcessControlBlock.BaseReg+i, '00');	// set a blank (nothing)
+					}
 				}
 			}
 			TSOS.Control.memoryUpdate();
