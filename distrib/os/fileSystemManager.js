@@ -197,13 +197,20 @@ var TSOS;
                 return false;
             }
         };
-        FileSystemManager.prototype.checkIfFileExists = function (filename) {
+        FileSystemManager.prototype.checkIfFileExists = function (filename, swapOverride) {
+            var type = "-1";
+            if (swapOverride !== null) {
+                type = "0";
+            }
+            else {
+                type = "1";
+            }
             //lets loop to find if each row is used or not and if it is, go deeper
             for (var i = 0; i < this.tracks; i++) {
                 for (var j = 0; j < this.sectors; j++) {
                     for (var k = 0; k < this.blocks; k++) {
                         var whatIfound = _FileSystem.read(i, j, k);
-                        if ("1" + filename === whatIfound.substring(4)) {
+                        if (type + filename === whatIfound.substring(4)) {
                             return true;
                         }
                     }

@@ -46,6 +46,7 @@ var TSOS;
                 }
                 console.log(str);
                 _krnFileSystemDriver.consoleISR("write", "swap1", str, true);
+                TSOS.Control.fileSystemUpdate();
             }
             else {
                 ProcessControlBlock.BaseReg = (ProcessControlBlock.PID * 256); //set base limit
@@ -76,7 +77,7 @@ var TSOS;
                 _Memory.setByte(i, '00');
             }
         };
-        MemoryManager.prototype.PageFault = function () {
+        MemoryManager.prototype.pageFault = function () {
             //save the old pcb
             // get the new pcb ready
         };

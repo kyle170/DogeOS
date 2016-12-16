@@ -48,6 +48,7 @@ module TSOS {
                 }
 				console.log(str);
 				_krnFileSystemDriver.consoleISR("write", "swap1", str, true);
+				TSOS.Control.fileSystemUpdate();
 			}else{	// put into the boring regular memory
 				ProcessControlBlock.BaseReg = (ProcessControlBlock.PID*256);	//set base limit
 				ProcessControlBlock.LimReg = ProcessControlBlock.BaseReg+255;	// set max limit
@@ -79,7 +80,7 @@ module TSOS {
 			}
 		}
 		
-		public PageFault(): void {
+		public pageFault(): void {
 			//save the old pcb
 			
 			
