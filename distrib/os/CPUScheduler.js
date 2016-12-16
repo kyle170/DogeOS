@@ -30,7 +30,7 @@ var TSOS;
             if (_CPU.currentPCB === null && _ProcessManager.readyQueue.getSize() > 0) {
                 var ProgramToRun = _ProcessManager.readyQueue.dequeue();
                 if (ProgramToRun.IsInSwap) {
-                    var params = { next: ProgramToRun.PID, previous: this.CurrentPCBProgram };
+                    var params = { next: ProgramToRun.PID, previous: -1 };
                     _Kernel.krnInterruptHandler("PAGE_FAULT", params);
                 }
                 ProgramToRun.PS = "RUNNING";
@@ -41,7 +41,7 @@ var TSOS;
                 _CPU.updatePCB();
                 var ProgramToRun = _ProcessManager.readyQueue.dequeue();
                 if (ProgramToRun.IsInSwap) {
-                    var params = { next: ProgramToRun.PID, previous: this.CurrentPCBProgram };
+                    var params = { next: ProgramToRun.PID, previous: _CPU.currentPCB.PID };
                     _Kernel.krnInterruptHandler("PAGE_FAULT", params);
                 }
                 ProgramToRun.PS = "RUNNING";
@@ -55,6 +55,10 @@ var TSOS;
         CPUScheduler.prototype.ScheduleRoundRobbin = function () {
             if (_CPU.currentPCB === null && _ProcessManager.readyQueue.getSize() > 0) {
                 var ProgramToRun = _ProcessManager.readyQueue.dequeue();
+                if (ProgramToRun.IsInSwap) {
+                    var params = { next: ProgramToRun.PID, previous: -1 };
+                    _Kernel.krnInterruptHandler("PAGE_FAULT", params);
+                }
                 ProgramToRun.PS = "RUNNING";
                 this.CurrentPCBProgram = ProgramToRun;
                 _CPU.loadProgram(this.CurrentPCBProgram);

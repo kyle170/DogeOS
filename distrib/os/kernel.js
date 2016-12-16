@@ -25,7 +25,7 @@ var TSOS;
             _KernelInterruptQueue = new TSOS.Queue(); // A (currently) non-priority queue for interrupt requests (IRQs).
             _KernelBuffers = new Array(); // Buffers... for the kernel.
             _KernelInputQueue = new TSOS.Queue(); // Where device input lands before being processed out somewhere.
-            _ProcessManager = new TSOS.ProcessManager(4);
+            _ProcessManager = new TSOS.ProcessManager();
             _MemoryManager = new TSOS.MemoryManager();
             _CPUScheduler = new TSOS.CPUScheduler();
             _FileSystemManager = new TSOS.FileSystemManager(); // bring in the filesystem manager
@@ -125,6 +125,9 @@ var TSOS;
                     break;
                 case "CONTEXT_SWITCH":
                     _CPUScheduler.contextSwitch(); // TRIGGERED
+                    break;
+                case "PAGE_FAULT":
+                    _MemoryManager.pageFault(params.next, params.previous); // TRIGGERED... LETS GET SWITCHING!
                     break;
                 default:
                     this.krnTrapError("Invalid Interrupt Request. irq=" + irq + " params=[" + params + "]");

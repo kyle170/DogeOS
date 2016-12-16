@@ -49,14 +49,17 @@ module TSOS {
 			// program comes in as a string of doubles... we must write it in the memory!
 			//_Memory.clearMem(); // clear anything that was previously in there
 			if(_Formatted && (PCB.CPID*256) >= _Memory.memorySize){ // disk loaded and lets put it on the disk!
-				var str = "";
+				var str: string = "";
 				for (var i = 0; i < ProgramData.length; i++){
-                    str += ProgramData[i];
+					if(ProgramData[i] !== undefined){
+						str += ""+ProgramData[i];
+					}else{
+						str += "00";
+					}
                 }
-				console.log(str);
 				ProcessControlBlock.IsInSwap = true;
 				ProcessControlBlock.SwapLocation = "003";
-				_krnFileSystemDriver.consoleISR("write", "swap2", str, true);
+				_FileSystemManager.write("swap2", str, true);
 				TSOS.Control.fileSystemUpdate();
 			}else{	// put into the boring regular memory
 				ProcessControlBlock.BaseReg = (ProcessControlBlock.PID*256);	//set base limit
@@ -72,6 +75,7 @@ module TSOS {
 				}
 			}
 			TSOS.Control.memoryUpdate();
+			TSOS.Control.readyQueueUpdate();
 		}
 		
 		public clearAllMemory(): void {
@@ -90,28 +94,33 @@ module TSOS {
 		}
 		
 		public pageFault(nextPID:number, oldPID: number): void {
-			console.log("hey...we had a page fault!");
 			var toLoad = _ProcessManager.ResidentList[nextPID];
 			var toStore = _ProcessManager.ResidentList[oldPID];
 			//save the old pcb
-			var toStoreString = "";
-			for(var i=0; i<256; i++){
-				toStoreString += this.readFromMemory(toStore, i);
+			if(oldPID !== -1){
+				var toStoreString = '';
+				for(var i=0; i<256; i++){
+					toStoreString += this.readFromMemory(toStore, i);
+				}
+				toStore.IsInSwap = true;
+				toStore.SwapLocation = "001";
+				_FileSystemManager.write("swap1", toStoreString, true);
+				
+				TSOS.Control.fileSystemUpdate();
+				
 			}
-			toStore.IsInSwap = true;
-			toStore.SwapLocation = "003";
-			_krnFileSystemDriver.consoleISR("write", "swap1", toStoreString, true);
 			
 			// get the new pcb ready
 			var newProg = _krnFileSystemDriver.consoleISR("read", "swap2", true);
+			//console.log(newProg);
 			var progArray = [];
-			for(var i=0; i< 256; i+=2){
+			for(var i=0; i< newProg.length; i+=2){
 				progArray.push(""+ newProg[i] + newProg[i+1]);
 			}
 			_FileSystemManager.recursiveFileDelete(0,0,3);
-			toStore.IsInSwap = false;
-			toStore.SwapLocation = "003";
-			this.alloicateMemoryForProgram(newProg, progArray);
+			toLoad.IsInSwap = false;
+			toLoad.SwapLocation = "";
+			//this.alloicateMemoryForProgram(newProg, progArray);
 			TSOS.Control.fileSystemUpdate();
 		}
 		

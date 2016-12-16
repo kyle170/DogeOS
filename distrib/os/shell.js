@@ -632,7 +632,7 @@ var TSOS;
                             data += args[i].charAt(j);
                         }
                     }
-                    data += " "; //spacing fix
+                    data += " ";
                 }
                 if (parcount === 2) {
                     if (_krnFileSystemDriver.consoleISR("write", args[0], data)) {

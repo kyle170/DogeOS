@@ -96,9 +96,9 @@ module TSOS {
 
         public write(fileName, data, swapOverride: boolean): boolean {
             if(this.checkIfFileExists(fileName) || swapOverride !== null){ // good, it exists... lets continue
-				var fileDataLocation = this.fileDataLocationFinder(fileName);
+				var fileDataLocation = this.fileDataLocationFinder(fileName, swapOverride);
 				this.recursiveFileDelete(fileDataLocation.substring(0,1), fileDataLocation.substring(1,2), fileDataLocation.substring(2,3)); // get rid of any previous file data!
-				if(this.recursiveWrite(fileDataLocation.substring(0,1), fileDataLocation.substring(1,2), fileDataLocation.substring(2,3), data)){
+				if(this.recursiveWrite(fileDataLocation.substring(0,1), fileDataLocation.substring(1,2), fileDataLocation.substring(2,3), data, swapOverride)){
 					return true;
 				}else{
 					return false;
@@ -109,15 +109,22 @@ module TSOS {
 			}
         }
 		
-		public recursiveWrite(i, j, k, data): boolean {
+		public recursiveWrite(i, j, k, data,swapOverride: boolean): boolean {
+			//console.log(data);
 			var padding = 7;
+			var type = "2";
+			if(swapOverride !== null){
+				type = "0";
+			}else{
+				type = "2";
+			}
 			if(data.length < this.blockSize-padding){
-				_FileSystem.write(i, j, k, "1---"+"2"+data);
+				_FileSystem.write(i, j, k, "1---"+type+data);
 			}else{
 				var newLocation = this.findFreeSpaceOnTheTSB(true);
 				var shortened = data.substring(0, this.blockSize-padding);
 				var whatsleft = data.substring(this.blockSize-padding);
-				_FileSystem.write(i, j, k, "1"+newLocation.substring(0,1)+newLocation.substring(1,2)+newLocation.substring(2,3)+"2"+shortened);
+				_FileSystem.write(i, j, k, "1"+newLocation.substring(0,1)+newLocation.substring(1,2)+newLocation.substring(2,3)+type+shortened);
 				this.recursiveWrite(newLocation.substring(0,1), newLocation.substring(1,2), newLocation.substring(2,3), whatsleft);				
 			}
 			return true

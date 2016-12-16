@@ -38,8 +38,9 @@ module TSOS {
 			if(_CPU.currentPCB === null && _ProcessManager.readyQueue.getSize() > 0){ // nothing to start with and a program arrives
                 var ProgramToRun = _ProcessManager.readyQueue.dequeue();
 				if(ProgramToRun.IsInSwap){  //OH NOES...SHES IN SWAP...LETS GET HER OUTTA THERE!
-					var params = {next: ProgramToRun.PID, previous: this.CurrentPCBProgram};
+					var params = {next: ProgramToRun.PID, previous: -1};
 					_Kernel.krnInterruptHandler("PAGE_FAULT", params);
+					
 				}
                 ProgramToRun.PS = "RUNNING"; 
 				this.CurrentPCBProgram = ProgramToRun;
@@ -48,7 +49,7 @@ module TSOS {
 				_CPU.updatePCB();
 				var ProgramToRun = _ProcessManager.readyQueue.dequeue();
 				if(ProgramToRun.IsInSwap){  //OH NOES...SHES IN SWAP...LETS GET HER OUTTA THERE!
-					var params = {next: ProgramToRun.PID, previous: this.CurrentPCBProgram};
+					var params = {next: ProgramToRun.PID, previous: _CPU.currentPCB.PID};
 					_Kernel.krnInterruptHandler("PAGE_FAULT", params);
 				}
 				ProgramToRun.PS = "RUNNING";
@@ -63,6 +64,10 @@ module TSOS {
 		private ScheduleRoundRobbin(): void {
 			if(_CPU.currentPCB === null && _ProcessManager.readyQueue.getSize() > 0){
                 var ProgramToRun = _ProcessManager.readyQueue.dequeue();
+				if(ProgramToRun.IsInSwap){  //OH NOES...SHES IN SWAP...LETS GET HER OUTTA THERE!
+					var params = {next: ProgramToRun.PID, previous: -1};
+					_Kernel.krnInterruptHandler("PAGE_FAULT", params);
+				}
                 ProgramToRun.PS = "RUNNING";
 				this.CurrentPCBProgram = ProgramToRun;
                 _CPU.loadProgram(this.CurrentPCBProgram);

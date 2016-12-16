@@ -11,10 +11,10 @@
 //
 // Global CONSTANTS (TypeScript 1.5 introduced const. Very cool.)
 //
-const APP_NAME: string    = "KOS";   // 'Something Something Kyles's OS
+const APP_NAME: string    = "DogeOS";   // 'Something Something Kyles's OS
 const APP_VERSION: string = "9000.15?";   // What did you expect?
 
-const CPU_CLOCK_INTERVAL: number = 1;   // This is in ms (milliseconds) so 1000 = 1 second. (NOT WHEN I SHIFT INTO MAXIMUM OVERDRIVE!!!!!)
+const CPU_CLOCK_INTERVAL: number = 100;   // This is in ms (milliseconds) so 1000 = 1 second. (NOT WHEN I SHIFT INTO MAXIMUM OVERDRIVE!!!!!)
 
 const TIMER_IRQ: number = 0;  // Pages 23 (timer), 9 (interrupts), and 561 (interrupt priority).
                               // NOTE: The timer is different from hardware/host clock pulses. Don't confuse these.
