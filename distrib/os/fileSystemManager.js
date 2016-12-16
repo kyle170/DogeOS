@@ -86,9 +86,9 @@ var TSOS;
         };
         FileSystemManager.prototype.write = function (fileName, data, swapOverride) {
             if (this.checkIfFileExists(fileName) || swapOverride !== null) {
-                var fileDataLocation = this.fileDataLocationFinder(fileName, swapOverride);
+                var fileDataLocation = this.fileDataLocationFinder(fileName);
                 this.recursiveFileDelete(fileDataLocation.substring(0, 1), fileDataLocation.substring(1, 2), fileDataLocation.substring(2, 3)); // get rid of any previous file data!
-                if (this.recursiveWrite(fileDataLocation.substring(0, 1), fileDataLocation.substring(1, 2), fileDataLocation.substring(2, 3), data, swapOverride)) {
+                if (this.recursiveWrite(fileDataLocation.substring(0, 1), fileDataLocation.substring(1, 2), fileDataLocation.substring(2, 3), data)) {
                     return true;
                 }
                 else {
@@ -100,39 +100,19 @@ var TSOS;
                 return false;
             }
         };
-        FileSystemManager.prototype.dump = function (v) {
-            switch (typeof v) {
-                case "object":
-                    for (var i in v) {
-                        console.log(i + ":" + v[i]);
-                    }
-                    break;
-                default:
-                    console.log(typeof v + ":" + v);
-                    break;
-            }
-        };
-        FileSystemManager.prototype.recursiveWrite = function (i, j, k, data, swapOverride) {
-            //console.log(data);
+        FileSystemManager.prototype.recursiveWrite = function (i, j, k, data) {
             var padding = 7;
-            if (swapOverride !== null) {
-                var type = "0";
-            }
-            else {
-                var type = "2";
-            }
             if (data.length < this.blockSize - padding) {
-                _FileSystem.write(i, j, k, "1---" + type + data);
+                _FileSystem.write(i, j, k, "1---" + "2" + data);
             }
             else {
                 var newLocation = this.findFreeSpaceOnTheTSB(true);
-                var trimmed = data.substring(0, (this.blockSize - padding));
-                this.dump(trimmed);
+                var shortened = data.substring(0, this.blockSize - padding);
                 var whatsleft = data.substring(this.blockSize - padding);
-                _FileSystem.write(i, j, k, "1" + newLocation.substring(0, 1) + newLocation.substring(1, 2) + newLocation.substring(2, 3) + type + trimmed);
+                _FileSystem.write(i, j, k, "1" + newLocation.substring(0, 1) + newLocation.substring(1, 2) + newLocation.substring(2, 3) + "2" + shortened);
                 this.recursiveWrite(newLocation.substring(0, 1), newLocation.substring(1, 2), newLocation.substring(2, 3), whatsleft);
             }
-            //return true
+            return true;
         };
         FileSystemManager.prototype.deleteFile = function (fileName) {
             if (this.checkIfFileExists(fileName)) {

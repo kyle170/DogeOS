@@ -91,31 +91,35 @@ var TSOS;
             }
         };
         MemoryManager.prototype.pageFault = function (nextPID, oldPID) {
-            var toLoad = _ProcessManager.ResidentList[nextPID];
-            var toStore = _ProcessManager.ResidentList[oldPID];
-            //save the old pcb
-            if (oldPID !== -1) {
-                var toStoreData = '';
-                for (var i = 0; i < 256; i++) {
-                    toStoreData += this.readFromMemory(toStore, i);
+            /*	var toLoad = _ProcessManager.ResidentList[nextPID];
+                var toStore = _ProcessManager.ResidentList[oldPID];
+                //save the old pcb
+                if(oldPID !== -1){
+                    var toStoreData = '';
+                    for(var i=0; i<256; i++){
+                        toStoreData += this.readFromMemory(toStore, i);
+                    }
+                    toStore.IsInSwap = false;
+                    toStore.SwapLocation = "001";
+                    _FileSystemManager.write("swap1", toStoreData, true);
+                    
+                    TSOS.Control.fileSystemUpdate();
+                    
                 }
-                toStore.IsInSwap = true;
-                toStore.SwapLocation = "001";
-                _FileSystemManager.write("swap1", toStoreData, true);
+                
+                // get the new pcb ready
+                //var newProg = _krnFileSystemDriver.consoleISR("read", "swap2", true);
+                //console.log(newProg);
+                var progArray = [];
+                for(var i=0; i< newProg.length; i+=2){
+                    progArray.push(""+ newProg[i] + newProg[i+1]);
+                }
+                //_FileSystemManager.recursiveFileDelete(0,0,3);
+                toLoad.IsInSwap = false;
+                toLoad.SwapLocation = "";
+                //this.alloicateMemoryForProgram(newProg, progArray);
                 TSOS.Control.fileSystemUpdate();
-            }
-            // get the new pcb ready
-            //var newProg = _krnFileSystemDriver.consoleISR("read", "swap2", true);
-            //console.log(newProg);
-            var progArray = [];
-            for (var i = 0; i < newProg.length; i += 2) {
-                progArray.push("" + newProg[i] + newProg[i + 1]);
-            }
-            //_FileSystemManager.recursiveFileDelete(0,0,3);
-            toLoad.IsInSwap = false;
-            toLoad.SwapLocation = "";
-            //this.alloicateMemoryForProgram(newProg, progArray);
-            TSOS.Control.fileSystemUpdate();
+                */
         };
         return MemoryManager;
     }());

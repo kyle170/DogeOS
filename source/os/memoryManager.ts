@@ -94,7 +94,7 @@ module TSOS {
 		}
 		
 		public pageFault(nextPID:number, oldPID: number): void {
-			var toLoad = _ProcessManager.ResidentList[nextPID];
+		/*	var toLoad = _ProcessManager.ResidentList[nextPID];
 			var toStore = _ProcessManager.ResidentList[oldPID];
 			//save the old pcb
 			if(oldPID !== -1){
@@ -102,7 +102,7 @@ module TSOS {
 				for(var i=0; i<256; i++){
 					toStoreData += this.readFromMemory(toStore, i);
 				}
-				toStore.IsInSwap = true;
+				toStore.IsInSwap = false;
 				toStore.SwapLocation = "001";
 				_FileSystemManager.write("swap1", toStoreData, true);
 				
@@ -122,6 +122,7 @@ module TSOS {
 			toLoad.SwapLocation = "";
 			//this.alloicateMemoryForProgram(newProg, progArray);
 			TSOS.Control.fileSystemUpdate();
+			*/
 		}
 		
     }
