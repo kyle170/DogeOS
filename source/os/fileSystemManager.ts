@@ -94,11 +94,12 @@ module TSOS {
 			}
 		}
 
-        public write(fileName, data, swapOverride: boolean): boolean {
-            if(this.checkIfFileExists(fileName) || swapOverride !== null){ // good, it exists... lets continue
+        public write(fileName, data): boolean {
+            if(this.checkIfFileExists(fileName)){ // good, it exists... lets continue
 				var fileDataLocation = this.fileDataLocationFinder(fileName);
 				this.recursiveFileDelete(fileDataLocation.substring(0,1), fileDataLocation.substring(1,2), fileDataLocation.substring(2,3)); // get rid of any previous file data!
 				if(this.recursiveWrite(fileDataLocation.substring(0,1), fileDataLocation.substring(1,2), fileDataLocation.substring(2,3), data)){
+					TSOS.Control.fileSystemUpdate();
 					return true;
 				}else{
 					return false;
@@ -177,18 +178,12 @@ module TSOS {
 			return "No free space left";
 		}
 		
-		private fileDataLocationFinder(filename: string, swapOverride: boolean): string{
-			var type = "-1";
-			if(swapOverride !== null){
-				type = "0";
-			}else{
-				type = "1";
-			}
+		private fileDataLocationFinder(filename: string): string{
 			for(var i=0; i<this.tracks; i++){
 				for(var j=0; j<this.sectors; j++){ // loop through each sector
 					for(var k=0; k<this.blocks; k++){ // loop through each block
 						var whatIfound = _FileSystem.read(i,j,k);
-						if(type+filename === whatIfound.substring(4)){
+						if("1"+filename === whatIfound.substring(4)){
 							return ""+whatIfound.substring(1,4);
 						}
 					}
@@ -207,19 +202,14 @@ module TSOS {
 			}
 		}
 		
-		private checkIfFileExists(filename, swapOverride: boolean): boolean{
-			var type = "-1";
-			if(swapOverride !== null){
-				type = "0";
-			}else{
-				type = "1";
-			}
+		private checkIfFileExists(filename): boolean{
+
 			//lets loop to find if each row is used or not and if it is, go deeper
 			for(var i=0; i<this.tracks; i++){
 				for(var j=0; j<this.sectors; j++){ // loop through each sector
 					for(var k=0; k<this.blocks; k++){ // loop through each block
 						var whatIfound = _FileSystem.read(i,j,k);
-						if(type+filename === whatIfound.substring(4)){
+						if("1"+filename === whatIfound.substring(4)){
 							return true;
 						}
 					}
